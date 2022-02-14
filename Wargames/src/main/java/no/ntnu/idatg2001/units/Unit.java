@@ -8,6 +8,13 @@ public abstract class Unit {
     int numberOfDefends;
     int numberOfAttacks;
 
+    /**
+     * Constructor for Unit objects with all parameters.
+     * @param name Name of the unit.
+     * @param health The health value of the unit.
+     * @param attack The attack value of the unit.
+     * @param armor The armor value of the unit.
+     */
     public Unit(String name, int health, int attack, int armor) {
         this.name = name;
         this.health = health;
@@ -16,6 +23,11 @@ public abstract class Unit {
         numberOfDefends = 0;
     }
 
+    /**
+     * Constructor for Unit objects.
+     * @param name The name of the object.
+     * @param health The health value of the unit.
+     */
     public Unit(String name, int health) {
         this.name = name;
         this.health = health;
@@ -42,18 +54,36 @@ public abstract class Unit {
         this.health = health;
     }
 
+    /**
+     * Increments the number of attacks to the unit.
+     */
     public void setNumberOfAttacks() {
           this.numberOfAttacks++;
     }
 
+    /**
+     * Increments the number of defends ot the unit.
+     */
     public void setNumberOfDefends() {
         this.numberOfDefends++;
     }
 
+    /**
+     * Abstract method for attack-bonus to units.
+     * @return The value of the attack-bonus
+     */
     public abstract int getAttackBonus();
 
+    /**
+     * Abstract method for resist-bonus to units.
+     * @return THe value of the resist-bonus.
+     */
     public abstract int getResistBonus();
 
+    /**
+     * Attack method, attack another unit, takes attack, attack-bonus, armor, resist-bonus into consideration.
+     * @param opponent The opponent to attack.
+     */
     public void attack(Unit opponent){
         opponent.setHealth(opponent.getHealth() - (this.getAttack() + this.getAttackBonus())
                 + (opponent.getArmor() + opponent.getResistBonus()));
@@ -61,6 +91,10 @@ public abstract class Unit {
         this.setNumberOfAttacks();
     }
 
+    /**
+     * Returns the information about the unit.
+     * @return String, consists of name, health, attack and armor.
+     */
     @Override
     public String toString() {
         return  "Name " + name + "\n" +
