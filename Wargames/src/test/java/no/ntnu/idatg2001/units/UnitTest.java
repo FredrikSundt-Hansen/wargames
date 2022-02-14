@@ -33,7 +33,7 @@ class UnitTest {
     /**
      *  Tests attack methods, as well as setNumberOfAttacks, and setNumberOfDefends.
      */
-   
+
   @Test
   void attack() {
       //No attacks, or defends
