@@ -9,7 +9,7 @@ public abstract class Unit {
     int numberOfAttacks;
 
     /**
-     * Constructor for Unit objects with all parameters.
+     * Constructs a unit with   
      * @param name Name of the unit.
      * @param health The health value of the unit.
      * @param attack The attack value of the unit.
