@@ -76,12 +76,12 @@ public abstract class Unit {
 
     /**
      * Abstract method for resist-bonus to units.
-     * @return THe value of the resist-bonus.
+     * @return The value of the resist-bonus.
      */
     public abstract int getResistBonus();
 
     /**
-     * Attack method, attack another unit, takes attack, attack-bonus, armor, resist-bonus into consideration.
+     * Attack method, attacks another unit, takes attack, attack-bonus, armor, resist-bonus into consideration.
      * @param opponent The opponent to attack.
      */
     public void attack(Unit opponent){

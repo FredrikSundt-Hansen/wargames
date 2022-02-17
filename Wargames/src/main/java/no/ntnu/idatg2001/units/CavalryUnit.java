@@ -7,7 +7,7 @@ public class CavalryUnit extends Unit{
      * @param name Name of the unit.
      * @param health Health value of the unit.
      * @param attack Attack value of the unit.
-     * @param armor Armor vlaue of the unit.
+     * @param armor Armor value of the unit.
      */
     public CavalryUnit(String name, int health, int attack, int armor) {
         super(name, health, attack, armor);

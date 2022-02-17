@@ -3,7 +3,7 @@ package no.ntnu.idatg2001.units;
 public class RangedUnit extends Unit{
 
     /**
-     * Constructs new ranged unit, with all parameters.
+     * Constructs a new ranged unit, with all parameters.
      * @param name The name of the unit.
      * @param health The health value of the hunit.
      * @param attack The attack value of the unit.

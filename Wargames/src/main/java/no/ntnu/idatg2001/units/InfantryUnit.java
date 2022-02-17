@@ -3,7 +3,7 @@ package no.ntnu.idatg2001.units ;
 public class InfantryUnit extends Unit{
 
     /**
-     * Constructs new infantry unit, with all parameters.
+     * Constructs a new infantry unit, with all parameters.
      * @param name Name of the unit.
      * @param health Health value of the unit.
      * @param attack Attack value of the unit.
