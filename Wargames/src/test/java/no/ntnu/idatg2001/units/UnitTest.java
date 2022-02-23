@@ -31,9 +31,6 @@ class UnitTest {
       assertEquals(100,u2.getHealth());
   }
 
-    /**
-     *  Tests attack methods, as well as setNumberOfAttacks, and setNumberOfDefends.
-     */
 
   @Test
   void attack() {

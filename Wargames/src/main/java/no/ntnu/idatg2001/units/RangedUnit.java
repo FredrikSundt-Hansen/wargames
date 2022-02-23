@@ -33,7 +33,7 @@ public class RangedUnit extends Unit{
     public int getResistBonus() {
         if (numberOfDefends == 0){
             return 6;
-        }else if (numberOfDefends ==1){
+        }else if (numberOfDefends == 1){
             return 4;
         } else {
             return 2;

@@ -11,8 +11,8 @@ public class Battle {
   private Random rand;
 
   public Battle(Army armyOne, Army armyTwo) {
-    this.armyOne = armyOne;
-    this.armyTwo = armyTwo;
+    this.armyOne = new Army(armyOne.getName(),armyOne.getAllUnits());
+    this.armyTwo = new Army(armyTwo.getName(),armyTwo.getAllUnits());
     rand = new Random();
   }
 

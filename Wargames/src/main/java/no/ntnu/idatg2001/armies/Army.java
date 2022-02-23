@@ -86,6 +86,7 @@ public class Army {
    * @return A unit.
    */
   public Unit getRand() {
+
     if (!units.isEmpty()) {
       return units.get(rand.nextInt(units.size()));
     } else {
