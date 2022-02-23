@@ -1,9 +1,9 @@
 package no.ntnu.idatg2001.units;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CavalryUnitTest {
   private Unit c1;

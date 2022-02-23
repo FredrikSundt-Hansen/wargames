@@ -31,9 +31,9 @@ public class RangedUnit extends Unit{
 
     @Override
     public int getResistBonus() {
-        if (this.numberOfDefends == 0){
+        if (numberOfDefends == 0){
             return 6;
-        }else if (this.numberOfDefends <=1){
+        }else if (numberOfDefends ==1){
             return 4;
         } else {
             return 2;

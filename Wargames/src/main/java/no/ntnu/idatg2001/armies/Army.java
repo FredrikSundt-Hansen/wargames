@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.armies;
 
+import java.util.stream.Collectors;
 import no.ntnu.idatg2001.units.Unit;
 
 import java.util.ArrayList;
@@ -8,24 +9,23 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Army {
-  String name;
-  List<Unit> units;
-  Random random;
+  private String name;
+  private List<Unit> units;
+  private Random rand;
 
   /**
    * Constructs a new Army object containing units.
-   *
    * @param name The name of the army.
    * @param units A list containing units.
    */
   public Army(String name, List<Unit> units) {
     this.name = name;
     this.units = units;
+    rand = new Random();
   }
 
   /**
    * Constructs an empty army.
-   *
    * @param name The name of the army.
    */
   public Army(String name) {
@@ -43,7 +43,6 @@ public class Army {
 
   /**
    * Adds a unit to the army.
-   *
    * @param unit The unit to add.
    */
   public void add(Unit unit) {
@@ -52,7 +51,6 @@ public class Army {
 
   /**
    * Adds a collection of units to the army.
-   *
    * @param units The list of units to add.
    */
   public void addAll(List<Unit> units) {
@@ -61,7 +59,6 @@ public class Army {
 
   /**
    * Removes a unit from the army.
-   *
    * @param unit The unit to remove,
    */
   public void remove(Unit unit) {
@@ -70,8 +67,7 @@ public class Army {
 
   /**
    * Checks if the army is empty or not.
-   *
-   * @return True if the army is not empty, false otherwise.
+   * @return True if the army contains units, false if it is empty.
    */
   public boolean hasUnits() {
     return !this.units.isEmpty();
@@ -79,7 +75,6 @@ public class Army {
 
   /**
    * Returns a list of all the units in the army.
-   *
    * @return New list of all the units.
    */
   public List<Unit> getAllUnits() {
@@ -88,28 +83,30 @@ public class Army {
 
   /**
    * Returns a random unit in the army.
-   *
    * @return A unit.
    */
-  public Unit getRandom() {
-    random = new Random();
-    return this.units.get(random.nextInt(units.size()));
+  public Unit getRand() {
+    if (!units.isEmpty()) {
+      return units.get(rand.nextInt(units.size()));
+    } else {
+      throw new IllegalArgumentException("Empty list.");
+    }
   }
 
   /**
    * Returns the information about the army.
-   *
    * @return A string containing the name and how many units.
    */
   @Override
   public String toString() {
-    return "Army " + name + '\n' + "has " + units + " units.";
+    return  " '" + name + "' " +
+            "\nUnits           :  " + units.size() +
+            "\nDifferent units :  " + units.stream().map(Unit::getName).collect(Collectors.toSet()) + "\n";
   }
 
   /**
    * Compares to armies. Return true if they are equal, takes name and units of the into
    * consideration.
-   *
    * @param o Army to compare.
    * @return True if the two armies are equal, and false otherwise.
    */
