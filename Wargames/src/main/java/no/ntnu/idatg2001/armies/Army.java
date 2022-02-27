@@ -55,10 +55,10 @@ public class Army {
    * @param unit The unit to add.
    */
   public void addUnit(Unit unit){
-    try{
+    if (unit != null) {
       this.units.add(unit);
-    }catch (IllegalArgumentException e){
-      throw new IllegalArgumentException("Invalid unit, cannot add it to the army.");
+    } else {
+      throw new NullPointerException("Invalid unit, cannot add it to the army");
     }
   }
 
@@ -129,14 +129,18 @@ public class Army {
    */
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof Army)) return false;
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Army)) {
+      return false;
+    }
     Army army = (Army) o;
     return Objects.equals(name, army.name) && Objects.equals(units, army.units);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, units);
+    return Objects.hash(name);
   }
 }

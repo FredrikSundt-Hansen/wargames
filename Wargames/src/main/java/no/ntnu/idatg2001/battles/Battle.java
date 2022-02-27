@@ -1,6 +1,5 @@
 package no.ntnu.idatg2001.battles;
 
-import java.util.InvalidPropertiesFormatException;
 import java.util.Random;
 import no.ntnu.idatg2001.armies.Army;
 import no.ntnu.idatg2001.units.Unit;
@@ -21,7 +20,6 @@ public class Battle {
     this.armyTwo = new Army(armyTwo.getName(),armyTwo.getAllUnits());
     rand = new Random();
   }
-
 
   /**
    * Simulates a battle between two armies, based on random attacks from each army.
@@ -59,8 +57,6 @@ public class Battle {
     }
     return winner;
   }
-
-
 
   /**
    * Represents the information about the battle, the names of the armies and the winner, will also
