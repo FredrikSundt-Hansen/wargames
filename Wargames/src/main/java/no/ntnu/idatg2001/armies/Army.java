@@ -1,13 +1,17 @@
 package no.ntnu.idatg2001.armies;
 
-import java.util.stream.Collectors;
-import no.ntnu.idatg2001.units.Unit;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
+import no.ntnu.idatg2001.units.Unit;
 
+/**
+ * Army class, represents an army that consists of several units.
+ *
+ * @version 1.0.1
+ */
 public class Army {
   private String name;
   private List<Unit> units;
@@ -15,6 +19,7 @@ public class Army {
 
   /**
    * Constructs a new Army object containing units.
+   *
    * @param name The name of the army.
    * @param units A list containing units.
    */
@@ -26,6 +31,7 @@ public class Army {
 
   /**
    * Constructs an empty army.
+   *
    * @param name The name of the army.
    */
   public Army(String name) {
@@ -34,6 +40,11 @@ public class Army {
     rand = new Random();
   }
 
+  /**
+   * Mutator method to change the name of the unit, if the name is not blank.
+   *
+   * @param name The name of the unit.
+   */
   public void setName(String name) {
     if (!name.isBlank()) {
       this.name = name;
@@ -52,9 +63,10 @@ public class Army {
 
   /**
    * Adds a unit to the army.
+   *
    * @param unit The unit to add.
    */
-  public void addUnit(Unit unit){
+  public void addUnit(Unit unit) {
     if (unit != null) {
       this.units.add(unit);
     } else {
@@ -64,6 +76,7 @@ public class Army {
 
   /**
    * Adds a collection of units to the army.
+   *
    * @param units The list of units to add.
    */
   public void addAllUnits(List<Unit> units) {
@@ -72,6 +85,7 @@ public class Army {
 
   /**
    * Removes a unit from the army.
+   *
    * @param unit The unit to remove,
    */
   public void removeUnit(Unit unit) {
@@ -84,6 +98,7 @@ public class Army {
 
   /**
    * Checks if the army is empty or not.
+   *
    * @return True if the army contains units, false if it is empty.
    */
   public boolean hasUnits() {
@@ -92,6 +107,7 @@ public class Army {
 
   /**
    * Returns a list of all the units in the army.
+   *
    * @return New list of all the units.
    */
   public List<Unit> getAllUnits() {
@@ -100,6 +116,7 @@ public class Army {
 
   /**
    * Returns a random unit in the army.
+   *
    * @return A unit.
    */
   public Unit getRandom() {
@@ -112,18 +129,21 @@ public class Army {
 
   /**
    * Returns the information about the army.
+   *
    * @return A string containing the name and how many units.
    */
   @Override
   public String toString() {
-    return  " '" + name + "' " +
-            "\nUnits           :  " + units.size() +
-            "\nDifferent units :  " + units.stream().map(Unit::getName).collect(Collectors.toSet()) + "\n";
+    return  " '" + name + "' "
+        + "\nUnits           :  " + units.size()
+        + "\nDifferent units :  " + units.stream().map(Unit::getName).collect(Collectors.toSet())
+        + "\n";
   }
 
   /**
    * Compares to armies. Return true if they are equal, takes name and units of the into
    * consideration.
+   *
    * @param o Army to compare.
    * @return True if the two armies are equal, and false otherwise.
    */
