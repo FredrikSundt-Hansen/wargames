@@ -19,7 +19,7 @@ public class Army {
    * @param units A list containing units.
    */
   public Army(String name, List<Unit> units) {
-    this.name = name;
+    this.setName(name);
     this.units = units;
     rand = new Random();
   }
@@ -29,8 +29,17 @@ public class Army {
    * @param name The name of the army.
    */
   public Army(String name) {
-    this.name = name;
+    this.setName(name);
     this.units = new ArrayList<>();
+    rand = new Random();
+  }
+
+  public void setName(String name) {
+    if (!name.isBlank()) {
+      this.name = name;
+    } else {
+      throw new IllegalArgumentException("Invalid name.");
+    }
   }
 
   public String getName() {
@@ -45,15 +54,19 @@ public class Army {
    * Adds a unit to the army.
    * @param unit The unit to add.
    */
-  public void add(Unit unit) {
-    units.add(unit);
+  public void addUnit(Unit unit){
+    try{
+      this.units.add(unit);
+    }catch (IllegalArgumentException e){
+      throw new IllegalArgumentException("Invalid unit, cannot add it to the army.");
+    }
   }
 
   /**
    * Adds a collection of units to the army.
    * @param units The list of units to add.
    */
-  public void addAll(List<Unit> units) {
+  public void addAllUnits(List<Unit> units) {
     this.units.addAll(units);
   }
 
@@ -61,8 +74,12 @@ public class Army {
    * Removes a unit from the army.
    * @param unit The unit to remove,
    */
-  public void remove(Unit unit) {
-    this.units.remove(unit);
+  public void removeUnit(Unit unit) {
+    if (this.units.contains(unit)) {
+      this.units.remove(unit);
+    } else {
+      throw new IllegalArgumentException("Unit already exists in the army.");
+    }
   }
 
   /**
@@ -85,12 +102,11 @@ public class Army {
    * Returns a random unit in the army.
    * @return A unit.
    */
-  public Unit getRand() {
-
+  public Unit getRandom() {
     if (!units.isEmpty()) {
       return units.get(rand.nextInt(units.size()));
     } else {
-      throw new IllegalArgumentException("Empty list.");
+      throw new IllegalArgumentException("Empty list");
     }
   }
 

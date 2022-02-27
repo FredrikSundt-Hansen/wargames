@@ -15,12 +15,13 @@ public abstract class Unit {
      * @param attack The attack value of the unit.
      * @param armor The armor value of the unit.
      */
-    public Unit(String name, int health, int attack, int armor) {
-        this.name = name;
-        this.health = health;
-        this.attack = attack;
-        this.armor = armor;
+    protected Unit(String name, int health, int attack, int armor){
+        this.setName(name);
+        this.setHealth(health);
+        this.setAttack(attack);
+        this.setArmor(armor);
         numberOfDefends = 0;
+        numberOfAttacks = 0;
     }
 
     /**
@@ -28,10 +29,38 @@ public abstract class Unit {
      * @param name The name of the object.
      * @param health The health value of the unit.
      */
-    public Unit(String name, int health) {
-        this.name = name;
-        this.health = health;
+    protected Unit(String name, int health){
+        this.setName(name);
+        this.setHealth(health);
         numberOfDefends = 0;
+    }
+
+    public void setHealth(int health){
+        this.health = health;
+    }
+
+    public void setName(String name) {
+        if (!name.isBlank()) {
+            this.name = name;
+        } else {
+            throw new IllegalArgumentException("Invalid name.");
+        }
+    }
+
+    public void setAttack(int attack) {
+        if (attack > 0 && attack < 1000) {
+          this.attack = attack;
+        } else {
+            throw new IllegalArgumentException("Invalid attack value.");
+        }
+    }
+
+    public void setArmor(int armor) {
+        if (armor > 0 && armor < 1000) {
+            this.armor = armor;
+        } else {
+            throw new IllegalArgumentException("Invalid armor value.");
+        }
     }
 
     public String getName() {
@@ -48,10 +77,6 @@ public abstract class Unit {
 
     public int getArmor() {
         return armor;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
     }
 
     /**

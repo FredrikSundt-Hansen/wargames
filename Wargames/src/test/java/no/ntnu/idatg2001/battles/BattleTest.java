@@ -9,15 +9,16 @@ import no.ntnu.idatg2001.units.InfantryUnit;
 import no.ntnu.idatg2001.units.RangedUnit;
 import no.ntnu.idatg2001.units.Unit;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class BattleTest {
     private Army humanArmy;
     private Army orcishHorde;
 
-    @BeforeEach
+  @DisplayName("Makes a human army and an orcish army before every test.")
+  @BeforeEach
     void setUp() {
     Unit infantryHuman = new InfantryUnit("Footman", 100);
     Unit cavalryHuman = new CavalryUnit("Knight", 100);
@@ -33,24 +34,27 @@ class BattleTest {
     orcishHorde = new Army("Orcish horde");
 
     for (int i = 0; i < 500; i++) {
-      humanArmy.add(infantryHuman);
-      orcishHorde.add(infantryOrc);
+      humanArmy.addUnit(infantryHuman);
+      orcishHorde.addUnit(infantryOrc);
       if (i < 100) {
-        humanArmy.add(cavalryHuman);
-        orcishHorde.add(cavalryOrc);
+        humanArmy.addUnit(cavalryHuman);
+        orcishHorde.addUnit(cavalryOrc);
       }
       if (i < 200) {
-        humanArmy.add(rangedHuman);
-        orcishHorde.add(rangedOrc);
+        humanArmy.addUnit(rangedHuman);
+        orcishHorde.addUnit(rangedOrc);
       }
       if (i < 1) {
-        humanArmy.add(commanderHuman);
-        orcishHorde.add(commanderOrc);
+        humanArmy.addUnit(commanderHuman);
+        orcishHorde.addUnit(commanderOrc);
         }
       }
-    }
+  }
 
   @Test
+  @DisplayName("Shows the distribution of wins over a many battles. " +
+      "If it is about equally many wins, then the random generator " +
+      "is working correctly ( 50/50 chance for an army to win).")
   void simulate() {
       List<Army> battles = new ArrayList<>();
     for (int i = 0; i < 1000; i++) {
@@ -75,8 +79,6 @@ class BattleTest {
     Army a5 = new Battle(humanArmy,orcishHorde).simulate();
 
     assertFalse(a1.equals(a2) && a1.equals(a3) && a1.equals(a4) && a1.equals(a5));
-
-
-
   }
+
 }

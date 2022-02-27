@@ -2,6 +2,8 @@ package no.ntnu.idatg2001.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,37 @@ class UnitTest {
       assertEquals(100,u2.getHealth());
   }
 
+  @Test
+  void testInvalidName() {
+    try {
+      Unit u3 = new InfantryUnit("", 100);
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  void testInvalidAttack() {
+    try {
+      Unit u5 = new InfantryUnit("Test", 100, -10, 10);
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  void testInvalidArmor() {
+    try {
+      Unit u6 = new InfantryUnit("Test", 100, 10, -10);
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertTrue(true);
+    }
+  }
+
+
 
   @Test
   void attack() {
@@ -44,7 +77,7 @@ class UnitTest {
       assertEquals(1,u2.numberOfDefends);
       assertEquals(1,u1.numberOfAttacks);
 
-      //Second attack, second defend
+      //Second attack, second defend. One attack does one damage.
       u1.attack(u2);
       assertEquals(98,u2.getHealth());
       assertEquals(2,u2.numberOfDefends);

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,6 @@ class ArmyTest {
 
     InfantryUnit infantry2 = new InfantryUnit("Infantry", 100);
     InfantryUnit infantry3 = new InfantryUnit("Infantry", 100);
-    InfantryUnit infantry4= new InfantryUnit("Infantry", 100);
-    InfantryUnit infantry5 = new InfantryUnit("Infantry", 100);
 
     units = new ArrayList<>();
     units.add(infantry1);
@@ -45,41 +44,50 @@ class ArmyTest {
     units.add(commander1);
     units.add(infantry2);
     units.add(infantry3);
-    units.add(infantry4);
-    units.add(infantry5);
 
     army1 = new Army("TestArmy");
     army2 = new Army("TestArmy2", units);
   }
 
   @Test
-  void add() {
-    army1.add(infantry1);
+  void testAddUnit() {
+    army1.addUnit(infantry1);
     assertEquals("Infantry",army1.getUnits().get(0).getName());
   }
 
   @Test
-  void addAll() {
-    army1.addAll(units);
-    assertEquals(4,army1.getUnits().size());
+  void testAddAllUnits() {
+    army1.addAllUnits(units);
+    assertEquals(6,army1.getUnits().size());
   }
 
   @Test
-  void remove() {
+  void testRemove() {
     army2.getUnits().remove(2);
-    assertEquals(3,army2.getUnits().size());
+    assertEquals(5,army2.getUnits().size());
     assertNotEquals("Cavalry",army2.getUnits().get(2).getName());
     assertEquals("Commander",army2.getUnits().get(2).getName());
   }
 
   @Test
-  void hasUnits() {
+  void testRemoveInvalidUnit() {
+    InfantryUnit infantry4 = new InfantryUnit("Infantry", 100);
+    try {
+      army2.removeUnit(infantry4);
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  void testHasUnits() {
     assertFalse(army1.hasUnits());
     assertTrue(army2.hasUnits());
   }
 
   @Test
-  void getAllUnits() {
+  void testGetAllUnits() {
     List<Unit> unitsReturned = army2.getAllUnits();
     assertEquals(army2.getUnits().size(),unitsReturned.size());
   }
@@ -93,14 +101,16 @@ class ArmyTest {
 
   @Test
   void testGetRandom() {
-    Unit u1 = army2.getRand();
-    Unit u2 = army2.getRand();
-    Unit u3 = army2.getRand();
-    Unit u4 = army2.getRand();
-    Unit u5 = army2.getRand();
-    Unit u6 = army2.getRand();
+    Unit u1 = army2.getRandom();
+    Unit u2 = army2.getRandom();
+    Unit u3 = army2.getRandom();
+    Unit u4 = army2.getRandom();
+    Unit u5 = army2.getRandom();
+    Unit u6 = army2.getRandom();
 
     assertFalse(u1.equals(u2) && u1.equals(u3) && u1.equals(u4) && u1.equals(u5) && u1.equals(u6));
-
   }
+
+  @Test
+  void testInvalidRandom() {}
 }
