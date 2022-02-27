@@ -112,5 +112,12 @@ class ArmyTest {
   }
 
   @Test
-  void testInvalidRandom() {}
+  void testInvalidRandom() {
+    try {
+      army1.getRandom();
+      fail();
+    } catch (IllegalArgumentException e) {
+      assertTrue(true);
+    }
+  }
 }
