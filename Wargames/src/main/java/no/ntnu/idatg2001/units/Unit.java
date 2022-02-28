@@ -48,12 +48,13 @@ public abstract class Unit {
   }
 
   /**
-   * Mutator method to change the name of the unit, if the name is not blank.
+   * Mutator method to change the name of the unit.
    *
    * @param name The name of the unit.
+   * @exception IllegalArgumentException - If name is empty (null).
    */
-  public void setName(String name) {
-    if (!name.isBlank()) {
+  public void setName(String name) throws IllegalArgumentException {
+    if (!name.isEmpty()) {
       this.name = name;
     } else {
       throw new IllegalArgumentException("Invalid name.");
@@ -61,11 +62,12 @@ public abstract class Unit {
   }
 
   /**
-   * Mutator method to change the attack value of the unit, if it is between 0 and 1000.
+   * Mutator method to change the attack value of the unit.
    *
    * @param attack The attack value of the unit.
+   * @exception IllegalArgumentException - If the value is less than zero, or more than 1000.
    */
-  public void setAttack(int attack) {
+  public void setAttack(int attack) throws IllegalArgumentException {
     if (attack > 0 && attack < 1000) {
       this.attack = attack;
     } else {
@@ -74,11 +76,12 @@ public abstract class Unit {
   }
 
   /**
-   * Mutator method to change the armor value of the unit, if it is between 0 and 1000.
+   * Mutator method to change the armor value of the unit.
    *
    * @param armor The armor value of the unit.
+   * @exception IllegalArgumentException - If the value is less than zero, or more than 1000.
    */
-  public void setArmor(int armor) {
+  public void setArmor(int armor) throws IllegalArgumentException {
     if (armor > 0 && armor < 1000) {
       this.armor = armor;
     } else {

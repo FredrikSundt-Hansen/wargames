@@ -41,12 +41,13 @@ public class Army {
   }
 
   /**
-   * Mutator method to change the name of the unit, if the name is not blank.
+   * Mutator method to change the name of the unit.
    *
    * @param name The name of the unit.
+   * @exception IllegalArgumentException - If name is empty (null).
    */
-  public void setName(String name) {
-    if (!name.isBlank()) {
+  public void setName(String name) throws IllegalArgumentException {
+    if (!name.isEmpty()) {
       this.name = name;
     } else {
       throw new IllegalArgumentException("Invalid name.");
@@ -79,7 +80,7 @@ public class Army {
    *
    * @param units The list of units to add.
    */
-  public void addAllUnits(List<Unit> units) {
+  public void addAllUnits(List<Unit> units) throws IncompatibleClassChangeError{
     this.units.addAll(units);
   }
 

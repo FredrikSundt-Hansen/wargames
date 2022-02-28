@@ -56,10 +56,23 @@ class ArmyTest {
   }
 
   @Test
+  void testAddInvalidUnit() {
+    try {
+      army1.addUnit(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertTrue(true);
+    }
+
+  }
+
+  @Test
   void testAddAllUnits() {
     army1.addAllUnits(units);
-    assertEquals(6,army1.getUnits().size());
+    army2.addAllUnits(army1.getAllUnits());
+    assertEquals(12,army2.getUnits().size());
   }
+
 
   @Test
   void testRemove() {
@@ -114,6 +127,7 @@ class ArmyTest {
   @Test
   void testInvalidRandom() {
     try {
+      //empty army
       army1.getRandom();
       fail();
     } catch (IllegalArgumentException e) {
