@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.units;
+package no.ntnu.idatg2001.wargames.units;
 
 /**
  * Ranged unit, a unit with benefit of attacking from a distance.

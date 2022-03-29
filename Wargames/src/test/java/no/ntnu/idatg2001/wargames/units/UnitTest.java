@@ -1,10 +1,12 @@
-package no.ntnu.idatg2001.units;
+package no.ntnu.idatg2001.wargames.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import no.ntnu.idatg2001.wargames.units.InfantryUnit;
+import no.ntnu.idatg2001.wargames.units.Unit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -68,26 +70,26 @@ class UnitTest {
   @Test
   void attack() {
       //No attacks, or defends
-      assertEquals(0,u1.numberOfDefends);
-      assertEquals(0,u2.numberOfAttacks);
+      assertEquals(0,u1.getNumberOfDefends());
+      assertEquals(0,u2.getNumberOfAttacks());
 
       //First attack, first defend
       u1.attack(u2);
       assertNotEquals(100,u2.getHealth());
-      assertEquals(1,u2.numberOfDefends);
-      assertEquals(1,u1.numberOfAttacks);
+      assertEquals(1,u2.getNumberOfDefends());
+      assertEquals(1,u1.getNumberOfAttacks());
 
       //Second attack, second defend. One attack does one damage.
       u1.attack(u2);
       assertEquals(98,u2.getHealth());
-      assertEquals(2,u2.numberOfDefends);
-      assertEquals(2,u1.numberOfAttacks);
+      assertEquals(2,u2.getNumberOfDefends());
+      assertEquals(2,u1.getNumberOfAttacks());
 
       //Third attack, third defend
       u1.attack(u2);
       assertEquals(97,u2.getHealth());
-      assertEquals(3,u2.numberOfDefends);
-      assertEquals(3,u1.numberOfAttacks);
+      assertEquals(3,u2.getNumberOfDefends());
+      assertEquals(3,u1.getNumberOfAttacks());
 
 
   }

@@ -51,7 +51,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>no.ntnu.idatg2001.Main</mainClass>
+                            <mainClass>no.ntnu.idatg2001.wargames.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

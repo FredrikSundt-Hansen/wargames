@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.units;
+package no.ntnu.idatg2001.wargames.units;
 
 /**
  * Abstract class unit, represents the basic functions of a unit. Other types of unit are inheriting
@@ -103,6 +103,14 @@ public abstract class Unit {
 
   public int getArmor() {
     return armor;
+  }
+
+  public int getNumberOfDefends() {
+    return numberOfDefends;
+  }
+
+  public int getNumberOfAttacks() {
+    return numberOfAttacks;
   }
 
   /** Increments the number of attacks to the unit. */

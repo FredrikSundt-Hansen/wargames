@@ -1,8 +1,8 @@
-package no.ntnu.idatg2001.battles;
+package no.ntnu.idatg2001.wargames.battles;
 
 import java.util.Random;
-import no.ntnu.idatg2001.armies.Army;
-import no.ntnu.idatg2001.units.Unit;
+import no.ntnu.idatg2001.wargames.armies.Army;
+import no.ntnu.idatg2001.wargames.units.Unit;
 
 /**
  * Battle class, simulates a battle between two armies.

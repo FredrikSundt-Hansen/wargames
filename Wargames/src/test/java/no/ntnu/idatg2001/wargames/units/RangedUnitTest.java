@@ -1,8 +1,10 @@
-package no.ntnu.idatg2001.units;
+package no.ntnu.idatg2001.wargames.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import no.ntnu.idatg2001.wargames.units.RangedUnit;
+import no.ntnu.idatg2001.wargames.units.Unit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

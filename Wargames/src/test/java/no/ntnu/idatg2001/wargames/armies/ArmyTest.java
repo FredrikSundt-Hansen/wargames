@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.armies;
+package no.ntnu.idatg2001.wargames.armies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,11 +8,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatg2001.units.CavalryUnit;
-import no.ntnu.idatg2001.units.CommanderUnit;
-import no.ntnu.idatg2001.units.InfantryUnit;
-import no.ntnu.idatg2001.units.RangedUnit;
-import no.ntnu.idatg2001.units.Unit;
+import no.ntnu.idatg2001.wargames.armies.Army;
+import no.ntnu.idatg2001.wargames.units.CavalryUnit;
+import no.ntnu.idatg2001.wargames.units.CommanderUnit;
+import no.ntnu.idatg2001.wargames.units.InfantryUnit;
+import no.ntnu.idatg2001.wargames.units.RangedUnit;
+import no.ntnu.idatg2001.wargames.units.Unit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

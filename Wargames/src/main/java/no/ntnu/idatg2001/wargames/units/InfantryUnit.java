@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.units;
+package no.ntnu.idatg2001.wargames.units;
 
 /**
  * Infantry unit, a basic unit with a small defense bonus.
