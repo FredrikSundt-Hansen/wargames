@@ -20,23 +20,18 @@ import org.junit.jupiter.api.Test;
 class ArmyTest {
   private Army army1;
   private Army army2;
-  private Army army3;
   private List<Unit> units;
 
-  private InfantryUnit infantry1;
-  private RangedUnit ranged1;
-  private CavalryUnit cavalry1;
-  private CommanderUnit commander1;
 
   @BeforeEach
   void setUp() {
-    infantry1 = new InfantryUnit("Infantry", 100);
-    ranged1 = new RangedUnit("Ranged unit", 100);
-    cavalry1 = new CavalryUnit("Cavalry", 100);
-    commander1 = new CommanderUnit("Commander", 100);
+    Unit infantry1 = new InfantryUnit("Infantry", 100);
+    Unit ranged1 = new RangedUnit("Ranged unit", 100);
+    Unit cavalry1 = new CavalryUnit("Cavalry", 100);
+    Unit commander1 = new CommanderUnit("Commander", 100);
 
-    InfantryUnit infantry2 = new InfantryUnit("Infantry", 100);
-    InfantryUnit infantry3 = new InfantryUnit("Infantry", 100);
+    Unit infantry2 = new InfantryUnit("Infantry", 100);
+    Unit infantry3 = new InfantryUnit("Infantry", 100);
 
     units = new ArrayList<>();
     units.add(infantry1);
@@ -52,7 +47,7 @@ class ArmyTest {
 
   @Test
   void testAddUnit() {
-    army1.addUnit(infantry1);
+    army1.addUnit(new InfantryUnit("Infantry", 100));
     assertEquals("Infantry",army1.getUnits().get(0).getName());
   }
 
@@ -108,7 +103,7 @@ class ArmyTest {
 
   @Test
   void testEquals() {
-    army3 = new Army("TestArmy2",units);
+    Army army3 = new Army("TestArmy2",units);
     assertTrue(army2.equals(army3));
     assertFalse(army2.equals(army1));
   }
@@ -134,5 +129,73 @@ class ArmyTest {
     } catch (IllegalArgumentException e) {
       assertTrue(true);
     }
+  }
+
+  @Test
+  void getAllCavalryUnits(){
+    List<Unit> testCavalryUnits = new ArrayList<>();
+    Unit cavalry2 = new CavalryUnit("Cavalry", 100);
+    Unit cavalry3 = new CavalryUnit("Cavalry", 100);
+    Unit cavalry4 = new CavalryUnit("Cavalry", 100);
+    Unit cavalry5 = new CavalryUnit("Cavalry", 100);
+
+    testCavalryUnits.add(cavalry2);
+    testCavalryUnits.add(cavalry3);
+    testCavalryUnits.add(cavalry4);
+    testCavalryUnits.add(cavalry5);
+
+    army1.addAllUnits(testCavalryUnits);
+    assertEquals(testCavalryUnits.size(),army1.getAllCavalryUnits().size());
+  }
+
+  @Test
+  void getALLCommanderUnits(){
+    List<Unit> testUnits = new ArrayList<>();
+    Unit commander2 = new CommanderUnit("Commander", 100);
+    Unit commander3 = new CommanderUnit("Commander", 100);
+    Unit commander4 = new CommanderUnit("Commander", 100);
+    Unit commander5 = new CommanderUnit("Commander", 100);
+
+    testUnits.add(commander2);
+    testUnits.add(commander3);
+    testUnits.add(commander4);
+    testUnits.add(commander5);
+
+    army1.addAllUnits(testUnits);
+    assertEquals(testUnits.size(),army1.getALLCommanderUnits().size());
+  }
+
+  @Test
+  void getAllRangedUnits(){
+    List<Unit> testUnits = new ArrayList<>();
+    Unit ranged2 = new RangedUnit("Ranged unit", 100);
+    Unit ranged3 = new RangedUnit("Ranged unit", 100);
+    Unit ranged4 = new RangedUnit("Ranged unit", 100);
+    Unit ranged5 = new RangedUnit("Ranged unit", 100);
+
+    testUnits.add(ranged2);
+    testUnits.add(ranged3);
+    testUnits.add(ranged4);
+    testUnits.add(ranged5);
+
+    army1.addAllUnits(testUnits);
+    assertEquals(testUnits.size(),army1.getAllRangedUnits().size());
+  }
+
+  @Test
+  void getAllInfantryUnits(){
+    List<Unit> testCavalryUnits = new ArrayList<>();
+    Unit infantry4 = new InfantryUnit("Infantry", 100);
+    Unit infantry5 = new InfantryUnit("Infantry", 100);
+    Unit infantry6 = new InfantryUnit("Infantry", 100);
+    Unit infantry7 = new InfantryUnit("Infantry", 100);
+
+    testCavalryUnits.add(infantry4);
+    testCavalryUnits.add(infantry5);
+    testCavalryUnits.add(infantry6);
+    testCavalryUnits.add(infantry7);
+
+    army1.addAllUnits(testCavalryUnits);
+    assertEquals(testCavalryUnits.size(),army1.getAllInfantryUnits().size());
   }
 }
