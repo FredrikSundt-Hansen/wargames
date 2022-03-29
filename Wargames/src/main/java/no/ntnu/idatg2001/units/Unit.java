@@ -20,7 +20,7 @@ public abstract class Unit {
    * @param name Name of the unit.
    * @param health The health value of the unit.
    * @param attack The attack value of the unit.
-   * @param armor The armor value of the unit.
+   * @param armor The armor value of the unit.cd
    */
   protected Unit(String name, int health, int attack, int armor) {
     this.setName(name);

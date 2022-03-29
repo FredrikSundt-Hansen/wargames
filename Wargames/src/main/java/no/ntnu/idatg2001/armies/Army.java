@@ -1,10 +1,15 @@
 package no.ntnu.idatg2001.armies;
 
+import com.sun.source.tree.InstanceOfTree;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
+import no.ntnu.idatg2001.units.CavalryUnit;
+import no.ntnu.idatg2001.units.CommanderUnit;
+import no.ntnu.idatg2001.units.InfantryUnit;
+import no.ntnu.idatg2001.units.RangedUnit;
 import no.ntnu.idatg2001.units.Unit;
 
 /**
@@ -126,6 +131,30 @@ public class Army {
     } else {
       throw new IllegalArgumentException("Empty list");
     }
+  }
+
+  public List<Unit> getCavalryUnits() {
+    return units.stream()
+        .filter(CavalryUnit.class::isInstance)
+        .collect(Collectors.toList());
+  }
+
+  public List<Unit> getCommanderUnits() {
+    return units.stream()
+        .filter(CommanderUnit.class::isInstance)
+        .collect(Collectors.toList());
+  }
+
+  public List<Unit> getRangedUnits() {
+    return units.stream()
+        .filter(RangedUnit.class::isInstance)
+        .collect(Collectors.toList());
+  }
+
+  public List<Unit> getInfantryUnits() {
+    return units.stream()
+        .filter(InfantryUnit.class::isInstance)
+        .collect(Collectors.toList());
   }
 
   /**
