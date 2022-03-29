@@ -44,6 +44,80 @@ public class Army {
     rand = new Random();
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public List<Unit> getUnits() {
+    return units;
+  }
+
+  /**
+   * Returns a new list of all cavalry units in the army.
+   *
+   * @return The list of units, consists of cavalry units.
+   */
+  public List<Unit> getAllCavalryUnits() {
+    return units.stream()
+        .filter(CavalryUnit.class::isInstance)
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Returns a new list of all commander units in the army.
+   *
+   * @return The list of units, consists of commander units.
+   */
+  public List<Unit> getALLCommanderUnits() {
+    return units.stream()
+        .filter(CommanderUnit.class::isInstance)
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Returns a new list of all ranged units in the army.
+   *
+   * @return The list of units, consists of ranged units.
+   */
+  public List<Unit> getAllRangedUnits() {
+    return units.stream()
+        .filter(RangedUnit.class::isInstance)
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Returns a new list of all infantry units in the army.
+   *
+   * @return The list of units, consists of infantry units.
+   */
+  public List<Unit> getAllInfantryUnits() {
+    return units.stream()
+        .filter(InfantryUnit.class::isInstance)
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * Returns a list of all the units in the army.
+   *
+   * @return New list of all the units.
+   */
+  public List<Unit> getAllUnits() {
+    return new ArrayList<>(this.units);
+  }
+
+  /**
+   * Returns a random unit in the army.
+   *
+   * @return A unit.
+   */
+  public Unit getRandom() {
+    if (!units.isEmpty()) {
+      return units.get(rand.nextInt(units.size()));
+    } else {
+      throw new IllegalArgumentException("Empty list");
+    }
+  }
+
   /**
    * Mutator method to change the name of the unit.
    *
@@ -56,14 +130,6 @@ public class Army {
     } else {
       throw new IllegalArgumentException("Invalid name.");
     }
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public List<Unit> getUnits() {
-    return units;
   }
 
   /**
@@ -84,7 +150,7 @@ public class Army {
    *
    * @param units The list of units to add.
    */
-  public void addAllUnits(List<Unit> units) throws IncompatibleClassChangeError{
+  public void addAllUnits(List<Unit> units) throws IncompatibleClassChangeError {
     this.units.addAll(units);
   }
 
@@ -111,52 +177,6 @@ public class Army {
   }
 
   /**
-   * Returns a list of all the units in the army.
-   *
-   * @return New list of all the units.
-   */
-  public List<Unit> getAllUnits() {
-    return new ArrayList<>(this.units);
-  }
-
-  /**
-   * Returns a random unit in the army.
-   *
-   * @return A unit.
-   */
-  public Unit getRandom() {
-    if (!units.isEmpty()) {
-      return units.get(rand.nextInt(units.size()));
-    } else {
-      throw new IllegalArgumentException("Empty list");
-    }
-  }
-
-  public List<Unit> getCavalryUnits() {
-    return units.stream()
-        .filter(CavalryUnit.class::isInstance)
-        .collect(Collectors.toList());
-  }
-
-  public List<Unit> getCommanderUnits() {
-    return units.stream()
-        .filter(CommanderUnit.class::isInstance)
-        .collect(Collectors.toList());
-  }
-
-  public List<Unit> getRangedUnits() {
-    return units.stream()
-        .filter(RangedUnit.class::isInstance)
-        .collect(Collectors.toList());
-  }
-
-  public List<Unit> getInfantryUnits() {
-    return units.stream()
-        .filter(InfantryUnit.class::isInstance)
-        .collect(Collectors.toList());
-  }
-
-  /**
    * Returns the information about the army.
    *
    * @return A string containing the name and how many units.
@@ -170,7 +190,7 @@ public class Army {
   }
 
   /**
-   * Compares to armies. Return true if they are equal, takes name and units of the into
+   * Compares to armies. Return true if they are equal, takes name and units of the army into
    * consideration.
    *
    * @param o Army to compare.
