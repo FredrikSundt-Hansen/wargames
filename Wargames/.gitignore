@@ -1,3 +1,6 @@
 .idea
 Wargames.iml
 target/
+army.csv
+humanArmy.csv
+orchishHorde.csv
