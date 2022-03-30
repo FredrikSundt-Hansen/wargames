@@ -44,6 +44,12 @@ public class Army {
     rand = new Random();
   }
 
+  public Army() {
+    this.name = null;
+    this.units = new ArrayList<>();
+    rand = new Random();
+  }
+
   public String getName() {
     return name;
   }
