@@ -45,18 +45,20 @@ public class ArmyFileHandler {
   public static Army readCsv(Path path) {
     Army army = new Army();
     try (BufferedReader reader = Files.newBufferedReader(path)) {
-      army.setName(reader.readLine());
       String lineOfText;
-      while ((lineOfText = reader.readLine()) != null) {
-        String[] words = lineOfText.split(",");
-        if (words[0].strip().equalsIgnoreCase(InfantryUnit.class.getSimpleName())) {
-          army.addUnit(new InfantryUnit(words[1].strip(),Integer.parseInt(words[2].strip())));
-        } else if (words[0].strip().equalsIgnoreCase(RangedUnit.class.getSimpleName())) {
-          army.addUnit(new RangedUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
-        } else if (words[0].strip().equalsIgnoreCase(CavalryUnit.class.getSimpleName())) {
-          army.addUnit(new CavalryUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
-        } else if (words[0].strip().equalsIgnoreCase(CommanderUnit.class.getSimpleName())) {
-          army.addUnit(new CommanderUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+      if (reader.readLine() != null) {
+        while ((lineOfText = reader.readLine()) != null) {
+          String[] words = lineOfText.split(",");
+
+          if (words[0].strip().equalsIgnoreCase(InfantryUnit.class.getSimpleName())) {
+            army.addUnit(new InfantryUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+          } else if (words[0].strip().equalsIgnoreCase(RangedUnit.class.getSimpleName())) {
+            army.addUnit(new RangedUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+          } else if (words[0].strip().equalsIgnoreCase(CavalryUnit.class.getSimpleName())) {
+            army.addUnit(new CavalryUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+          } else if (words[0].strip().equalsIgnoreCase(CommanderUnit.class.getSimpleName())) {
+            army.addUnit(new CommanderUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+          }
         }
       }
     } catch (IOException e) {
