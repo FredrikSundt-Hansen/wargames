@@ -1,8 +1,8 @@
-package no.ntnu.idatg2001.wargames.battles;
+package no.ntnu.idatg2001.wargames.model.battles;
 
 import java.util.Random;
-import no.ntnu.idatg2001.wargames.armies.Army;
-import no.ntnu.idatg2001.wargames.units.Unit;
+import no.ntnu.idatg2001.wargames.model.armies.Army;
+import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 /**
  * Battle class, simulates a battle between two armies.
@@ -13,7 +13,7 @@ public class Battle {
   private final Army armyOne;
   private final Army armyTwo;
   private Army winner;
-  private Random rand;
+  private final Random rand;
 
   /**
    * Constructs a new battle between two armies.
@@ -25,6 +25,14 @@ public class Battle {
     this.armyOne = new Army(armyOne.getName(), armyOne.getAllUnits());
     this.armyTwo = new Army(armyTwo.getName(), armyTwo.getAllUnits());
     rand = new Random();
+  }
+
+  public Army getArmyOne() {
+    return armyOne;
+  }
+
+  public Army getArmyTwo() {
+    return armyTwo;
   }
 
   /**

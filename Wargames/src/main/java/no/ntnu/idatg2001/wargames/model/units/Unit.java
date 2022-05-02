@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargames.units;
+package no.ntnu.idatg2001.wargames.model.units;
 
 /**
  * Abstract class unit, represents the basic functions of a unit. Other types of unit are inheriting

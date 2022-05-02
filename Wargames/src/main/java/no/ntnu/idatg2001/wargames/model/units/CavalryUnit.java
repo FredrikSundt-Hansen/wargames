@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargames.units;
+package no.ntnu.idatg2001.wargames.model.units;
 
 /**
  * Cavalry unit, unit with a strong first attack and a benefit in close quarter combat.

@@ -2,8 +2,8 @@ package no.ntnu.idatg2001.wargames.units;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import no.ntnu.idatg2001.wargames.units.InfantryUnit;
-import no.ntnu.idatg2001.wargames.units.Unit;
+import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
+import no.ntnu.idatg2001.wargames.model.units.Unit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
