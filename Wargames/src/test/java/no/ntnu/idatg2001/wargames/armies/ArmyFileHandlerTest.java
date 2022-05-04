@@ -1,19 +1,20 @@
 package no.ntnu.idatg2001.wargames.armies;
 
 import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.stream.Collectors;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
-import no.ntnu.idatg2001.wargames.model.utility.fileHandler;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
 import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
+import no.ntnu.idatg2001.wargames.model.utility.ArmyFileHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class fileHandlerTest {
+class ArmyFileHandlerTest {
   Army humanArmy;
   Army orcishHorde;
 
@@ -55,48 +56,20 @@ class fileHandlerTest {
   }
 
   @Test
-  void readAndWriteCsv() {
-    String path = "src/main/resources/armyCsv/army.csv";
-    fileHandler.clearFile(path);
+  void writeArmyCsv() {
 
-
-    //Army testArmy = ArmyFileHandler.readCsv(Path.of(path));
-
-    //assertEquals(testArmy.getName(),humanArmy.getName());
-    //assertEquals(testArmy.getUnits().size(),humanArmy.getUnits().size());
-    //assertEquals(testArmy, humanArmy);
   }
 
   @Test
   void writeBattleCsv() {
-    String path = "src/main/resources/armyCsv/battleSaveFile.csv";
-    fileHandler.clearFile(path);
+    String path = "src/main/resources/savefiles/battleSaveFile.csv";
     Battle battle = new Battle(humanArmy, orcishHorde);
-
+    try {
+      ArmyFileHandler.writeBattle(battle, path);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
-  /*
-  @Test
-  void readAndWriteTwoArmies() {
-    String pathHumanArmy = "src/main/resources/armyCsv/humanArmy.csv";
-    String pathOrcishHorde = "src/main/resources/armyCsv/orcishHorde.csv";
 
-    ArmyFileHandler.writeCsv(humanArmy,Path.of(pathHumanArmy));
-    Army newHumanArmy = ArmyFileHandler.readCsv(Path.of(pathHumanArmy));
-
-    ArmyFileHandler.writeCsv(orcishHorde,Path.of(pathOrcishHorde));
-    Army newOrcishHorde = ArmyFileHandler.readCsv(Path.of(pathOrcishHorde));
-
-    assertEquals(newHumanArmy.getName(),humanArmy.getName());
-    assertEquals(newHumanArmy.getUnits().size(),humanArmy.getUnits().size());
-
-    assertEquals(newOrcishHorde.getName(),orcishHorde.getName());
-    assertEquals(newOrcishHorde.getUnits().size(),orcishHorde.getUnits().size());
-
-    Battle battle = new Battle(newHumanArmy,newOrcishHorde);
-
-    assertEquals(newHumanArmy.getName(), battle.simulate().getName());
-  }
-
-   */
 }

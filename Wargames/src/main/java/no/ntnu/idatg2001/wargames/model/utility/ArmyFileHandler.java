@@ -2,45 +2,58 @@ package no.ntnu.idatg2001.wargames.model.utility;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
+import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
 import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
-public class fileHandler {
+public class ArmyFileHandler {
 
   /**
    * Private constructor to hide the implicit public one.
    */
-  private fileHandler() {
+  private ArmyFileHandler() {
 
   }
 
-  public static void clearFile(String path) {
-
+  private static void clearFile(String path) throws  IOException {
+    try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
+      writer.write("");
+    }
   }
+
 
   /**
    * Writes an army to a file in path.
    * @param army The army to write in the file.
    * @param path The path of the file to write to.
    */
-  public static void writeCsv(Army army, Path path) {
-    try (BufferedWriter writer = Files.newBufferedWriter(path)) {
+  public static void writeArmyCsv(FileWriter fileWriter, Army army, String path) throws IOException {
+    clearFile(path);
+    try (BufferedWriter writer = new BufferedWriter(fileWriter)) {
       writer.write(army.getName() + "\n");
       for (Unit unit : army.getUnits()) {
         writer.write(
             unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
       }
-    } catch (IOException e) {
-      System.err.println(e.getMessage());
     }
   }
+
+  public static void writeBattle(Battle battle, String path) throws IOException {
+    try (FileWriter fileWriter = new FileWriter(path, true);
+    BufferedWriter bufferedWriter = Files.newBufferedWriter(Path.of(path))) {
+      writeArmyCsv(fileWriter, battle.getArmyOne(), path);
+      writeArmyCsv(fileWriter, battle.getArmyTwo(), path);
+    }
+  }
+
 
   /**
    * Reads a csv file to path, and returns the army.
