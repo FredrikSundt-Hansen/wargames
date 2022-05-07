@@ -1,6 +1,6 @@
 .idea
 Wargames.iml
 target/
-army.csv
-humanArmy.csv
-orchishHorde.csv
+armyOneSaveFile.csv
+armyTwoSaveFile.csv
+battleSaveFile.csv
