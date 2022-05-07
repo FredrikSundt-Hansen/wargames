@@ -15,6 +15,7 @@ import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 public class ArmyFileHandler {
+  private static int startLine;
 
   /**
    * Private constructor to hide the implicit public one.
@@ -35,9 +36,9 @@ public class ArmyFileHandler {
    * @param army The army to write in the file.
    * @param path The path of the file to write to.
    */
-  public static void writeArmyCsv(FileWriter fileWriter, Army army, String path) throws IOException {
+  public static void writeArmyCsv(Army army, String path) throws IOException {
     clearFile(path);
-    try (BufferedWriter writer = new BufferedWriter(fileWriter)) {
+    try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       writer.write(army.getName() + "\n");
       for (Unit unit : army.getUnits()) {
         writer.write(
@@ -46,14 +47,56 @@ public class ArmyFileHandler {
     }
   }
 
+  private static void writeArmy(BufferedWriter writer, Army army, String path) throws IOException {
+    clearFile(path);
+    writer.write(army.getName() + "\n");
+    for (Unit unit : army.getUnits()) {
+      writer.write(
+          unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
+    }
+    writer.write("\n");
+
+  }
+
   public static void writeBattle(Battle battle, String path) throws IOException {
     try (FileWriter fileWriter = new FileWriter(path, true);
-    BufferedWriter bufferedWriter = Files.newBufferedWriter(Path.of(path))) {
-      writeArmyCsv(fileWriter, battle.getArmyOne(), path);
-      writeArmyCsv(fileWriter, battle.getArmyTwo(), path);
+         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+      writeArmy(bufferedWriter, battle.getArmyOne(), path);
+      writeArmy(bufferedWriter, battle.getArmyTwo(), path);
     }
   }
 
+  public static Battle readBattle(String path) throws IOException {
+    Battle battle = new Battle(readArmy(path), readArmy(path));
+    startLine = 0;
+    return battle;
+  }
+
+
+
+  private static Army readArmy(String path) throws IOException {
+    Army army = new Army();
+    int currentLine = 0;
+    try (BufferedReader reader = new BufferedReader(Files.newBufferedReader(Path.of(path)), startLine)) {
+      String lineOfText;
+
+      while ((lineOfText = reader.readLine()) != null) {
+        String[] words = lineOfText.split(",");
+
+        if (words[0].strip().equalsIgnoreCase(InfantryUnit.class.getSimpleName())) {
+          army.addUnit(new InfantryUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+        } else if (words[0].strip().equalsIgnoreCase(RangedUnit.class.getSimpleName())) {
+          army.addUnit(new RangedUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+        } else if (words[0].strip().equalsIgnoreCase(CavalryUnit.class.getSimpleName())) {
+          army.addUnit(new CavalryUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+        } else if (words[0].strip().equalsIgnoreCase(CommanderUnit.class.getSimpleName())) {
+          army.addUnit(new CommanderUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+        }
+        startLine++;
+      }
+    }
+    return army;
+  }
 
   /**
    * Reads a csv file to path, and returns the army.
@@ -77,6 +120,7 @@ public class ArmyFileHandler {
           } else if (words[0].strip().equalsIgnoreCase(CommanderUnit.class.getSimpleName())) {
             army.addUnit(new CommanderUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
           }
+
         }
       }
     } catch (IOException e) {

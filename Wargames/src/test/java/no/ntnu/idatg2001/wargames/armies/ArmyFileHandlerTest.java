@@ -66,6 +66,8 @@ class ArmyFileHandlerTest {
     Battle battle = new Battle(humanArmy, orcishHorde);
     try {
       ArmyFileHandler.writeBattle(battle, path);
+      Battle battleTest = ArmyFileHandler.readBattle(path);
+      System.out.println(battleTest);
     } catch (IOException e) {
       e.printStackTrace();
     }

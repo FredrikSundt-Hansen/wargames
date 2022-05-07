@@ -1,6 +1,4 @@
 .idea
 Wargames.iml
 target/
-armyOneSaveFile.csv
-armyTwoSaveFile.csv
-battleSaveFile.csv
+src/main/resources/savefiles/battleSaveFile.csv
