@@ -162,7 +162,7 @@ class ArmyTest {
     testUnits.add(commander5);
 
     army1.addAllUnits(testUnits);
-    assertEquals(testUnits.size(),army1.getALLCommanderUnits().size());
+    assertEquals(testUnits.size(),army1.getAllCommanderUnits().size());
   }
 
   @Test

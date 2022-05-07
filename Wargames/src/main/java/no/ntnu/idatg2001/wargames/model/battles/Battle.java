@@ -63,6 +63,7 @@ public class Battle {
   /**
    * Simulates a battle between two armies, based on random attacks from each army.
    *
+   * @param terrain String, the terrain to change to battle to.
    * @return The winner of the armies.
    */
   public Army simulate(String terrain) {

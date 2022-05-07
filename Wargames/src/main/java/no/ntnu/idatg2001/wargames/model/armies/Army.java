@@ -18,8 +18,8 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
  */
 public class Army {
   private String name;
-  private List<Unit> units;
-  private Random rand;
+  private final List<Unit> units;
+  private final Random rand;
 
   /**
    * Constructs a new Army object containing units.
@@ -34,7 +34,7 @@ public class Army {
   }
 
   /**
-   * Constructs an empty army.
+   * Constructs an empty army with name.
    *
    * @param name The name of the army.
    */
@@ -44,6 +44,9 @@ public class Army {
     rand = new Random();
   }
 
+  /**
+   * Constructs an empty army with no name.
+   */
   public Army() {
     this.name = null;
     this.units = new ArrayList<>();
@@ -74,7 +77,7 @@ public class Army {
    *
    * @return The list of units, consists of commander units.
    */
-  public List<Unit> getALLCommanderUnits() {
+  public List<Unit> getAllCommanderUnits() {
     return units.stream()
         .filter(CommanderUnit.class::isInstance)
         .collect(Collectors.toList());
@@ -182,6 +185,11 @@ public class Army {
     return !this.units.isEmpty();
   }
 
+  /**
+   * Method to set the terrain of every unit in the army units.
+   *
+   * @param terrain String, the terrain to change to.
+   */
   public void setTerrainToUnits(String terrain) {
     for (Unit unit : units) {
       unit.setTerrain(terrain);
