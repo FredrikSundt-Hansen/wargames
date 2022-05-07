@@ -35,19 +35,19 @@ class InfantryUnitTest {
 
   @Test
   void setTerrain() {
-    int attackBonus = u1.getAttackBonus();
-    int defendBonus = u1.getResistBonus();
+    int attackBonus = u1.getAttackBonus() + 2;
+    int defendBonus = u1.getResistBonus() + 2;
 
     u1.setTerrain("Hills");
-    assertEquals(attackBonus, u1.getAttackBonus());
-    assertEquals(defendBonus, u1.getResistBonus());
+    assertEquals(u1.getAttackBonus(), u1.getAttackBonus());
+    assertEquals(u1.getResistBonus(), u1.getResistBonus());
 
     u1.setTerrain("plains");
-    assertEquals(attackBonus, u1.getAttackBonus());
-    assertEquals(defendBonus, u1.getResistBonus());
+    assertEquals(u1.getAttackBonus(), u1.getAttackBonus());
+    assertEquals(u1.getResistBonus(), u1.getResistBonus());
 
     u1.setTerrain("Forest");
-    assertEquals(attackBonus + 2, u1.getAttackBonus());
-    assertEquals(defendBonus + 2, u1.getResistBonus());
+    assertEquals(attackBonus, u1.getAttackBonus());
+    assertEquals(defendBonus, u1.getResistBonus());
   }
 }

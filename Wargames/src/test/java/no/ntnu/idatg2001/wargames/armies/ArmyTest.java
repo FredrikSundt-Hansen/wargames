@@ -198,4 +198,31 @@ class ArmyTest {
     army1.addAllUnits(testCavalryUnits);
     assertEquals(testCavalryUnits.size(),army1.getAllInfantryUnits().size());
   }
+
+  @Test
+  void setTerrainToUnits() {
+    army1.setTerrainToUnits("plains");
+    for (Unit unit : army1.getAllCavalryUnits()) {
+      assertEquals(unit.getAttackBonus() + 1, unit.getAttackBonus());
+      assertEquals(unit.getAttackBonus(), unit.getAttackBonus());
+    }
+
+    army1.setTerrainToUnits("hill");
+    for (Unit unit : army1.getAllRangedUnits()) {
+      assertEquals(unit.getAttackBonus() + 1, unit.getAttackBonus());
+      assertEquals(unit.getAttackBonus() - 1, unit.getAttackBonus());
+    }
+
+    army1.setTerrainToUnits("forest");
+    for (Unit unit : army1.getAllInfantryUnits()) {
+      assertEquals(unit.getAttackBonus() + 2, unit.getAttackBonus());
+      assertEquals(unit.getAttackBonus() + 2, unit.getAttackBonus());
+    }
+
+    army1.setTerrainToUnits("test");
+    for (Unit unit : army1.getAllUnits()) {
+      assertEquals(unit.getAttackBonus(), unit.getAttackBonus());
+      assertEquals(unit.getAttackBonus(), unit.getAttackBonus());
+    }
+  }
 }

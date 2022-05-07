@@ -63,7 +63,7 @@ class BattleTest {
   void testSimulate() {
       List<Army> battles = new ArrayList<>();
     for (int i = 0; i < 1000; i++) {
-      Army army = new Battle(humanArmy,orcishHorde).simulate();
+      Army army = new Battle(humanArmy,orcishHorde).simulate("hills");
       battles.add(army);
     }
 
@@ -80,11 +80,11 @@ class BattleTest {
       "is the winner in the other battles too, that would indicate that random generator is " +
       "not working.")
   void testSimulate2() {
-    Army a1 = new Battle(humanArmy,orcishHorde).simulate();
-    Army a2 = new Battle(humanArmy,orcishHorde).simulate();
-    Army a3 = new Battle(humanArmy,orcishHorde).simulate();
-    Army a4 = new Battle(humanArmy,orcishHorde).simulate();
-    Army a5 = new Battle(humanArmy,orcishHorde).simulate();
+    Army a1 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    Army a2 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    Army a3 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    Army a4 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    Army a5 = new Battle(humanArmy,orcishHorde).simulate("plains");
 
     assertFalse(a1.equals(a2) && a1.equals(a3) && a1.equals(a4) && a1.equals(a5));
   }
@@ -98,15 +98,13 @@ class BattleTest {
       humanArmy2.addUnit(infantryHuman);
     }
 
-    Army a1 = new Battle(humanArmy,humanArmy2).simulate();
-    Army a2 = new Battle(humanArmy,humanArmy2).simulate();
-    Army a3 = new Battle(humanArmy,humanArmy2).simulate();
-    Army a4 = new Battle(humanArmy,humanArmy2).simulate();
-    Army a5 = new Battle(humanArmy,humanArmy2).simulate();
+    Army a1 = new Battle(humanArmy,humanArmy2).simulate("forest");
+    Army a2 = new Battle(humanArmy,humanArmy2).simulate("forest");
+    Army a3 = new Battle(humanArmy,humanArmy2).simulate("forest");
+    Army a4 = new Battle(humanArmy,humanArmy2).simulate("forest");
+    Army a5 = new Battle(humanArmy,humanArmy2).simulate("forest");
 
     assertTrue(a1.getName().equals(a2.getName()) && a1.getName().equals(a3.getName())
         && a1.getName().equals(a4.getName()) && a1.getName().equals(a5.getName()));
-
-
   }
 }
