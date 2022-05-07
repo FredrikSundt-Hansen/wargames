@@ -65,7 +65,9 @@ public class Battle {
    *
    * @return The winner of the armies.
    */
-  public Army simulate() {
+  public Army simulate(String terrain) {
+    armyOne.setTerrainToUnits(terrain);
+    armyTwo.setTerrainToUnits(terrain);
     boolean simulating = true;
     while (simulating) {
       try {

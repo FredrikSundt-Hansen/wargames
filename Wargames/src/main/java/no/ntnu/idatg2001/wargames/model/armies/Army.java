@@ -182,6 +182,12 @@ public class Army {
     return !this.units.isEmpty();
   }
 
+  public void setTerrainToUnits(String terrain) {
+    for (Unit unit : units) {
+      unit.setTerrain(terrain);
+    }
+  }
+
   /**
    * Returns the information about the army.
    *
