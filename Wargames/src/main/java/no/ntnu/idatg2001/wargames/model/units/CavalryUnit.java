@@ -32,16 +32,26 @@ public class CavalryUnit extends Unit {
   }
 
   @Override
+  public void setTerrain(String terrain) {
+    if (terrain.equalsIgnoreCase(Terrain.PLAINS.name())) {
+      terrainAttackBonus = 1;
+    }
+    else if (terrain.equalsIgnoreCase(Terrain.FOREST.name())) {
+     terrainDefendBonus = -1;
+    }
+  }
+
+  @Override
   public int getAttackBonus() {
     if (this.numberOfAttacks == 0) {
-      return 4;
+      return 4 + terrainAttackBonus;
     } else {
-      return 2;
+      return 2 + terrainAttackBonus;
     }
   }
 
   @Override
   public int getResistBonus() {
-    return 1;
+    return 1 + terrainDefendBonus;
   }
 }

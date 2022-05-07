@@ -13,6 +13,21 @@ public abstract class Unit {
   int armor;
   int numberOfDefends;
   int numberOfAttacks;
+  int terrainDefendBonus;
+  int terrainAttackBonus;
+
+  /**
+   * Three different types of terrain, used to calculate attack and resist bonus.
+   */
+  enum Terrain {
+    PLAINS, FOREST, HILL
+  }
+
+  /**
+   * Method to set the terrain of the unit. Accepts three different types, plains, forest and hill.
+   * @param terrain String, the terrain to change to.
+   */
+  public abstract void setTerrain(String terrain);
 
   /**
    * Constructs a new unit object with name, health, attack and armor.

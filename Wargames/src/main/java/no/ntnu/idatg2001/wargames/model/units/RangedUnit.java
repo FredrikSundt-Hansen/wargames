@@ -32,18 +32,30 @@ public class RangedUnit extends Unit {
   }
 
   @Override
+  public void setTerrain(String terrain) {
+    if (terrain.equalsIgnoreCase(Terrain.HILL.name())
+        || terrain.equalsIgnoreCase(Terrain.HILL.name() + "s")) {
+      terrainAttackBonus = 1;
+    }
+    else if (terrain.equalsIgnoreCase(Terrain.FOREST.name())) {
+      terrainAttackBonus = -1;
+
+    }
+  }
+
+  @Override
   public int getAttackBonus() {
-    return 3;
+    return 3 + terrainAttackBonus;
   }
 
   @Override
   public int getResistBonus() {
     if (numberOfDefends == 0) {
-      return 6;
+      return 6 + terrainDefendBonus;
     } else if (numberOfDefends == 1) {
-      return 4;
+      return 4 + terrainDefendBonus;
     } else {
-      return 2;
+      return 2 + terrainDefendBonus;
     }
   }
 }

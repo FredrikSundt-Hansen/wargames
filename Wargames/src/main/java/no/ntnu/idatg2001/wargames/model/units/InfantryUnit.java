@@ -32,12 +32,22 @@ public class InfantryUnit extends Unit {
   }
 
   @Override
+  public void setTerrain(String terrain) {
+    if (terrain.equalsIgnoreCase(Terrain.FOREST.name())) {
+      terrainAttackBonus = 2;
+      terrainDefendBonus = 2;
+    }
+  }
+
+  @Override
   public int getAttackBonus() {
-    return 2;
+    return 2 + terrainAttackBonus;
   }
 
   @Override
   public int getResistBonus() {
-    return 1;
+    return 1 + terrainDefendBonus;
   }
+
+
 }
