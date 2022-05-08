@@ -193,6 +193,13 @@ public abstract class Unit {
         + "Armor: " + armor;
   }
 
+  /**
+   * Compares to units. Return true if they are equal, takes the name, health, attack and armor of
+   * the unit into consideration.
+   *
+   * @param o Army to compare.
+   * @return True if the two armies are equal, and false otherwise.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -206,6 +213,10 @@ public abstract class Unit {
         Objects.equals(name, unit.name);
   }
 
+  /**
+   * Creates a hashcode of the unit, take name, health, attack and armor into consideration.
+   * @return
+   */
   @Override
   public int hashCode() {
     return Objects.hash(name, health, attack, armor);

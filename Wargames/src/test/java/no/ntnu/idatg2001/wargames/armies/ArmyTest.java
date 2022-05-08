@@ -80,7 +80,7 @@ class ArmyTest {
 
   @Test
   void testRemoveInvalidUnit() {
-    InfantryUnit infantry4 = new InfantryUnit("Infantry", 100);
+    InfantryUnit infantry4 = new InfantryUnit("Infantry4", 100);
     try {
       army2.removeUnit(infantry4);
       fail();

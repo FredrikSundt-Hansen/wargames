@@ -3,7 +3,6 @@ Wargames.iml
 target/
 src/main/resources/savefiles/armyOneSaveFile.csv
 src/main/resources/savefiles/armyTwoSaveFile.csv
-src/test/java/no/ntnu/idatg2001/wargames/utility/armyWithoutName.csv
-src/test/java/no/ntnu/idatg2001/wargames/utility/armyTestFile.csv
-src/test/java/no/ntnu/idatg2001/wargames/utility/nullArmyFile.csv
+src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithoutName.csv
+src/test/java/no/ntnu/idatg2001/wargames/armies/nullArmyFile.csv
 

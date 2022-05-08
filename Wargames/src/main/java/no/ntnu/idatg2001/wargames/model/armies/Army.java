@@ -44,6 +44,11 @@ public class Army {
     rand = new Random();
   }
 
+  /**
+   * Copy constructor for an army.
+   * @param army The army to copy.
+   * @throws NullPointerException - If army is null.
+   */
   public Army(Army army) throws NullPointerException {
     if (army != null) {
       this.name = army.name;
@@ -238,9 +243,13 @@ public class Army {
     return Objects.equals(name, army.name) && Objects.equals(units, army.units);
   }
 
+  /**
+   * Creates a hashcode of the army. Take the name and the units into consideration.
+   * @return
+   */
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return Objects.hash(name, units);
   }
 
 

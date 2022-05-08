@@ -10,7 +10,7 @@ module no.ntnu.idatg2001 {
 
   exports no.ntnu.idatg2001.wargames.ui.controllers;
   exports no.ntnu.idatg2001.wargames.ui.views;
-  opens no.ntnu.idatg2001.wargames.model.utility;
+
 
 
 }

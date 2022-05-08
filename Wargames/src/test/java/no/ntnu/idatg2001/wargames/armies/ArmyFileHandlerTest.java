@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargames.utility;
+package no.ntnu.idatg2001.wargames.armies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -52,12 +52,6 @@ class ArmyFileHandlerTest {
         orcishHorde.addUnit(commanderOrc);
       }
     }
-    String path = "src/test/java/no/ntnu/idatg2001/wargames/utility/armyTestFile.csv";
-    try {
-      Files.delete(Path.of(path));
-    } catch (IOException ignored) {
-
-    }
   }
 
   @Test
@@ -74,7 +68,7 @@ class ArmyFileHandlerTest {
   }
 
   @Test
-  void writeBattleCsv() {
+  void readAndWriteBattleCsv() {
     String pathArmyOne = "src/main/resources/savefiles/armyOneSaveFile.csv";
     String pathArmyTwo = "src/main/resources/savefiles/armyTwoSaveFile.csv";
 
@@ -91,7 +85,7 @@ class ArmyFileHandlerTest {
 
   @Test
   void readNewPath() {
-    String path = "src/test/java/no/ntnu/idatg2001/wargames/utility/armyTestFile.csv";
+    String path = "src/test/java/no/ntnu/idatg2001/wargames/newArmyTestFile.csv";
 
     try {
       ArmyFileHandler.writeArmyCsv(humanArmy, path);
@@ -110,7 +104,7 @@ class ArmyFileHandlerTest {
   @Test
   void readNullArmy() {
     try {
-      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/utility/nullArmyFile.csv");
+      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/armies/nullArmyFile.csv");
       fail();
     } catch (IOException | NullPointerException e) {
       assertTrue(true);
@@ -119,7 +113,7 @@ class ArmyFileHandlerTest {
 
   @Test
   void readArmyWithoutName() {
-    String path = "src/test/java/no/ntnu/idatg2001/wargames/utility/armyWithoutName.csv";
+    String path = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithoutName.csv";
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       for (Unit unit : humanArmy.getUnits()) {
         writer.write(
