@@ -1,8 +1,6 @@
 package no.ntnu.idatg2001.wargames.model;
 
 import java.util.List;
-import javafx.event.ActionEvent;
-import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
@@ -12,7 +10,7 @@ public class WargameFacade {
   private Battle battle;
 
   private WargameFacade() {
-
+    battle = new Battle();
   }
 
   public static WargameFacade getInstance() {
@@ -24,11 +22,11 @@ public class WargameFacade {
     return instance;
   }
 
-  private void setBattle(Battle battle) {
+  public void setBattle(Battle battle) {
     this.battle = battle;
   }
 
-  private void addUnitsToArmy(List<Unit> unitList, String army) {
+  public void addUnitsToArmy(List<Unit> unitList, String army) {
     if (army.strip().equalsIgnoreCase("armyone") || army.strip().equalsIgnoreCase("one")) {
       battle.getArmyOne().addAllUnits(unitList);
     } else if (army.strip().equalsIgnoreCase("armytwo") || army.strip().equalsIgnoreCase("two")) {
@@ -36,9 +34,11 @@ public class WargameFacade {
     }
   }
 
-  private void simulate(String terrain) {
+  public void simulate(String terrain) {
     battle.simulate(terrain);
   }
 
-
+  public void registerObserver(ArmyObserver armyObserver) {
+    battle.register(armyObserver);
+  }
 }

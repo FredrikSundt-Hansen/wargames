@@ -9,7 +9,7 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
  *
  * @version 1.0.1
  */
-public class Battle {
+public class Battle extends BattleUpdater {
   private final Army armyOne;
   private final Army armyTwo;
   private final Random rand;
@@ -25,6 +25,14 @@ public class Battle {
     this.armyTwo = new Army(armyTwo.getName(), armyTwo.getAllUnits());
     rand = new Random();
   }
+
+  public Battle() {
+    this.armyOne = new Army();
+    this.armyTwo = new Army();
+    rand = new Random();
+  }
+
+
 
   public Army getArmyOne() {
     return armyOne;
@@ -47,12 +55,14 @@ public class Battle {
     int n = rand.nextInt(2);
     if (n == 0) {
       u1.attack(u2);
+      updateAll(u1,u2);
       if (u2.getHealth() <= 0) {
         armyTwo.removeUnit(u2);
       }
     }
     if (n == 1) {
       u2.attack(u1);
+      updateAll(u2,u1);
       if (u1.getHealth() <= 0) {
         armyOne.removeUnit(u1);
       }

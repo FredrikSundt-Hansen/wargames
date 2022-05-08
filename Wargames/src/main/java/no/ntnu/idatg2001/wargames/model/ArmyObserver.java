@@ -4,5 +4,5 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 public interface ArmyObserver {
 
-  void update();
+  void update(Unit attacker, Unit defender);
 }
