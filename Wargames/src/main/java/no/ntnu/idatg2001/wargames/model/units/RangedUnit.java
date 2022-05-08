@@ -31,6 +31,10 @@ public class RangedUnit extends Unit {
     armor = 8;
   }
 
+  public RangedUnit(Unit unit) {
+    super(unit);
+  }
+
   @Override
   public void setTerrain(String terrain) {
     if (terrain.equalsIgnoreCase(Terrain.HILL.name())

@@ -31,5 +31,9 @@ public class CommanderUnit extends CavalryUnit {
     armor = 15;
   }
 
+  public CommanderUnit(Unit unit) {
+    super(unit);
+  }
+
 
 }

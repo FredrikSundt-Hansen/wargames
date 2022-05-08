@@ -47,12 +47,14 @@ public class ArmyFileHandler {
    * @param path The path of the csv file.
    * @return The army read from the file.
    */
-  public static Army readCsv(String path) throws IOException {
+  public static Army readCsv(String path) throws IOException, NullPointerException {
     Army army = new Army();
     try (BufferedReader reader = Files.newBufferedReader(Path.of(path))) {
       String lineOfText;
-      if ((lineOfText = reader.readLine()) != null) {
+      if ((lineOfText = reader.readLine()) != null && !lineOfText.contains(",")) {
         army.setName(lineOfText);
+      } else {
+        throw new NullPointerException("First line is null");
       }
 
       while ((lineOfText = reader.readLine()) != null) {
@@ -60,7 +62,7 @@ public class ArmyFileHandler {
         assignLineToUnit(army, words);
       }
     }
-    return army;
+    return new Army(army);
   }
 
   private static void assignLineToUnit(Army army, String[] words) {

@@ -1,5 +1,7 @@
 package no.ntnu.idatg2001.wargames.model.units;
 
+import java.util.Objects;
+
 /**
  * Abstract class unit, represents the basic functions of a unit. Other types of unit are inheriting
  * from this class.
@@ -57,6 +59,17 @@ public abstract class Unit {
     this.setHealth(health);
     numberOfDefends = 0;
   }
+
+  protected Unit(Unit unit){
+    this.setName(unit.name);
+    this.setHealth(unit.health);
+    this.setAttack(unit.attack);
+    this.setArmor(unit.armor);
+    this.numberOfDefends = unit.numberOfDefends;
+    this.numberOfAttacks = unit.numberOfAttacks;
+    this.terrainDefendBonus = unit.terrainDefendBonus;
+    this.terrainAttackBonus = unit.terrainAttackBonus;
+}
 
   public void setHealth(int health) {
     this.health = health;
@@ -174,5 +187,23 @@ public abstract class Unit {
   public String toString() {
     return "\nName: " + name + "\n" + "Health: " + health + "\n" + "Attack: " + attack + "\n"
         + "Armor: " + armor;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof Unit)) {
+      return false;
+    }
+    Unit unit = (Unit) o;
+    return health == unit.health && attack == unit.attack && armor == unit.armor &&
+        Objects.equals(name, unit.name);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, health, attack, armor);
   }
 }

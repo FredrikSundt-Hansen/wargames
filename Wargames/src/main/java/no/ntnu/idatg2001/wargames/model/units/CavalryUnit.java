@@ -31,6 +31,10 @@ public class CavalryUnit extends Unit {
     armor = 12;
   }
 
+  public CavalryUnit(Unit unit) {
+    super(unit);
+  }
+
   @Override
   public void setTerrain(String terrain) {
     if (terrain.equalsIgnoreCase(Terrain.PLAINS.name())) {

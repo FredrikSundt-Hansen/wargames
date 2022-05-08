@@ -44,6 +44,16 @@ public class Army {
     rand = new Random();
   }
 
+  public Army(Army army) throws NullPointerException {
+    if (army != null) {
+      this.name = army.name;
+      this.units = army.units;
+      rand = new Random();
+    } else {
+      throw new NullPointerException("Null army");
+    }
+  }
+
   /**
    * Constructs an empty army with no name.
    */
@@ -232,4 +242,6 @@ public class Army {
   public int hashCode() {
     return Objects.hash(name);
   }
+
+
 }
