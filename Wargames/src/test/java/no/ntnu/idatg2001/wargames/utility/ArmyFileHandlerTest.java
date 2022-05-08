@@ -5,12 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Iterator;
-import java.util.stream.Collectors;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
@@ -55,10 +52,16 @@ class ArmyFileHandlerTest {
         orcishHorde.addUnit(commanderOrc);
       }
     }
+    String path = "src/test/java/no/ntnu/idatg2001/wargames/utility/armyTestFile.csv";
+    try {
+      Files.delete(Path.of(path));
+    } catch (IOException ignored) {
+
+    }
   }
 
   @Test
-  void writeArmyCsv() {
+  void readAndWriteArmyCsv() {
     String path = "src/main/resources/savefiles/armyOneSaveFile.csv";
     try {
       ArmyFileHandler.writeArmyCsv(humanArmy,path);
@@ -80,7 +83,7 @@ class ArmyFileHandlerTest {
       ArmyFileHandler.writeArmyCsv(orcishHorde, pathArmyTwo);
       Battle battle =
           new Battle(ArmyFileHandler.readCsv(pathArmyOne), ArmyFileHandler.readCsv(pathArmyTwo));
-      assertEquals(battle.simulate("hills"),humanArmy);
+      assertEquals(battle.simulate("hills").getName(),humanArmy.getName());
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -96,6 +99,12 @@ class ArmyFileHandlerTest {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    try {
+      Files.delete(Path.of(path));
+    } catch (IOException ignored) {
+
+    }
   }
 
   @Test
@@ -103,7 +112,7 @@ class ArmyFileHandlerTest {
     try {
       ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/utility/nullArmyFile.csv");
       fail();
-    } catch (IOException e) {
+    } catch (IOException | NullPointerException e) {
       assertTrue(true);
     }
   }
@@ -123,7 +132,7 @@ class ArmyFileHandlerTest {
     try {
       ArmyFileHandler.readCsv(path);
       fail();
-    } catch (IOException e) {
+    } catch (IOException | NullPointerException e) {
       assertTrue(true);
     }
   }
