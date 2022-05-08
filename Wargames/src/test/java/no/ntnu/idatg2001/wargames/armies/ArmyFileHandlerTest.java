@@ -17,6 +17,7 @@ import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.model.armies.ArmyFileHandler;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ArmyFileHandlerTest {
@@ -68,6 +69,7 @@ class ArmyFileHandlerTest {
   }
 
   @Test
+  @DisplayName("Writees and read two armies used in a battle.")
   void readAndWriteBattleCsv() {
     String pathArmyOne = "src/main/resources/savefiles/armyOneSaveFile.csv";
     String pathArmyTwo = "src/main/resources/savefiles/armyTwoSaveFile.csv";
@@ -84,6 +86,7 @@ class ArmyFileHandlerTest {
   }
 
   @Test
+  @DisplayName("Tires to read to a new path. Deletes the file afterwards.")
   void readNewPath() {
     String path = "src/test/java/no/ntnu/idatg2001/wargames/newArmyTestFile.csv";
 
@@ -106,7 +109,7 @@ class ArmyFileHandlerTest {
     try {
       ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/armies/nullArmyFile.csv");
       fail();
-    } catch (IOException | NullPointerException e) {
+    } catch (IOException | IllegalArgumentException e) {
       assertTrue(true);
     }
   }
@@ -126,7 +129,47 @@ class ArmyFileHandlerTest {
     try {
       ArmyFileHandler.readCsv(path);
       fail();
-    } catch (IOException | NullPointerException e) {
+    } catch (IOException | IllegalArgumentException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  void readFromNonExcisitngFile() {
+    try {
+      ArmyFileHandler.readCsv("newNonExcisitngFile.csv");
+      fail();
+    } catch (IOException | IllegalArgumentException e) {
+      assertTrue(true);
+    }
+  }
+
+  @Test
+  @DisplayName("File already contains one army, with one line not containing a the right size.")
+  void readArmyWithInvalidUnit() {
+    try {
+      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithInvalidUnit.csv");
+      fail();
+    } catch (IOException | IllegalArgumentException e) {
+      assertTrue(true);
+    }
+
+
+  }
+
+  @Test
+  void writeNullArmy() {
+    try {
+      ArmyFileHandler.writeArmyCsv(null, "src/main/resources/savefiles/armyOneSaveFile.csv");
+      fail();
+    } catch (IOException | NullPointerException | IllegalArgumentException exception) {
+      assertTrue(true);
+    }
+
+    try {
+      ArmyFileHandler.writeArmyCsv(new Army(), "src/main/resources/savefiles/armyOneSaveFile.csv");
+      fail();
+    } catch (IOException | IllegalArgumentException | NullPointerException exception) {
       assertTrue(true);
     }
   }

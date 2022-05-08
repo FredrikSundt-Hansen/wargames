@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
 import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
@@ -31,14 +32,20 @@ public class ArmyFileHandler {
    * @param army The army to write in the file.
    * @param path The path of the file to write to.
    */
-  public static void writeArmyCsv(Army army, String path) throws IOException {
+  public static void writeArmyCsv(Army army, String path) throws IOException, NullPointerException, IllegalArgumentException {
+    Objects.requireNonNull(army);
     clearFile(path);
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       writer.write(army.getName());
       writer.newLine();
       for (Unit unit : army.getUnits()) {
         writer.write(
-            unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
+            unit.getClass().getSimpleName()
+                + ","
+                + unit.getName()
+                + ","
+                + unit.getHealth()
+                + "\n");
       }
     }
   }
@@ -49,25 +56,35 @@ public class ArmyFileHandler {
    * @param path The path of the csv file.
    * @return The army read from the file.
    */
-  public static Army readCsv(String path) throws IOException, NullPointerException {
+  public static Army readCsv(String path) throws IOException, IllegalArgumentException {
     Army army = new Army();
     try (BufferedReader reader = Files.newBufferedReader(Path.of(path))) {
       String lineOfText;
       if ((lineOfText = reader.readLine()) != null && !lineOfText.contains(",")) {
         army.setName(lineOfText);
       } else {
-        throw new NullPointerException("First line is null");
+        throw new IllegalArgumentException("First line is null");
       }
 
       while ((lineOfText = reader.readLine()) != null) {
         String[] words = lineOfText.split(",");
-        assignLineToUnit(army, words);
+        if (words.length == 3) {
+          assignLineToUnit(army, words);
+        } else {
+          throw new IllegalArgumentException("Invalid unit.");
+        }
       }
     }
     return new Army(army);
   }
 
-  private static void assignLineToUnit(Army army, String[] words) {
+  /**
+   * Method takes one line of words and checks which unit it corresponds to.
+   * @param army The army to the new unit to.
+   * @param words The line of words possible containing a unit.
+   * @throws IllegalArgumentException - If it does not find a match to the known units.
+   */
+  private static void assignLineToUnit(Army army, String[] words) throws IllegalArgumentException {
     if (words[0].strip().equalsIgnoreCase(InfantryUnit.class.getSimpleName())) {
       army.addUnit(new InfantryUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
     } else if (words[0].strip().equalsIgnoreCase(RangedUnit.class.getSimpleName())) {
@@ -76,6 +93,8 @@ public class ArmyFileHandler {
       army.addUnit(new CavalryUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
     } else if (words[0].strip().equalsIgnoreCase(CommanderUnit.class.getSimpleName())) {
       army.addUnit(new CommanderUnit(words[1].strip(), Integer.parseInt(words[2].strip())));
+    } else {
+      throw new IllegalArgumentException("Not a known unit. ");
     }
   }
 }
