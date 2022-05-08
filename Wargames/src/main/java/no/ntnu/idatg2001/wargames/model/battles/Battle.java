@@ -13,7 +13,6 @@ public class Battle {
   private final Army armyOne;
   private final Army armyTwo;
   private final Random rand;
-  private Army winner;
 
   /**
    * Constructs a new battle between two armies.
@@ -70,20 +69,21 @@ public class Battle {
     armyOne.setTerrainToUnits(terrain);
     armyTwo.setTerrainToUnits(terrain);
     boolean simulating = true;
+    Army army = null;
     while (simulating) {
       try {
         randomAttack(armyOne, armyTwo);
       } catch (IllegalArgumentException e) {
         if (!armyOne.hasUnits()) {
-          winner = armyTwo;
           simulating = false;
+          army = armyTwo;
         } else if (!armyTwo.hasUnits()) {
-          winner = armyOne;
           simulating = false;
+          army = armyOne;
         }
       }
     }
-    return winner;
+    return army;
   }
 
   /**
@@ -97,10 +97,6 @@ public class Battle {
     return "Battle between the armies '"
         + armyOne.getName()
         + "' and '"
-        + armyTwo.getName()
-        + " : \n"
-        + "\nThe winner was the "
-        + winner
-        + "";
+        + armyTwo.getName();
   }
 }
