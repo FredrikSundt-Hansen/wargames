@@ -165,7 +165,7 @@ public class Army {
    *
    * @param units The list of units to add.
    */
-  public void addAllUnits(List<Unit> units) throws IncompatibleClassChangeError {
+  public void addAllUnits(List<Unit> units) {
     this.units.addAll(units);
   }
 
