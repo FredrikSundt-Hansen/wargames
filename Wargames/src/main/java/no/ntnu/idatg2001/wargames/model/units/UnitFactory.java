@@ -40,14 +40,14 @@ public class UnitFactory {
    * @return An instance of the new unit.
    */
   public Unit createUnit(String unitType, String name, int health) {
-    switch (unitType) {
-      case "Infantry":
+    switch (unitType.toLowerCase()) {
+      case "infantry":
         return new InfantryUnit(name, health);
-      case "Cavalry":
+      case "cavalry":
         return new CavalryUnit(name, health);
-      case "Ranged":
+      case "ranged":
         return new RangedUnit(name, health);
-      case "Commander":
+      case "commander":
         return new CommanderUnit(name, health);
       default:
         return null;
