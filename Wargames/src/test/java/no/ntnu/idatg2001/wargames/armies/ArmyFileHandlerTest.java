@@ -57,7 +57,7 @@ class ArmyFileHandlerTest {
 
   @Test
   void readAndWriteArmyCsv() {
-    String path = "src/main/resources/savefiles/armyOneSaveFile.csv";
+    String path = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyOneSaveFile.csv";
     try {
       ArmyFileHandler.writeArmyCsv(humanArmy,path);
       Army army = ArmyFileHandler.readCsv(path);
@@ -71,8 +71,8 @@ class ArmyFileHandlerTest {
   @Test
   @DisplayName("Writees and read two armies used in a battle.")
   void readAndWriteBattleCsv() {
-    String pathArmyOne = "src/main/resources/savefiles/armyOneSaveFile.csv";
-    String pathArmyTwo = "src/main/resources/savefiles/armyTwoSaveFile.csv";
+    String pathArmyOne = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyOneSaveFile.csv";
+    String pathArmyTwo = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyTwoSaveFile.csv";
 
     try {
       ArmyFileHandler.writeArmyCsv(humanArmy, pathArmyOne);

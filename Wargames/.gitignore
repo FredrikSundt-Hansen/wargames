@@ -6,4 +6,6 @@ src/main/resources/savefiles/armyTwoSaveFile.csv
 src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithoutName.csv
 src/test/java/no/ntnu/idatg2001/wargames/armies/nullArmyFile.csv
 src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithInvalidUnit.csv
+src/test/java/no/ntnu/idatg2001/wargames/armies/armyOneSaveFile.csv
+src/test/java/no/ntnu/idatg2001/wargames/armies/armyTwoSaveFile.csv
 
