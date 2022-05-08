@@ -1,12 +1,7 @@
-package no.ntnu.idatg2001.wargames.model.utility;
+package no.ntnu.idatg2001.wargames.model.units;
 
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
-import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
-import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
-import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
-import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 /**
  * Factory class, used to make units without exposing creation logic to user.

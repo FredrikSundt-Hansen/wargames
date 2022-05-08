@@ -15,7 +15,7 @@ import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
-import no.ntnu.idatg2001.wargames.model.utility.ArmyFileHandler;
+import no.ntnu.idatg2001.wargames.model.armies.ArmyFileHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,11 +1,10 @@
-package no.ntnu.idatg2001.wargames.model.utility;
+package no.ntnu.idatg2001.wargames.model.armies;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
 import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
