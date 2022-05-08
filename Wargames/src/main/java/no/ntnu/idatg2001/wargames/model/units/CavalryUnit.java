@@ -33,6 +33,7 @@ public class CavalryUnit extends Unit {
 
   /**
    * Constructor using unit copy constructor.
+   *
    * @param unit The cavalry unit to copy.
    */
   public CavalryUnit(Unit unit) {
@@ -43,9 +44,8 @@ public class CavalryUnit extends Unit {
   public void setTerrain(String terrain) {
     if (terrain.equalsIgnoreCase(Terrain.PLAINS.name())) {
       terrainAttackBonus = 1;
-    }
-    else if (terrain.equalsIgnoreCase(Terrain.FOREST.name())) {
-     terrainDefendBonus = -1;
+    } else if (terrain.equalsIgnoreCase(Terrain.FOREST.name())) {
+      terrainDefendBonus = -1;
     }
   }
 

@@ -33,6 +33,7 @@ public class InfantryUnit extends Unit {
 
   /**
    * Constructor using unit copy constructor.
+   *
    * @param unit The infantry unit to copy.
    */
   public InfantryUnit(Unit unit) {
@@ -56,6 +57,4 @@ public class InfantryUnit extends Unit {
   public int getResistBonus() {
     return 1 + terrainDefendBonus;
   }
-
-
 }

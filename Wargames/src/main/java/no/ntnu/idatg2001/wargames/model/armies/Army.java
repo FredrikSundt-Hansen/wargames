@@ -17,9 +17,9 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
  * @version 1.0.1
  */
 public class Army {
-  private String name;
   private final List<Unit> units;
   private final Random rand;
+  private String name;
 
   /**
    * Constructs a new Army object containing units.
@@ -46,6 +46,7 @@ public class Army {
 
   /**
    * Copy constructor for an army.
+   *
    * @param army The army to copy.
    * @throws NullPointerException - If army is null.
    */
@@ -59,9 +60,7 @@ public class Army {
     }
   }
 
-  /**
-   * Constructs an empty army with no name.
-   */
+  /** Constructs an empty army with no name. */
   public Army() {
     this.name = null;
     this.units = new ArrayList<>();
@@ -70,6 +69,20 @@ public class Army {
 
   public String getName() {
     return name;
+  }
+
+  /**
+   * Mutator method to change the name of the unit.
+   *
+   * @param name The name of the unit.
+   * @exception IllegalArgumentException - If name is empty (null).
+   */
+  public void setName(String name) throws IllegalArgumentException {
+    if (!name.isEmpty()) {
+      this.name = name;
+    } else {
+      throw new IllegalArgumentException("Invalid name.");
+    }
   }
 
   public List<Unit> getUnits() {
@@ -82,9 +95,7 @@ public class Army {
    * @return The list of units, consists of cavalry units.
    */
   public List<Unit> getAllCavalryUnits() {
-    return units.stream()
-        .filter(CavalryUnit.class::isInstance)
-        .toList();
+    return units.stream().filter(CavalryUnit.class::isInstance).toList();
   }
 
   /**
@@ -93,9 +104,7 @@ public class Army {
    * @return The list of units, consists of commander units.
    */
   public List<Unit> getAllCommanderUnits() {
-    return units.stream()
-        .filter(CommanderUnit.class::isInstance)
-        .toList();
+    return units.stream().filter(CommanderUnit.class::isInstance).toList();
   }
 
   /**
@@ -104,9 +113,7 @@ public class Army {
    * @return The list of units, consists of ranged units.
    */
   public List<Unit> getAllRangedUnits() {
-    return units.stream()
-        .filter(RangedUnit.class::isInstance)
-        .toList();
+    return units.stream().filter(RangedUnit.class::isInstance).toList();
   }
 
   /**
@@ -115,9 +122,7 @@ public class Army {
    * @return The list of units, consists of infantry units.
    */
   public List<Unit> getAllInfantryUnits() {
-    return units.stream()
-        .filter(InfantryUnit.class::isInstance)
-        .toList();
+    return units.stream().filter(InfantryUnit.class::isInstance).toList();
   }
 
   /**
@@ -139,20 +144,6 @@ public class Army {
       return units.get(rand.nextInt(units.size()));
     } else {
       throw new IllegalArgumentException("Empty list");
-    }
-  }
-
-  /**
-   * Mutator method to change the name of the unit.
-   *
-   * @param name The name of the unit.
-   * @exception IllegalArgumentException - If name is empty (null).
-   */
-  public void setName(String name) throws IllegalArgumentException {
-    if (!name.isEmpty()) {
-      this.name = name;
-    } else {
-      throw new IllegalArgumentException("Invalid name.");
     }
   }
 
@@ -218,9 +209,13 @@ public class Army {
    */
   @Override
   public String toString() {
-    return  " '" + name + "' "
-        + "\nUnits           :  " + units.size()
-        + "\nDifferent units :  " + units.stream().map(Unit::getName).collect(Collectors.toSet())
+    return " '"
+        + name
+        + "' "
+        + "\nUnits           :  "
+        + units.size()
+        + "\nDifferent units :  "
+        + units.stream().map(Unit::getName).collect(Collectors.toSet())
         + "\n";
   }
 
@@ -245,12 +240,11 @@ public class Army {
 
   /**
    * Creates a hashcode of the army. Take the name and the units into consideration.
-   * @return
+   *
+   * @return Hashcode as an integer.
    */
   @Override
   public int hashCode() {
     return Objects.hash(name, units);
   }
-
-
 }

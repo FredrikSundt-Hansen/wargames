@@ -33,11 +33,10 @@ public class CommanderUnit extends CavalryUnit {
 
   /**
    * Constructor using unit copy constructor.
+   *
    * @param unit The commander unit to copy.
    */
   public CommanderUnit(Unit unit) {
     super(unit);
   }
-
-
 }

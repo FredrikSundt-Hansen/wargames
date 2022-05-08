@@ -12,9 +12,7 @@ import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
-/**
- * File handler for Army class. Writes and reads armies using buffered-writer and - reader.
- */
+/** File handler for Army class. Writes and reads armies using buffered-writer and - reader. */
 public class ArmyFileHandler {
 
   /** Private constructor to hide the implicit public one. */
@@ -32,7 +30,8 @@ public class ArmyFileHandler {
    * @param army The army to write in the file.
    * @param path The path of the file to write to.
    */
-  public static void writeArmyCsv(Army army, String path) throws IOException, NullPointerException, IllegalArgumentException {
+  public static void writeArmyCsv(Army army, String path)
+      throws IOException, NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(army);
     clearFile(path);
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
@@ -40,12 +39,7 @@ public class ArmyFileHandler {
       writer.newLine();
       for (Unit unit : army.getUnits()) {
         writer.write(
-            unit.getClass().getSimpleName()
-                + ","
-                + unit.getName()
-                + ","
-                + unit.getHealth()
-                + "\n");
+            unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
       }
     }
   }
@@ -80,6 +74,7 @@ public class ArmyFileHandler {
 
   /**
    * Method takes one line of words and checks which unit it corresponds to.
+   *
    * @param army The army to the new unit to.
    * @param words The line of words possible containing a unit.
    * @throws IllegalArgumentException - If it does not find a match to the known units.

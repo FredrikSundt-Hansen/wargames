@@ -33,6 +33,7 @@ public class RangedUnit extends Unit {
 
   /**
    * Constructor using unit copy constructor.
+   *
    * @param unit The ranged unit to copy.
    */
   public RangedUnit(Unit unit) {
@@ -44,10 +45,8 @@ public class RangedUnit extends Unit {
     if (terrain.equalsIgnoreCase(Terrain.HILL.name())
         || terrain.equalsIgnoreCase(Terrain.HILL.name() + "s")) {
       terrainAttackBonus = 1;
-    }
-    else if (terrain.equalsIgnoreCase(Terrain.FOREST.name())) {
+    } else if (terrain.equalsIgnoreCase(Terrain.FOREST.name())) {
       terrainAttackBonus = -1;
-
     }
   }
 

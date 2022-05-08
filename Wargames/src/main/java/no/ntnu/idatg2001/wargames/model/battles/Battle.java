@@ -12,8 +12,8 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
 public class Battle {
   private final Army armyOne;
   private final Army armyTwo;
-  private Army winner;
   private final Random rand;
+  private Army winner;
 
   /**
    * Constructs a new battle between two armies.
@@ -73,7 +73,7 @@ public class Battle {
     while (simulating) {
       try {
         randomAttack(armyOne, armyTwo);
-      } catch (IllegalArgumentException  e) {
+      } catch (IllegalArgumentException e) {
         if (!armyOne.hasUnits()) {
           winner = armyTwo;
           simulating = false;
@@ -94,7 +94,13 @@ public class Battle {
    */
   @Override
   public String toString() {
-    return "Battle between the armies '" + armyOne.getName() + "' and '" + armyTwo.getName()
-        + " : \n" + "\nThe winner was the " + winner + "";
+    return "Battle between the armies '"
+        + armyOne.getName()
+        + "' and '"
+        + armyTwo.getName()
+        + " : \n"
+        + "\nThe winner was the "
+        + winner
+        + "";
   }
 }

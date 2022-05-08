@@ -27,6 +27,7 @@ public abstract class Unit {
 
   /**
    * Method to set the terrain of the unit. Accepts three different types, plains, forest and hill.
+   *
    * @param terrain String, the terrain to change to.
    */
   public abstract void setTerrain(String terrain);
@@ -62,9 +63,10 @@ public abstract class Unit {
 
   /**
    * Copy constructor for units.
+   *
    * @param unit The unit to copy.
    */
-  protected Unit(Unit unit){
+  protected Unit(Unit unit) {
     this.setName(unit.name);
     this.setHealth(unit.health);
     this.setAttack(unit.attack);
@@ -73,7 +75,7 @@ public abstract class Unit {
     this.numberOfAttacks = unit.numberOfAttacks;
     this.terrainDefendBonus = unit.terrainDefendBonus;
     this.terrainAttackBonus = unit.terrainAttackBonus;
-}
+  }
 
   public void setHealth(int health) {
     this.health = health;
@@ -209,13 +211,16 @@ public abstract class Unit {
       return false;
     }
     Unit unit = (Unit) o;
-    return health == unit.health && attack == unit.attack && armor == unit.armor &&
-        Objects.equals(name, unit.name);
+    return health == unit.health
+        && attack == unit.attack
+        && armor == unit.armor
+        && Objects.equals(name, unit.name);
   }
 
   /**
    * Creates a hashcode of the unit, take name, health, attack and armor into consideration.
-   * @return
+   *
+   * @return Hashcode as an integer.
    */
   @Override
   public int hashCode() {
