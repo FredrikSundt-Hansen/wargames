@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="100.0" maxWidth="550.0" minHeight="100.0" minWidth="550.0" prefHeight="100.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="16.0" layoutY="37.0" text="Attacker:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="341.0" layoutY="41.0" text="Defender: ">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelAttackerName" layoutX="93.0" layoutY="25.0" text="&quot;unit name&quot;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelDefenderName" layoutX="426.0" layoutY="10.0" text="&quot;unit name&quot;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="71.0" fitWidth="111.0" layoutX="220.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/sword_gif.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="labelDefenderHealth" layoutX="424.0" layoutY="41.0" text="&quot;unit health&quot;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelAttackerAttackBonus" layoutX="93.0" layoutY="56.0" text="&quot;attack bonus&quot;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lebelDefenderResistBonus" layoutX="424.0" layoutY="68.0" text="&quot;resist bonus&quot;">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Line endX="14.0" endY="53.0" layoutX="209.0" layoutY="37.0" startX="14.0" startY="-31.0" />
+      <Line endX="14.0" endY="53.0" layoutX="317.0" layoutY="37.0" startX="14.0" startY="-31.0" />
+   </children>
+</AnchorPane>
