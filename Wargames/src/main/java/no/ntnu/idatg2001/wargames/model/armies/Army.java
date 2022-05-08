@@ -79,7 +79,7 @@ public class Army {
   public List<Unit> getAllCavalryUnits() {
     return units.stream()
         .filter(CavalryUnit.class::isInstance)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**
@@ -90,7 +90,7 @@ public class Army {
   public List<Unit> getAllCommanderUnits() {
     return units.stream()
         .filter(CommanderUnit.class::isInstance)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**
@@ -101,7 +101,7 @@ public class Army {
   public List<Unit> getAllRangedUnits() {
     return units.stream()
         .filter(RangedUnit.class::isInstance)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**
@@ -112,7 +112,7 @@ public class Army {
   public List<Unit> getAllInfantryUnits() {
     return units.stream()
         .filter(InfantryUnit.class::isInstance)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   /**

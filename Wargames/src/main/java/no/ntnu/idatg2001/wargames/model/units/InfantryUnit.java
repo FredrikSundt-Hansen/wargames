@@ -31,6 +31,10 @@ public class InfantryUnit extends Unit {
     armor = 10;
   }
 
+  /**
+   * Constructor using unit copy constructor.
+   * @param unit The infantry unit to copy.
+   */
   public InfantryUnit(Unit unit) {
     super(unit);
   }

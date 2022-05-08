@@ -31,6 +31,10 @@ public class RangedUnit extends Unit {
     armor = 8;
   }
 
+  /**
+   * Constructor using unit copy constructor.
+   * @param unit The ranged unit to copy.
+   */
   public RangedUnit(Unit unit) {
     super(unit);
   }

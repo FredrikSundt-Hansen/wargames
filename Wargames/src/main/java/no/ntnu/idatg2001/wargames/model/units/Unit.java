@@ -37,7 +37,7 @@ public abstract class Unit {
    * @param name Name of the unit.
    * @param health The health value of the unit.
    * @param attack The attack value of the unit.
-   * @param armor The armor value of the unit.cd
+   * @param armor The armor value of the unit.
    */
   protected Unit(String name, int health, int attack, int armor) {
     this.setName(name);
@@ -60,6 +60,10 @@ public abstract class Unit {
     numberOfDefends = 0;
   }
 
+  /**
+   * Copy constructor for units.
+   * @param unit The unit to copy.
+   */
   protected Unit(Unit unit){
     this.setName(unit.name);
     this.setHealth(unit.health);

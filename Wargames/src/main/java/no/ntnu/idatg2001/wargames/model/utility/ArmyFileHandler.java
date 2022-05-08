@@ -12,6 +12,9 @@ import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
+/**
+ * File handler for Army class. Writes and reads armies using buffered-writer and - reader.
+ */
 public class ArmyFileHandler {
 
   /** Private constructor to hide the implicit public one. */

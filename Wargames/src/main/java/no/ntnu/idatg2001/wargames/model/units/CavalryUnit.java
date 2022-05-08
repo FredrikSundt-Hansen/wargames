@@ -31,6 +31,10 @@ public class CavalryUnit extends Unit {
     armor = 12;
   }
 
+  /**
+   * Constructor using unit copy constructor.
+   * @param unit The cavalry unit to copy.
+   */
   public CavalryUnit(Unit unit) {
     super(unit);
   }
