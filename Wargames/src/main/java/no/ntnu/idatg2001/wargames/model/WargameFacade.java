@@ -38,7 +38,7 @@ public class WargameFacade {
     battle.simulate(terrain);
   }
 
-  public void registerObserver(ArmyObserver armyObserver) {
-    battle.register(armyObserver);
+  public void registerObserver(UnitObserver unitObserver) {
+    battle.register(unitObserver);
   }
 }

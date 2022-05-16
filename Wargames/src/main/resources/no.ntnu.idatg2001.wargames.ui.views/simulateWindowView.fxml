@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedAreaChart?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.SimulateWindowController">
+<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.SimulateWindowController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -29,10 +35,50 @@
         </menus>
       </MenuBar>
    </top>
-   <center>
-      <Canvas height="300.0" width="500.0" BorderPane.alignment="CENTER" />
-   </center>
    <bottom>
       <VBox prefHeight="100.0" prefWidth="900.0" BorderPane.alignment="CENTER" />
    </bottom>
+   <left>
+      <Pane prefHeight="725.0" prefWidth="386.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackedAreaChart layoutX="14.0" layoutY="14.0" prefHeight="231.0" prefWidth="349.0">
+              <xAxis>
+                <NumberAxis prefHeight="20.0" prefWidth="290.0" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis side="LEFT" />
+              </yAxis>
+            </StackedAreaChart>
+            <StackedAreaChart layoutX="29.0" layoutY="279.0" prefHeight="194.0" prefWidth="338.0">
+               <xAxis>
+                  <NumberAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </StackedAreaChart>
+            <StackedAreaChart layoutX="14.0" layoutY="514.0" prefHeight="188.0" prefWidth="354.0">
+               <xAxis>
+                  <NumberAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </StackedAreaChart>
+         </children>
+      </Pane>
+   </left>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Canvas height="505.0" layoutX="8.0" layoutY="209.0" width="1000.0" />
+            <ToggleButton layoutX="464.0" layoutY="62.0" mnemonicParsing="false" text="Start" />
+            <Slider layoutX="148.0" layoutY="68.0" />
+            <ProgressIndicator layoutX="48.0" layoutY="48.0" progress="0.0" />
+         </children>
+      </Pane>
+   </center>
+   <right>
+      <Pane prefHeight="725.0" prefWidth="318.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>

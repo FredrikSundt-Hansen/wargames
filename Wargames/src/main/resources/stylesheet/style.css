@@ -1,25 +1,28 @@
-.button-newBattle {
-    -fx-background-color:  rgba(0,0,0,0);
+.mainMenuButton-over {
+    -fx-background-color:  rgb(240,237,225);
+    -fx-text-fill: rgb(0,65,137);
 }
 
-.button-newBattle:hover{
-    -fx-background-color: rgb(200,200,200);
-}
-.thing-background{
-    -fx-background-color: rgb(153, 147, 147);
-    -fx-border-width: 3;
-    -fx-border-color: Black;
-
-}
-.itemBuyButton{
-    -fx-background-color: rgba(0,0,0,0);
-    -fx-border-width: 2;
-    -fx-border-color: White;
-    -fx-border-radius: 30;
+.button-over {
+    -fx-background-color: rgb(0,65,137);
+    -fx-text-fill: rgb(240, 237, 225);
 }
 
-.itemBuyButton:hover{
-    -fx-border-color: Black;
-    -fx-background-color: rgb(230,230,230,0.4);
-    -fx-background-radius: 30;
+.button-over:hover {
+    -fx-background-color:  rgb(240,237,225);
+    -fx-text-fill: rgb(0,65,137);
 }
+
+
+.background-over{
+    -fx-background-color: rgb(0,65,137);
+}
+
+.whiteBackground-over{
+    -fx-text-fill: rgb(240, 237, 225);
+}
+
+.text-fill {
+    -fx-text-fill: rgb(0,65,137);
+}
+

@@ -2,6 +2,7 @@ package no.ntnu.idatg2001.wargames.battles;
 
 import java.util.ArrayList;
 import java.util.List;
+import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
@@ -9,11 +10,10 @@ import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
+import no.ntnu.idatg2001.wargames.ui.controllers.SimulateWindowController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,6 +54,8 @@ class BattleTest {
         orcishHorde.addUnit(commanderOrc);
         }
       }
+
+
   }
 
   @Test
@@ -106,5 +108,14 @@ class BattleTest {
 
     assertTrue(a1.getName().equals(a2.getName()) && a1.getName().equals(a3.getName())
         && a1.getName().equals(a4.getName()) && a1.getName().equals(a5.getName()));
+  }
+
+  @Test
+  void facadeSimulate() {
+    WargameFacade.getInstance().setBattle(new Battle(humanArmy,orcishHorde));
+    SimulateWindowController controller = new SimulateWindowController();
+    controller.setUp();
+
+    WargameFacade.getInstance().simulate("plains");
   }
 }
