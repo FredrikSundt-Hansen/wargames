@@ -10,8 +10,8 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
  * @version 1.0.1
  */
 public class Battle extends UnitUpdater {
-  private final Army armyOne;
-  private final Army armyTwo;
+  private Army armyOne;
+  private Army armyTwo;
   private final Random rand;
 
   /**
@@ -26,12 +26,6 @@ public class Battle extends UnitUpdater {
     rand = new Random();
   }
 
-  public Battle() {
-    this.armyOne = new Army();
-    this.armyTwo = new Army();
-    rand = new Random();
-  }
-
 
 
   public Army getArmyOne() {
@@ -40,6 +34,14 @@ public class Battle extends UnitUpdater {
 
   public Army getArmyTwo() {
     return armyTwo;
+  }
+
+  public void setArmyOne(Army army) {
+    armyOne = army;
+  }
+
+  public void setArmyTwo(Army army) {
+    armyTwo = army;
   }
 
   /**

@@ -9,6 +9,7 @@ import java.util.Objects;
  * @version 1.0.0
  */
 public abstract class Unit {
+  String type;
   String name;
   int health;
   int attack;
@@ -45,8 +46,6 @@ public abstract class Unit {
     this.setHealth(health);
     this.setAttack(attack);
     this.setArmor(armor);
-    numberOfDefends = 0;
-    numberOfAttacks = 0;
   }
 
   /**
@@ -58,7 +57,6 @@ public abstract class Unit {
   protected Unit(String name, int health) {
     this.setName(name);
     this.setHealth(health);
-    numberOfDefends = 0;
   }
 
   /**
@@ -102,7 +100,7 @@ public abstract class Unit {
    * @exception IllegalArgumentException - If the value is less than zero, or more than 1000.
    */
   public void setAttack(int attack) throws IllegalArgumentException {
-    if (attack > 0 && attack < 1000) {
+    if (attack >= 0 && attack < 1000) {
       this.attack = attack;
     } else {
       throw new IllegalArgumentException("Invalid attack value.");
@@ -116,11 +114,15 @@ public abstract class Unit {
    * @exception IllegalArgumentException - If the value is less than zero, or more than 1000.
    */
   public void setArmor(int armor) throws IllegalArgumentException {
-    if (armor > 0 && armor < 1000) {
+    if (armor >= 0 && armor < 1000) {
       this.armor = armor;
     } else {
       throw new IllegalArgumentException("Invalid armor value.");
     }
+  }
+
+  public String getType() {
+    return getClass().getSimpleName();
   }
 
   public String getName() {
@@ -138,6 +140,8 @@ public abstract class Unit {
   public int getArmor() {
     return armor;
   }
+
+
 
   public int getNumberOfDefends() {
     return numberOfDefends;

@@ -1,15 +1,15 @@
 .mainMenuButton-over {
-    -fx-background-color:  rgb(240,237,225);
+    -fx-background-color:  white;
     -fx-text-fill: rgb(0,65,137);
 }
 
 .button-over {
     -fx-background-color: rgb(0,65,137);
-    -fx-text-fill: rgb(240, 237, 225);
+    -fx-text-fill: white;
 }
 
 .button-over:hover {
-    -fx-background-color:  rgb(240,237,225);
+    -fx-background-color: white;
     -fx-text-fill: rgb(0,65,137);
 }
 
@@ -18,11 +18,37 @@
     -fx-background-color: rgb(0,65,137);
 }
 
-.whiteBackground-over{
-    -fx-text-fill: rgb(240, 237, 225);
+.whiteBackground {
+    -fx-background-color: white;
 }
 
 .text-fill {
     -fx-text-fill: rgb(0,65,137);
 }
+
+
+.choiceBox-over {
+    -fx-background-color: rgb(0,65,137);
+    -fx-control-inner-background: rgb(0,65,137);
+    -fx-selection-bar: rgb(0,65,137);
+}
+
+.choiceBox .label {
+    -fx-text-fill: white;
+}
+
+.choiceBox .menu-item:focused .label{
+    -fx-text-fill: white;
+}
+
+
+
+
+
+
+
+
+
+
+
 

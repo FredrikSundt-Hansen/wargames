@@ -1,6 +1,7 @@
 package no.ntnu.idatg2001.wargames.model.armies;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -200,6 +201,10 @@ public class Army {
     for (Unit unit : units) {
       unit.setTerrain(terrain);
     }
+  }
+
+  public List<String> getAllTypes() {
+    return units.stream().map(Unit::getType).collect(Collectors.toSet()).stream().toList();
   }
 
   /**
