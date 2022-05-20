@@ -37,16 +37,16 @@ public class UnitFactory {
    * @param health The health of the new unit.
    * @return An instance of the new unit.
    */
-  public Unit createUnit(String unitType, String name, int health) {
+  public Unit createUnit(String unitType, String name, int health, int attack, int armor) {
     switch (unitType.toLowerCase()) {
       case "infantry":
-        return new InfantryUnit(name, health);
+        return new InfantryUnit(name, health, attack, armor);
       case "cavalry":
-        return new CavalryUnit(name, health);
+        return new CavalryUnit(name, health, attack, armor);
       case "ranged":
-        return new RangedUnit(name, health);
+        return new RangedUnit(name, health, attack, armor);
       case "commander":
-        return new CommanderUnit(name, health);
+        return new CommanderUnit(name, health, attack, armor);
       default:
         return null;
     }
@@ -62,10 +62,10 @@ public class UnitFactory {
    * @param numberUnits How many units to create of that type.
    * @return List of units, with the given health, name, and number.
    */
-  public List<Unit> createMultipleUnits(String unitType, String name, int health, int numberUnits) {
+  public List<Unit> createMultipleUnits(String unitType, String name, int health, int attack, int armor, int numberUnits) {
     List<Unit> unitList = new ArrayList<>();
     for (int i = 0; i < numberUnits; i++) {
-      unitList.add(createUnit(unitType, name, health));
+      unitList.add(createUnit(unitType, name, health, attack, armor));
     }
     return unitList;
   }

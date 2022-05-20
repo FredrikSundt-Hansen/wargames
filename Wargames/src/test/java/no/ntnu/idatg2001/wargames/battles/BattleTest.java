@@ -109,13 +109,4 @@ class BattleTest {
     assertTrue(a1.getName().equals(a2.getName()) && a1.getName().equals(a3.getName())
         && a1.getName().equals(a4.getName()) && a1.getName().equals(a5.getName()));
   }
-
-  @Test
-  void facadeSimulate() {
-    WargameFacade.getInstance().setBattle(new Battle(humanArmy,orcishHorde));
-    SimulateWindowController controller = new SimulateWindowController();
-    controller.setUp();
-
-    WargameFacade.getInstance().simulate("plains");
-  }
 }
