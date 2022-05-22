@@ -1,13 +1,11 @@
 package no.ntnu.idatg2001.wargames.model;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
+import no.ntnu.idatg2001.wargames.model.armies.ArmyFileHandler;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
-import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
-import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
-import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
-import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.model.units.UnitFactory;
 
@@ -22,6 +20,7 @@ public class WargameFacade {
   private final Army armyOne;
   private final Army armyTwo;
   private Battle battle;
+  private String currentTerrain;
 
   /**
    * Constructor creates an instance.
@@ -45,8 +44,8 @@ public class WargameFacade {
     return instance;
   }
 
-  public void setBattle(Battle battle) {
-    this.battle = battle;
+  public void setBattle(List<Unit> armyOne, List<Unit> armyTwo, String armyOneName, String armyTwoName) {
+    this.battle = new Battle(new Army(armyOneName, armyOne), new Army(armyTwoName, armyTwo));
   }
 
   public List<Unit> getArmyOneUnits() {
@@ -73,16 +72,20 @@ public class WargameFacade {
     return armyTwo.getName();
   }
 
-  public void addUnits(List<Unit> units, String armyName) {
-    if (armyName.equalsIgnoreCase(armyOne.getName())) {
-      armyOne.addAllUnits(units);
-    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
-      armyTwo.addAllUnits(units);
-    }
+  public void addUnitsArmyOne(List<Unit> units) {
+    armyOne.addAllUnits(units);
   }
 
-  public void simulate(String terrain) {
-    battle.simulate(terrain);
+  public void addUnitsArmyTwo(List<Unit> units) {
+    armyTwo.addAllUnits(units);
+  }
+
+  public void setCurrentTerrain(String terrain) {
+    currentTerrain = terrain;
+  }
+
+  public void simulate() {
+    battle.simulate(currentTerrain);
   }
 
   /**
@@ -90,6 +93,7 @@ public class WargameFacade {
    * @param unitObserver
    */
   public void registerObserver(UnitObserver unitObserver) {
+    battle = new Battle(armyOne, armyTwo);
     battle.register(unitObserver);
   }
 
@@ -139,5 +143,82 @@ public class WargameFacade {
     return UnitFactory.getInstance()
           .createMultipleUnits(type, name, health, attack, armor, amount);
 
+  }
+
+  public List<Unit> getArmyOneFromResources() throws IOException {
+    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneSaveFile.csv");
+    armyOne.setName(army.getName());
+    return army.getUnits();
+  }
+
+  public List<Unit> getArmyTwoFromResources() throws IOException {
+    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyTwoSaveFile.csv");
+    armyTwo.setName(army.getName());
+    return army.getUnits();
+  }
+
+  public void saveArmyOneToResources() throws IOException, IllegalArgumentException {
+    ArmyFileHandler.writeArmyCsv(armyOne,"src/main/resources/savefiles/armyOneSaveFile.csv");
+  }
+
+  public void saveArmyTwoToResources() throws IOException, IllegalArgumentException {
+    ArmyFileHandler.writeArmyCsv(armyTwo, "src/main/resources/savefiles/armyTwoSaveFile.csv");
+
+  }
+
+  public int getArmyOneAmountInfantry() {
+    return armyOne.getAllInfantryUnits().size();
+  }
+
+  public int getArmyOneAmountRanged() {
+    return armyOne.getAllRangedUnits().size();
+  }
+
+  public int getArmyOneAmountCavalry() {
+    return armyOne.getAllCavalryUnits().size();
+  }
+
+  public int getArmyOneAmountCommander() {
+    return armyOne.getAllCommanderUnits().size();
+  }
+
+  public int getArmyTwoAmountInfantry() {
+    return armyTwo.getAllInfantryUnits().size();
+  }
+
+  public int getArmyTwoAmountRanged() {
+    return armyTwo.getAllRangedUnits().size();
+  }
+
+  public int getArmyTwoAmountCavalry() {
+    return armyTwo.getAllCavalryUnits().size();
+  }
+
+  public int getArmyTwoAmountCommander() {
+    return armyTwo.getAllCommanderUnits().size();
+  }
+
+  public List<Unit> getArmyOneFromDemoFile() throws IOException {
+    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneDemoFile.csv");
+    armyOne.setName(army.getName());
+    return army.getUnits();
+  }
+
+  public List<Unit> getArmyTwoFromDemoFile() throws IOException {
+    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyTwoDemoFile.csv");
+    armyTwo.setName(army.getName());
+    return army.getUnits();
+  }
+
+  public String getCurrentTerrain() {
+    return currentTerrain;
+  }
+
+  public void setBattleTerrain() {
+    battle.setTerrain(currentTerrain);
+  }
+
+  public boolean simulateStep() {
+    return battle.simulateStep();
   }
 }
