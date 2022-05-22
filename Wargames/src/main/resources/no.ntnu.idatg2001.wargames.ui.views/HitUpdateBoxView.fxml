@@ -4,24 +4,49 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="54.0" maxWidth="421.0" minHeight="54.0" minWidth="421.0" prefHeight="54.0" prefWidth="420.0" style="-fx-background-color: darkgrey;" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.HitUpdateBoxController">
+<AnchorPane maxHeight="79.0" maxWidth="421.0" minHeight="33.0" minWidth="219.0" opacity="0.78" prefHeight="41.0" prefWidth="421.0" style="-fx-background-color: darkgrey;" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.HitUpdateBoxController">
    <children>
-      <ImageView fitHeight="28.0" fitWidth="33.0" layoutX="116.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" rotate="21.8">
-         <image>
-            <Image url="@../images/icons/icon_sword.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="51.0" fitWidth="67.0" layoutX="316.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="unitImageView" fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="22.0" fitWidth="18.0" layoutX="322.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/icons/icon_health_symbol.png" />
          </image>
       </ImageView>
-      <Label fx:id="defenderNameLabel" layoutX="219.0" layoutY="19.0" text="name" />
-      <Label fx:id="attackValueLabel" layoutX="63.0" layoutY="17.0" text="attack" />
-      <Label fx:id="attackBonusLabel" layoutX="164.0" layoutY="19.0" text="bonus" />
-      <Label fx:id="nameAttackerLabel" layoutX="14.0" layoutY="17.0" text="name" />
-      <Label fx:id="defenderHealthValue" layoutX="269.0" layoutY="19.0" text="health" />
-      <Label fx:id="defenderResistValue" layoutX="380.0" layoutY="19.0" text="resist" />
+      <Label fx:id="defenderNameLabel" layoutX="357.0" layoutY="15.0" text="&quot;Defender&quot;" underline="true">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="attackValueLabel" layoutX="54.0" layoutY="15.0" text="attack">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="attackBonusLabel" layoutX="87.0" layoutY="15.0" text="bonus">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="nameAttackerLabel" layoutY="15.0" text="&quot;Attacker&quot;" underline="true">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="defenderHealthValue" layoutX="286.0" layoutY="15.0" text="health">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <Label fx:id="defenderResistValue" layoutX="255.0" layoutY="15.0" text="resist">
+         <font>
+            <Font size="10.0" />
+         </font></Label>
+      <ImageView fitHeight="49.0" fitWidth="29.0" layoutX="154.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" rotate="-120.3">
+         <image>
+            <Image url="@../images/UnitTypes/sword_image.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="48.0" layoutX="212.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/UnitTypes/shield_image.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

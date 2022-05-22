@@ -21,19 +21,16 @@ public class HitUpdateBoxController implements Initializable {
   @FXML
   private Label defenderResistValue;
 
-  public void setValues(
-      String nameAttacker,
-      int attackValue,
-      int attackBonus,
-      String nameDefender,
-      int healthDefender,
-      int resistDefender) {
+
+  public void setValues(String nameAttacker, int attackValue, int attackBonus, String nameDefender,
+      int healthDefender, int resistDefender) {
+
     defenderNameLabel.setText(nameAttacker);
     attackValueLabel.setText(String.valueOf(attackValue));
-    attackBonusLabel.setText(String.valueOf(attackBonus));
+    attackBonusLabel.setText("+" + attackBonus);
     nameAttackerLabel.setText(String.valueOf(nameDefender));
     defenderHealthValue.setText(String.valueOf(healthDefender));
-    defenderResistValue.setText(String.valueOf(resistDefender));
+    defenderResistValue.setText("-" + resistDefender);
   }
 
   @Override

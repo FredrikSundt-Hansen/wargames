@@ -73,7 +73,7 @@ public class WargamesApplication extends Application {
   @FXML
   public static void getToSimulateBattle() {
     FXMLLoader loader =
-        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/simulateWindowView.fxml"));
+        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/SimulationView.fxml"));
     try {
       Parent root = loader.load();
       Scene scene = new Scene(root);
