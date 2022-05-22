@@ -14,6 +14,21 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 /** File handler for Army class. Writes and reads armies using buffered-writer and - reader. */
 public class ArmyFileHandler {
+  private static String lastLoadedFilePath;
+  private static String lastLoadedFileName;
+  private static String lastLoadedFileArmyName;
+
+  public static String getLastLoadedFilePath() {
+    return lastLoadedFilePath;
+  }
+
+  public static String getLastLoadedFileName() {
+    return lastLoadedFileName;
+  }
+
+  public static String getLastLoadedFileArmyName() {
+    return lastLoadedFileArmyName;
+  }
 
   /** Private constructor to hide the implicit public one. */
   private ArmyFileHandler() {}
@@ -45,6 +60,7 @@ public class ArmyFileHandler {
         writer.write(
             unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
       }
+
     }
   }
 
@@ -56,12 +72,14 @@ public class ArmyFileHandler {
    */
   public static Army readCsv(String path) throws IOException, IllegalArgumentException {
     Army army = new Army();
-    try (BufferedReader reader = Files.newBufferedReader(Path.of(path))) {
+    Path currentPath = Path.of(path);
+    try (BufferedReader reader = Files.newBufferedReader(currentPath)) {
       String lineOfText;
       if ((lineOfText = reader.readLine()) != null && !lineOfText.contains(",")) {
         army.setName(lineOfText);
+        lastLoadedFileArmyName = lineOfText;
       } else {
-        throw new IllegalArgumentException("First line is null");
+        throw new IllegalArgumentException("Error. Army name is not correct. ");
       }
 
       while ((lineOfText = reader.readLine()) != null) {
@@ -73,6 +91,9 @@ public class ArmyFileHandler {
         }
       }
     }
+    lastLoadedFilePath = currentPath.toAbsolutePath().toString();
+    String[] pathElements = lastLoadedFilePath.split("\\\\");
+    lastLoadedFileName = pathElements[pathElements.length - 1].split("\\.")[0];
     return new Army(army);
   }
 

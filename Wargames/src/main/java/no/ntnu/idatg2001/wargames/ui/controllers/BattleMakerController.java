@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 
@@ -29,6 +30,7 @@ import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
  */
 public class BattleMakerController implements Initializable {
 
+
   private Image plains;
   private Image hills;
   private Image forest;
@@ -36,13 +38,14 @@ public class BattleMakerController implements Initializable {
   private ArmyMakerController armyOneController;
   private ArmyMakerController armyTwoController;
 
-  @FXML
-  private Pane armyOnePane;
-  @FXML
-  private Pane armyTwoPane;
+  @FXML private Label armyTwoFilePath;
+  @FXML private Label armyOneFilePath;
+  @FXML private Pane armyOnePane;
+  @FXML private Pane armyTwoPane;
   @FXML private ImageView terrainImageView;
   @FXML private ChoiceBox<String> terrainChoiceBox;
   @FXML private Label currentTerrainLabel;
+  @FXML private Label filePathLabel;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -87,6 +90,9 @@ public class BattleMakerController implements Initializable {
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    armyOneFilePath.setVisible(false);
+    armyTwoFilePath.setVisible(false);
   }
 
   /**
@@ -179,6 +185,19 @@ public class BattleMakerController implements Initializable {
     }
   }
 
+  private void setFilePath(boolean armyOne) {
+    List<String> fileInfo = WargameFacade.getInstance().getLastLoadedFileInfo();
+      if (armyOne) {
+        armyOneFilePath.setVisible(true);
+        armyOneFilePath.setText("Army " + "'" + fileInfo.get(0) + "'" + " loaded from :" +
+            fileInfo.get(1) + " \nFile name : " + fileInfo.get(2));
+      } else {
+        armyTwoFilePath.setVisible(true);
+        armyTwoFilePath.setText("Army " + fileInfo.get(0) + " loaded from :" +
+            fileInfo.get(1) + " \nFile name : " + fileInfo.get(2));
+      }
+  }
+
   /** Saves army one to resources file.*/
   @FXML
   private void onSaveArmyOneButtonClick() {
@@ -210,6 +229,7 @@ public class BattleMakerController implements Initializable {
       armyOneController.setUnitList(WargameFacade.getInstance().getArmyOneFromResources());
       armyOneController.setArmyName(WargameFacade.getInstance().getArmyOneName());
       armyOneController.updateArmyUnits();
+      setFilePath(true);
     } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
@@ -222,6 +242,7 @@ public class BattleMakerController implements Initializable {
       armyTwoController.setUnitList(WargameFacade.getInstance().getArmyTwoFromResources());
       armyTwoController.setArmyName(WargameFacade.getInstance().getArmyTwoName());
       armyTwoController.updateArmyUnits();
+      setFilePath(false);
     } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
@@ -235,15 +256,49 @@ public class BattleMakerController implements Initializable {
   private void onLoadDemoFileButtonClick() {
     try {
       armyOneController.setUnitList(WargameFacade.getInstance().getArmyOneFromDemoFile());
-      armyTwoController.setUnitList(WargameFacade.getInstance().getArmyTwoFromDemoFile());
       armyOneController.setArmyName(WargameFacade.getInstance().getArmyOneName());
-      armyTwoController.setArmyName(WargameFacade.getInstance().getArmyTwoName());
       armyOneController.updateArmyUnits();
-      armyTwoController.updateArmyUnits();
+      setFilePath(true);
 
+      armyTwoController.setUnitList(WargameFacade.getInstance().getArmyTwoFromDemoFile());
+      armyTwoController.setArmyName(WargameFacade.getInstance().getArmyTwoName());
+      armyTwoController.updateArmyUnits();
+      setFilePath(false);
     } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
-
   }
+
+  @FXML
+  private void onLoadArmyOneFromFile() {
+    showFileChooser(armyOneController);
+    setFilePath(true);
+  }
+
+  @FXML
+  private void onLoadArmyTwoFromFile() {
+    showFileChooser(armyTwoController);
+    setFilePath(false);
+  }
+
+  /**
+   * Method to show a File-chooser dialog, and uses the armyController to set the list and name of
+   * the new army loaded from file.
+   *
+   * @param armyController The armyController to use.
+   */
+  private void showFileChooser(ArmyMakerController armyController) {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Load an army from a csv file.");
+    File army = fileChooser.showOpenDialog(null);
+    try {
+      armyController.setUnitList(WargameFacade.getInstance().getArmyOneFromFile(army.getAbsolutePath()));
+      armyController.setArmyName(WargameFacade.getInstance().getArmyOneName());
+      armyController.updateArmyUnits();
+    } catch (IOException | IllegalArgumentException e) {
+      showErrorMessage(e.getMessage());
+    }
+  }
+
+
 }

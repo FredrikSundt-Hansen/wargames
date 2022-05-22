@@ -35,23 +35,18 @@
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" text="Save" />
                         <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyOneButtonClick" text="Load previouse save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadArmyOneFromFile" text="Load from file" />
                     </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Army two">
                      <items>
                         <MenuItem mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick" text="Save" />
                         <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyTwoButtonClick" text="Load previous save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadArmyTwoFromFile" text="Load from file" />
                      </items>
                   </Menu>
                   <MenuItem mnemonicParsing="false" onAction="#onLoadDemoFileButtonClick" text="Load demo " />
                </items>
-               <graphic>
-                  <Label text="&quot;Path&quot;">
-                     <graphic>
-                        <Label fx:id="filePathLabel" text="Loaded from" />
-                     </graphic>
-                  </Label>
-               </graphic>
             </Menu>
         </menus>
       </MenuBar>
@@ -90,14 +85,14 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="463.0" layoutY="63.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="Terrain" underline="true">
+            <Label layoutX="462.0" layoutY="-3.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="Terrain" underline="true">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
             <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="-4.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
             <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="942.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
-            <Button layoutX="7.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" stylesheets="@../stylesheet/style.css">
+            <Button layoutX="7.0" layoutY="-1.0" mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" stylesheets="@../stylesheet/style.css">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -106,7 +101,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button layoutX="953.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick" stylesheets="@../stylesheet/style.css">
+            <Button layoutX="953.0" layoutY="-1.0" mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick" stylesheets="@../stylesheet/style.css">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -115,6 +110,8 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Label fx:id="armyTwoFilePath" disable="true" layoutX="14.0" layoutY="74.0" text="path" />
+            <Label fx:id="armyOneFilePath" disable="true" layoutX="14.0" layoutY="35.0" text="path" />
          </children>
       </Pane>
    </center>

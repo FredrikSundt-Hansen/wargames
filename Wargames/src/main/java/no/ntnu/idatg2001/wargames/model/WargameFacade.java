@@ -143,6 +143,27 @@ public class WargameFacade {
     return army.getUnits();
   }
 
+  public List<Unit> getArmyOneFromFile(String path) throws IOException {
+    Army army = ArmyFileHandler.readCsv(path);
+    this.armyOne.setName(army.getName());
+
+    return army.getUnits();
+  }
+
+  public List<Unit> getArmyTwoFromFile(String path) throws IOException {
+    Army army = ArmyFileHandler.readCsv(path);
+    this.armyOne.setName(army.getName());
+    return army.getUnits();
+  }
+
+  public List<String> getLastLoadedFileInfo() {
+    List<String> fileInfo = new ArrayList<>();
+    fileInfo.add(ArmyFileHandler.getLastLoadedFileArmyName());
+    fileInfo.add(ArmyFileHandler.getLastLoadedFilePath());
+    fileInfo.add(ArmyFileHandler.getLastLoadedFileName());
+    return fileInfo;
+  }
+
   public List<Integer> getArmyOneAmountsUnitTypes() {
     return getUnitValues(armyOne);
   }
@@ -186,7 +207,6 @@ public class WargameFacade {
     long b = battles.stream().filter(army -> army.getName().equals(armyTwo.getName())).count();
     distributionOfWinners.add(a);
     distributionOfWinners.add(b);
-
     return distributionOfWinners;
   }
 
