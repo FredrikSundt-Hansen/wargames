@@ -1,7 +1,5 @@
 package no.ntnu.idatg2001.wargames.ui.controllers;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -21,107 +18,50 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.ui.views.ArmyEditorDialog;
-import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 
-/**
- * The Controller for the ArmyMakerView. Controls the user interaction from the gui in
- * ArmyMakerView, and the dialog ArmyEditorDialog. It hols the tableview data, as well as the
- * terrain image data. It shows the current terrain for the battle. The terrain for simulating is
- * then selected based on the url of the image currently showing.
- * Additionally, it has function save armies, load previous one
- * and load an army from file.
- */
 public class ArmyMakerController implements Initializable {
 
-  private Image plains;
-  private Image hills;
-  private Image forest;
+  private List<Unit> unitList;
 
-  private List<Unit> unitListArmyOne;
-  private List<Unit> unitListArmyTwo;
+  @FXML private Label totalUnitsLabel;
+  @FXML private Label totalInfantryUnitsUnitsLabel;
+  @FXML private Label totalRangedUnitsLabel;
+  @FXML private Label totalCavalryUnitsLabel;
+  @FXML private Label totalCommanderUnitsUnitsLabel;
+  @FXML private TableView<Unit> armyTableView;
+  @FXML private TableColumn<Unit, String> typeColumn;
+  @FXML private TableColumn<Unit, String> nameColumn;
+  @FXML private TableColumn<Unit, String> healthColumn;
+  @FXML private TableColumn<Unit, String> armorColumn;
+  @FXML private TableColumn<Unit, String> attackColumn;
+  @FXML private Label armyNameLabel;
 
-  @FXML private Label infantryTotalArmyOneLabel;
-  @FXML private Label rangedTotalArmyOneLabel;
-  @FXML private Label cavalryTotalArmyOneLabel;
-  @FXML private Label commanderTotalArmyOneLabel;
-  @FXML private Label infantryTotalArmyTwoLabel;
-  @FXML private Label rangedTotalArmyTwoLabel;
-  @FXML private Label cavalryTotalArmyTwoLabel;
-  @FXML private Label commanderTotalArmyTwoLabel;
-  @FXML private TableView<Unit> armyOneTableView;
-  @FXML private TableColumn<Unit, String> typeArmyOneColumn;
-  @FXML private TableColumn<Unit, String> nameArmyOneColumn;
-  @FXML private TableColumn<Unit, String> healthArmyOneColumn;
-  @FXML private TableColumn<Unit, String> armorArmyOneColumn;
-  @FXML private TableColumn<Unit, String> attackArmyOneColumn;
-  @FXML private TableView<Unit> armyTwoTableView;
-  @FXML private TableColumn<Unit, String> typeArmyTwoColumn;
-  @FXML private TableColumn<Unit, String> nameArmyTwoColumn;
-  @FXML private TableColumn<Unit, String> healthArmyTwoColumn;
-  @FXML private TableColumn<Unit, String> armorArmyTwoColumn;
-  @FXML private TableColumn<Unit, String> attackArmyTwoColumn;
-  @FXML private Label armyOneNameLabel;
-  @FXML private Label armyTwoNameLabel;
-  @FXML private ImageView terrainImageView;
-  @FXML private ChoiceBox<String> terrainChoiceBox;
-  @FXML private Label currentTerrainLabel;
+  private boolean armyOne;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
-    plains = new Image(new File("src/main/resources/images/Plains_Image.jpg").toURI().toString());
-    hills = new Image(new File("src/main/resources/images/Hills_Image.jpg").toURI().toString());
-    forest = new Image(new File("src/main/resources/images/Forest_Image.jpg").toURI().toString());
-    terrainImageView.setImage(plains);
-
-    List<String> differentTerrains = new ArrayList<>();
-    String stringPlains = getTerrainValueFromImage(this.plains);
-    String stringHills = getTerrainValueFromImage(this.hills);
-    String stringForest = getTerrainValueFromImage(this.forest);
-
-    differentTerrains.add(stringPlains);
-    differentTerrains.add(stringHills);
-    differentTerrains.add(stringForest);
-
-    terrainChoiceBox.setItems(FXCollections.observableList(differentTerrains));
-    terrainChoiceBox.setValue(stringPlains);
-
-    terrainChoiceBox
-        .onActionProperty()
-        .setValue(actionEvent -> setImage(terrainChoiceBox.getValue()));
-
     ObservableList<Unit> unitObservableListArmyOne =
         FXCollections.observableList(new ArrayList<>());
-    unitListArmyOne = unitObservableListArmyOne;
-    armyOneTableView.setItems(unitObservableListArmyOne);
-    armyOneTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    unitList = unitObservableListArmyOne;
+    armyTableView.setItems(unitObservableListArmyOne);
+    armyTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-    ObservableList<Unit> unitObservableListArmyTwo =
-        FXCollections.observableList(new ArrayList<>());
-    unitListArmyTwo = unitObservableListArmyTwo;
-    armyTwoTableView.setItems(unitObservableListArmyTwo);
-    armyTwoTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+    setTableView(typeColumn, nameColumn, healthColumn, armorColumn,
+        attackColumn);
+  }
 
-    setTableView(typeArmyOneColumn, nameArmyOneColumn, healthArmyOneColumn, armorArmyOneColumn,
-        attackArmyOneColumn);
-
-    setTableView(typeArmyTwoColumn, nameArmyTwoColumn, healthArmyTwoColumn, attackArmyTwoColumn,
-        armorArmyTwoColumn);
-
-    updateArmyUnits();
-    updateArmyNamesLabels();
+  public void setArmyOne(boolean armyOne) {
+    this.armyOne = armyOne;
   }
 
   /**
    * Updated the units in the facade to the actual units from the tableView.
    */
-  private void updateArmyUnits() {
-    WargameFacade.getInstance().addUnitsArmyOne(armyOneTableView.getItems());
-    WargameFacade.getInstance().addUnitsArmyTwo(armyTwoTableView.getItems());
+  public void updateArmyUnits() {
+    WargameFacade.getInstance().setUnits(armyTableView.getItems(), armyNameLabel.getText());
     updateAllTotalLabels();
   }
 
@@ -130,23 +70,11 @@ public class ArmyMakerController implements Initializable {
    */
   private void updateAllTotalLabels() {
     WargameFacade instance = WargameFacade.getInstance();
-
-    infantryTotalArmyOneLabel.setText(String.valueOf(instance.getArmyOneAmountInfantry()));
-    rangedTotalArmyOneLabel.setText(String.valueOf(instance.getArmyOneAmountRanged()));
-    cavalryTotalArmyOneLabel.setText(String.valueOf(instance.getArmyOneAmountCavalry()));
-    commanderTotalArmyOneLabel.setText(String.valueOf(instance.getArmyOneAmountCommander()));
-    infantryTotalArmyTwoLabel.setText(String.valueOf(instance.getArmyTwoAmountInfantry()));
-    rangedTotalArmyTwoLabel.setText(String.valueOf(instance.getArmyTwoAmountRanged()));
-    cavalryTotalArmyTwoLabel.setText(String.valueOf(instance.getArmyTwoAmountCavalry()));
-    commanderTotalArmyTwoLabel.setText(String.valueOf(instance.getArmyTwoAmountCommander()));
-  }
-
-  /**
-   * Updated the labels with the values from {@code armyOneName} and {@code armyTwoName}.
-   */
-  private void updateArmyNamesLabels() {
-    armyOneNameLabel.setText(WargameFacade.getInstance().getArmyOneName());
-    armyTwoNameLabel.setText(WargameFacade.getInstance().getArmyTwoName());
+    totalUnitsLabel.setText(String.valueOf(instance.geAmountOfUnits(armyNameLabel.getText())));
+    totalInfantryUnitsUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountInfantry(armyNameLabel.getText())));
+    totalRangedUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountRanged(armyNameLabel.getText())));
+    totalCavalryUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountCavalry(armyNameLabel.getText())));
+    totalCommanderUnitsUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountCommander(armyNameLabel.getText())));
   }
 
   /**
@@ -172,69 +100,8 @@ public class ArmyMakerController implements Initializable {
     columnArmor.setCellValueFactory(new PropertyValueFactory<>("armor"));
   }
 
-  /**
-   * Method to get the string value associated with the terrain.
-   *
-   * @param image Image to get the terrain string value from.
-   * @return Terrain value as a string.
-   */
-  private String getTerrainValueFromImage(Image image) {
-    return image.getUrl().split("/")[14].split("\\.")[0].split("_")[0];
-  }
-
-  /**
-   * Method to set the image of terrain in the middle of the view. Will switch image depending on
-   * which image is currently showing.
-   *
-   * @param terrain The terrain as a string.
-   */
-  private void setImage(String terrain) {
-    if (terrain.equalsIgnoreCase(getTerrainValueFromImage(plains))) {
-      setTerrainImageView(plains);
-    } else if (terrain.equalsIgnoreCase(getTerrainValueFromImage(hills))) {
-      setTerrainImageView(hills);
-    } else if (terrain.equalsIgnoreCase(getTerrainValueFromImage(forest))) {
-      setTerrainImageView(forest);
-    }
-  }
-
-  /**
-   * Method to set an image as the current terrain-image.
-   *
-   * @param terrainImage The image to load, showing the terrain.
-   */
-  private void setTerrainImageView(Image terrainImage) {
-    terrainImageView.setImage(terrainImage);
-    currentTerrainLabel.setVisible(true);
-    currentTerrainLabel.setText(getTerrainValueFromImage(terrainImage));
-  }
-
-  /**
-   * When user has clicked has decided to switch terrain image.
-   * Switches between terrain bases on which image is currently showing.
-   */
   @FXML
-  private void onSwitchTerrainMouseClick() {
-    if (terrainImageView.getImage().getUrl().equals(plains.getUrl())) {
-      setTerrainImageView(hills);
-      terrainChoiceBox.setValue(getTerrainValueFromImage(hills));
-    } else if (terrainImageView.getImage().getUrl().equals(hills.getUrl())) {
-      setTerrainImageView(forest);
-      terrainChoiceBox.setValue(getTerrainValueFromImage(forest));
-    } else if (terrainImageView.getImage().getUrl().equals(forest.getUrl())) {
-      setTerrainImageView(plains);
-      terrainChoiceBox.setValue(getTerrainValueFromImage(plains));
-    }
-  }
-
-  @FXML
-  private void onAddUnitsArmyOneButtonClick() {
-    showDialogAddUnits();
-
-  }
-
-  @FXML
-  private void onAddUnitsArmyTwoButtonClick() {
+  private void onAddUnitsButtonClick() {
     showDialogAddUnits();
   }
 
@@ -243,74 +110,38 @@ public class ArmyMakerController implements Initializable {
    * If the user input is not valid, it will simply not add.
    */
   private void showDialogAddUnits() {
-    if ((armyOneNameLabel.getText() != null && !armyOneNameLabel.getText().isEmpty())
-        || (armyTwoNameLabel.getText() != null && !armyTwoNameLabel.getText().isEmpty())) {
-
-      ArmyEditorDialog dialog = new ArmyEditorDialog();
+    if ((armyNameLabel.getText() != null && !armyNameLabel.getText().isEmpty())) {
+      ArmyEditorDialog dialog = new ArmyEditorDialog(armyNameLabel.getText());
       Optional<List<Unit>> result = dialog.showAndWait();
 
       if (result.isPresent() && dialog.getValidInput()) {
-          String armyName = dialog.getCurrentArmy();
-          addUnitsToCorrectArmy(result.get(), armyName);
+        unitList.addAll(result.get());
+        updateArmyUnits();
       }
     } else {
       showErrorMessage("Need to have a name on at least on army");
     }
   }
 
-  /**
-   * Method to add a list of units with the army name to the correct army based on the name.
-   *
-   * @param units The units to add.
-   * @param armyName The name of the army, if it is the same as one of the current army names.
-   */
-  private void addUnitsToCorrectArmy(List<Unit> units, String armyName) {
-    if (armyName.equals(armyOneNameLabel.getText())) {
-      unitListArmyOne.addAll(units);
-    } else if (armyName.equals(armyTwoNameLabel.getText())) {
-      unitListArmyTwo.addAll(units);
-    }
-    updateArmyUnits();
-
-  }
-
   /** Method to remove all selected rows form the tableviewArmyOne when remove button is pressed.
    * Activated by button.
    */
-  public void onRemoveUnitsArmyOneButtonClick() {
-    ObservableList<Unit> selectedRows = armyOneTableView.getSelectionModel().getSelectedItems();
+  public void onRemoveUnitsButtonClick() {
+    ObservableList<Unit> selectedRows = armyTableView.getSelectionModel().getSelectedItems();
     ArrayList<Unit> rows = new ArrayList<>(selectedRows);
-    if (showAlertDelete(rows.size(), armyOneNameLabel.getText())) {
-      rows.forEach(row -> armyOneTableView.getItems().remove(row));
+    if (showAlertDelete(rows.size(), armyNameLabel.getText())) {
+      rows.forEach(row -> armyTableView.getItems().remove(row));
     }
-  }
-
-  /** Method to remove all selected rows form the tableviewArmyTwo when remove button is pressed.
-   * Activated by button.
-   */
-  @FXML
-  private void onRemoveUnitsArmyTwoButtonClick() {
-    ObservableList<Unit> selectedRows = armyTwoTableView.getSelectionModel().getSelectedItems();
-    ArrayList<Unit> rows = new ArrayList<>(selectedRows);
-    if (showAlertDelete(rows.size(), armyTwoNameLabel.getText())) {
-      rows.forEach(row -> armyTwoTableView.getItems().remove(row));
-    }
+    updateAllTotalLabels();
   }
 
   /*** Method to reset (delete all units) of army one. Activated by button.*/
   @FXML
-  private void onResetArmyOneButtonClick() {
-    if (showAlertDelete(armyOneTableView.getItems().size(), armyOneNameLabel.getText())) {
-      armyOneTableView.getItems().clear();
+  private void onResetUnitsButtonClick() {
+    if (showAlertDelete(armyTableView.getItems().size(), armyNameLabel.getText())) {
+      armyTableView.getItems().clear();
     }
-  }
-
-  /*** Method to reset (delete all units) of army two. Activated by button.*/
-  @FXML
-  private void onResetArmyTwoButtonClick() {
-    if (showAlertDelete(armyTwoTableView.getItems().size(), armyTwoNameLabel.getText())) {
-      armyTwoTableView.getItems().clear();
-    }
+    updateAllTotalLabels();
   }
 
   /**
@@ -337,6 +168,48 @@ public class ArmyMakerController implements Initializable {
   }
 
   /**
+   * Shows a {@code TextInputDialog}, dialog to change the name of an army.
+   *
+   * @return String, user input from dialog.
+   */
+  private String showNameTextInputDialog() {
+    TextInputDialog textInputDialog = new TextInputDialog("name");
+    textInputDialog.setHeaderText("Change name?");
+    textInputDialog.setTitle("Army name");
+    textInputDialog.getDialogPane().setContentText("Army name : ");
+    TextField input = textInputDialog.getEditor();
+
+    Optional<String> result = textInputDialog.showAndWait();
+    if (result.isPresent()) {
+      return input.getText();
+    } else {
+      return null;
+    }
+  }
+
+  /**Method to change the name army one. Activated by button.*/
+  @FXML
+  private void onChangeArmyOneNameButtonClick() {
+    String name = showNameTextInputDialog();
+    if (name != null && !name.isEmpty()) {
+      setArmyNameLabel(name);
+
+    }
+  }
+
+  private void setArmyNameLabel(String name) {
+    if (name != null && !name.isEmpty()) {
+      armyNameLabel.setText(name);
+      if (armyOne) {
+        WargameFacade.getInstance().setArmyOneName(name);
+      } else {
+        WargameFacade.getInstance().setArmyTwoName(name);
+      }
+    }
+  }
+
+
+  /**
    * Method to show an alert error message.
    *
    * @param e The message to show in the alert box.
@@ -349,136 +222,20 @@ public class ArmyMakerController implements Initializable {
     alert.showAndWait();
   }
 
-  /**Method to change the name army one. Activated by button.*/
-  @FXML
-  private void onChangeArmyOneNameButtonClick() {
-    String name = showNameTextInputDialog("Army one name");
-    if (name != null && !name.isEmpty()) {
-      setArmyOneNameLabel(name);
-    }
+  public List<Unit> getUnitList() {
+    return unitList;
   }
 
-  /**Method to change the name army two. Activated by button.*/
-  @FXML
-  private void onChangeArmyTwoNameButtonClick() {
-    String name = showNameTextInputDialog("Army two name");
-    if (name != null && !name.isEmpty()) {
-      setArmyTwoNameLabel(name);
-    }
+  public void setUnitList(List<Unit> unitList) {
+    this.unitList.addAll(unitList);
+
   }
 
-  /**
-   * Shows a {@code TextInputDialog}, dialog to change the name of an army.
-   *
-   * @param message The title of the dialog.
-   * @return String, user input from dialog.
-   */
-  private String showNameTextInputDialog(String message) {
-    TextInputDialog textInputDialog = new TextInputDialog("name");
-    textInputDialog.setHeaderText("Change name?");
-    textInputDialog.setTitle(message);
-    textInputDialog.getDialogPane().setContentText("Army name : ");
-    TextField input = textInputDialog.getEditor();
-
-    Optional<String> result = textInputDialog.showAndWait();
-    if (result.isPresent()) {
-      return input.getText();
-    } else {
-      return null;
-    }
+  public String getArmyName() {
+    return armyNameLabel.getText();
   }
 
-  private void setArmyOneNameLabel(String name) {
-    if (name != null && !name.equals(armyTwoNameLabel.getText())) {
-      armyOneNameLabel.setText(name);
-    }
-  }
-
-  private void setArmyTwoNameLabel(String name) {
-    if (name != null && !name.equals(armyOneNameLabel.getText())) {
-      armyTwoNameLabel.setText(name);
-    }
-  }
-
-  /**
-   * Method to show Simulate view.
-   * If army one unit is not empty, and army two units is not empty.
-   * Updated units and name to the armies.
-   */
-  @FXML
-  private void onSimulateButtonClick() {
-    if (!unitListArmyOne.isEmpty() && !unitListArmyTwo.isEmpty()) {
-      WargameFacade.getInstance().setArmyOneName(armyOneNameLabel.getText());
-      WargameFacade.getInstance().setArmyTwoName(armyTwoNameLabel.getText());
-      updateArmyUnits();
-      WargameFacade.getInstance()
-          .setCurrentTerrain(getTerrainValueFromImage(terrainImageView.getImage()));
-      WargameFacade.getInstance().setBattleTerrain();
-      WargamesApplication.getToSimulateBattle();
-    } else {
-      showErrorMessage("Both armies need to have units in them.");
-    }
-  }
-
-  /** Saves army one to resources file.*/
-  @FXML
-  private void onSaveArmyOneButtonClick() {
-    try {
-      WargameFacade.getInstance().saveArmyOneToResources();
-      WargameFacade.getInstance().setArmyOneName(armyOneNameLabel.getText());
-    } catch (IOException e) {
-      showErrorMessage(e.getMessage());
-    }
-  }
-
-  /** Saves army two to resources file.*/
-  @FXML
-  private void onSaveArmyTwoButtonClick() {
-    try {
-      WargameFacade.getInstance().saveArmyTwoToResources();
-      WargameFacade.getInstance().setArmyTwoName(armyTwoNameLabel.getText());
-    } catch (IOException e) {
-      showErrorMessage(e.getMessage());
-    }
-  }
-
-  /**Loads previous army one.*/
-  @FXML
-  private void onLoadPreviousArmyOneButtonClick() {
-    try {
-      unitListArmyOne.addAll(WargameFacade.getInstance().getArmyOneFromResources());
-      updateArmyNamesLabels();
-      updateArmyUnits();
-    } catch (IOException e) {
-      showErrorMessage(e.getMessage());
-    }
-  }
-
-  /**Loads previous army two.*/
-  @FXML
-  private void onLoadPreviousArmyTwoButtonClick() {
-    try {
-      unitListArmyTwo.addAll(WargameFacade.getInstance().getArmyTwoFromResources());
-      updateArmyNamesLabels();
-      updateArmyUnits();
-    } catch (IOException e) {
-      showErrorMessage(e.getMessage());
-    }
-  }
-
-  /**
-   * Loads a demo file that has 161 units on both armies, with names.
-   * Used to give the user an idea on how to make an army.
-   */
-  @FXML
-  private void onLoadDemoFileButtonClick() {
-    try {
-      unitListArmyOne.addAll(WargameFacade.getInstance().getArmyOneFromDemoFile());
-      unitListArmyTwo.addAll(WargameFacade.getInstance().getArmyTwoFromDemoFile());
-    } catch (IOException e) {
-      showErrorMessage(e.getMessage());
-    }
-    updateArmyNamesLabels();
-    updateArmyUnits();
+  public void setArmyName(String armyName) {
+    this.armyNameLabel.setText(armyName);
   }
 }
