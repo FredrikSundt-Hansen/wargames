@@ -35,7 +35,11 @@ public class ArmyFileHandler {
     Objects.requireNonNull(army);
     clearFile(path);
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
-      writer.write(army.getName());
+      if (army.getName() != null || !army.getName().isEmpty()) {
+        writer.write(army.getName());
+      } else {
+        throw new IllegalArgumentException("Army has no name.");
+      }
       writer.newLine();
       for (Unit unit : army.getUnits()) {
         writer.write(

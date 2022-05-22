@@ -140,7 +140,7 @@ public class Army {
    *
    * @return A unit.
    */
-  public Unit getRandom() {
+  public Unit getRandom() throws IllegalArgumentException {
     if (!units.isEmpty()) {
       return units.get(rand.nextInt(units.size()));
     } else {
@@ -201,10 +201,6 @@ public class Army {
     for (Unit unit : units) {
       unit.setTerrain(terrain);
     }
-  }
-
-  public List<String> getAllTypes() {
-    return units.stream().map(Unit::getType).collect(Collectors.toSet()).stream().toList();
   }
 
   /**
