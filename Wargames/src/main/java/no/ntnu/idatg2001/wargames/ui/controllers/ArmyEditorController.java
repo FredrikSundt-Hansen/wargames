@@ -1,6 +1,7 @@
 package no.ntnu.idatg2001.wargames.ui.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -11,8 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
-import no.ntnu.idatg2001.wargames.model.WargameFacade;
-import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 /**
  * Controller class for ArmyEditorDialogView. Sets up every javafx component in the view,
@@ -44,8 +43,13 @@ public class ArmyEditorController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
+    List<String> unitTypes = new ArrayList<>();
+    unitTypes.add("Infantry");
+    unitTypes.add("Ranged");
+    unitTypes.add("Cavalry");
+    unitTypes.add("Commander");
     choiceBoxType.setItems(
-        FXCollections.observableList(WargameFacade.getInstance().getAllDifferentUnits()));
+        FXCollections.observableList(unitTypes));
 
     textFieldName.setPromptText("name");
 
@@ -77,29 +81,15 @@ public class ArmyEditorController implements Initializable {
    * Method to return list of units from facade with the given values.
    * @return List of units with the given user inputs.
    */
-  public List<Unit> getUnitList() {
-    return WargameFacade.getInstance()
-        .makeUnits(
-            choiceBoxType.getValue(),
-            textFieldName.getText(),
-            spinnerHealth.getValue(),
-            spinnerAttack.getValue(),
-            spinnerArmor.getValue(),
-            spinnerAmount.getValue());
-  }
+  public List<String> getUnitList() {
+    List<String> userInputValues = new ArrayList<>();
+    userInputValues.add(choiceBoxType.getValue());
+    userInputValues.add(textFieldName.getText());
+    userInputValues.add(String.valueOf(spinnerHealth.getValue()));
+    userInputValues.add(String.valueOf(spinnerAttack.getValue()));
+    userInputValues.add(String.valueOf(spinnerArmor.getValue()));
+    userInputValues.add(String.valueOf(spinnerAmount.getValue()));
 
-  /**
-   * Method to check user input if it is valid for adding to armies.
-   * Checks that the user has chosen an army, a type and a name.
-   * All these criteria are needed to make a unit.
-   * Spinners does not need to checked because their spinner-factory
-   * makes sure the value cannot be lower than 1, or higher than 1000,
-   * and can only have integer input.
-   *
-   * @return True if the user inputs are correct.
-   */
-  public boolean validInput() {
-    return choiceBoxType.getValue() != null
-        && textFieldName.getText() != null;
+    return userInputValues;
   }
 }

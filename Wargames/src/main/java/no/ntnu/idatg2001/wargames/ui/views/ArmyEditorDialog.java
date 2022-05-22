@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.ui.controllers.ArmyEditorController;
 
 /**
@@ -20,10 +19,9 @@ import no.ntnu.idatg2001.wargames.ui.controllers.ArmyEditorController;
  * the custom dialog, ArmyEditorDialogView to make units
  * instead of making one manually in this class.
  */
-public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializable{
+public class ArmyEditorDialog extends Dialog<List<String>> implements Initializable {
 
-  private List<Unit> unitList = new ArrayList<>();
-  private boolean validInput;
+  private List<String> unitValues = new ArrayList<>();
 
   /**
    * Constructor for the dialog. Adds an apply button and calls showArmyEditor to load the view.
@@ -54,22 +52,15 @@ public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializabl
     setResultConverter(
         buttonType -> {
           if (buttonType == ButtonType.APPLY) {
-            validInput = controller.validInput();
-            if (validInput) {
-              unitList = controller.getUnitList();
+            unitValues = controller.getUnitList();
+            if (unitValues.get(0) != null && unitValues.get(1) != null) {
+              return unitValues;
+            } else {
+              return null;
             }
           }
-          return unitList;
+          return unitValues;
         });
-  }
-
-  /**
-   * Returns the boolean valueValidInput,
-   * is true if the value from the controller is true, and false otherwise.
-   * @return True if user input is valid, and false otherwise.
-   */
-  public boolean getValidInput() {
-    return validInput;
   }
 
   /**

@@ -112,11 +112,15 @@ public class ArmyMakerController implements Initializable {
   private void showDialogAddUnits() {
     if ((armyNameLabel.getText() != null && !armyNameLabel.getText().isEmpty())) {
       ArmyEditorDialog dialog = new ArmyEditorDialog(armyNameLabel.getText());
-      Optional<List<Unit>> result = dialog.showAndWait();
+      Optional<List<String>> result = dialog.showAndWait();
 
-      if (result.isPresent() && dialog.getValidInput()) {
-        unitList.addAll(result.get());
-        updateArmyUnits();
+      if (result.isPresent()) {
+        try {
+          unitList.addAll(WargameFacade.getInstance().makeUnits(result.get()));
+          updateArmyUnits();
+        } catch (IllegalArgumentException e) {
+          showErrorMessage(e.getMessage());
+        }
       }
     } else {
       showErrorMessage("Need to have a name on at least on army");

@@ -186,7 +186,7 @@ public class BattleMakerController implements Initializable {
       WargameFacade.getInstance().setArmyOneName(armyOneController.getArmyName());
       WargameFacade.getInstance().setUnits(armyOneController.getUnitList(), armyOneController.getArmyName());
       WargameFacade.getInstance().saveArmyOneToResources();
-    } catch (IOException e) {
+    } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
   }
@@ -198,7 +198,7 @@ public class BattleMakerController implements Initializable {
       WargameFacade.getInstance().setArmyTwoName(armyTwoController.getArmyName());
       WargameFacade.getInstance().setUnits(armyTwoController.getUnitList(), armyTwoController.getArmyName());
       WargameFacade.getInstance().saveArmyTwoToResources();
-    } catch (IOException e) {
+    } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
   }
@@ -210,7 +210,7 @@ public class BattleMakerController implements Initializable {
       armyOneController.setUnitList(WargameFacade.getInstance().getArmyOneFromResources());
       armyOneController.setArmyName(WargameFacade.getInstance().getArmyOneName());
       armyOneController.updateArmyUnits();
-    } catch (IOException e) {
+    } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
   }
@@ -222,7 +222,7 @@ public class BattleMakerController implements Initializable {
       armyTwoController.setUnitList(WargameFacade.getInstance().getArmyTwoFromResources());
       armyTwoController.setArmyName(WargameFacade.getInstance().getArmyTwoName());
       armyTwoController.updateArmyUnits();
-    } catch (IOException e) {
+    } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
   }
@@ -241,7 +241,7 @@ public class BattleMakerController implements Initializable {
       armyOneController.updateArmyUnits();
       armyTwoController.updateArmyUnits();
 
-    } catch (IOException e) {
+    } catch (IOException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
 

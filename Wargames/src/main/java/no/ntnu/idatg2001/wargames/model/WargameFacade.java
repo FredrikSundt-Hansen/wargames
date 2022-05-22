@@ -96,20 +96,6 @@ public class WargameFacade {
   }
 
   /**
-   * Method to get a list of all current types of units.
-   * @return List of all unit types.
-   */
-  public List<String> getAllDifferentUnits() {
-    List<String> unitTypes = new ArrayList<>();
-    unitTypes.add("Infantry");
-    unitTypes.add("Ranged");
-    unitTypes.add("Cavalry");
-    unitTypes.add("Commander");
-
-    return unitTypes;
-  }
-
-  /**
    * Method to make several units using UnitFactory.
    * @param type The type of the unit (Infantry, Commander etc. )
    * @param name The name of the unit.
@@ -119,10 +105,15 @@ public class WargameFacade {
    * @param amount The amount of units ot make.
    * @return List of all units with these characteristics.
    */
-  public List<Unit> makeUnits(
-      String type, String name, int health, int attack, int armor, int amount) {
+  public List<Unit> makeUnits(List<String> unitValuesAsString) throws IllegalArgumentException {
     return UnitFactory.getInstance()
-          .createMultipleUnits(type, name, health, attack, armor, amount);
+          .createMultipleUnits(
+              unitValuesAsString.get(0),
+              unitValuesAsString.get(1),
+              Integer.parseInt(unitValuesAsString.get(2)),
+              Integer.parseInt(unitValuesAsString.get(3)),
+              Integer.parseInt(unitValuesAsString.get(4)),
+              Integer.parseInt(unitValuesAsString.get(5)));
 
   }
 
@@ -135,26 +126,26 @@ public class WargameFacade {
 
   }
 
-  public List<Unit> getArmyOneFromResources() throws IOException {
+  public List<Unit> getArmyOneFromResources() throws IOException, IllegalArgumentException {
     Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneSaveFile.csv");
     armyOne.setName(army.getName());
     return army.getUnits();
   }
 
-  public List<Unit> getArmyTwoFromResources() throws IOException {
+  public List<Unit> getArmyTwoFromResources() throws IOException, IllegalArgumentException {
     Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyTwoSaveFile.csv");
     armyTwo.setName(army.getName());
     return army.getUnits();
   }
 
-  public List<Unit> getArmyOneFromDemoFile() throws IOException {
+  public List<Unit> getArmyOneFromDemoFile() throws IOException, IllegalArgumentException {
     Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneDemoFile.csv");
     armyOne.setName(army.getName());
     return army.getUnits();
   }
 
 
-  public List<Unit> getArmyTwoFromDemoFile() throws IOException {
+  public List<Unit> getArmyTwoFromDemoFile() throws IOException, IllegalArgumentException {
     Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyTwoDemoFile.csv");
     armyTwo.setName(army.getName());
     return army.getUnits();
