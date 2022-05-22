@@ -25,33 +25,62 @@ public class WargamesApplication extends Application {
   }
 
   @FXML
-  public static void gotToMainMenu() throws IOException {
+  public static void gotToMainMenu() {
     FXMLLoader loader =
         new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/MainWindowView.fxml"));
-    Parent root = loader.load();
-    Scene scene = new Scene(root);
-    primaryStage.setScene(scene);
+    try {
+      Parent root = loader.load();
+      Scene scene = new Scene(root);
+      primaryStage.setScene(scene);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
     primaryStage.setTitle("Main Menu");
     primaryStage.show();
   }
 
   @FXML
-  public static void showSetArmyNames() throws IOException {
+  public static void goToSetArmyNames() {
     FXMLLoader loader =
         new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/SetArmyNamesView.fxml"));
-    Parent root = loader.load();
-    Scene scene = new Scene(root);
-    primaryStage.setScene(scene);
+    try {
+      Parent root = loader.load();
+      Scene scene = new Scene(root);
+      primaryStage.setScene(scene);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     primaryStage.setTitle("Set Army Names");
     primaryStage.show();
   }
 
-  public static void goToBattleMaker() throws IOException {
+  @FXML
+  public static void goToBattleMaker() {
     FXMLLoader loader =
         new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyMakerView.fxml"));
-    Parent root = loader.load();
-    Scene scene = new Scene(root);
-    primaryStage.setScene(scene);
+    try {
+      Parent root = loader.load();
+      Scene scene = new Scene(root);
+      primaryStage.setScene(scene);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    primaryStage.setTitle("Battle Maker");
+    primaryStage.show();
+  }
+
+  @FXML
+  public static void getToSimulateBattle() {
+    FXMLLoader loader =
+        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/simulateWindowView.fxml"));
+    try {
+      Parent root = loader.load();
+      Scene scene = new Scene(root);
+      primaryStage.setScene(scene);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     primaryStage.setTitle("Battle Maker");
     primaryStage.show();
   }

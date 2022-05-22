@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.StackedAreaChart?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ProgressIndicator?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.SimulateWindowController">
+<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.SimulateWindowController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
+            <Menu mnemonicParsing="false" text="Simulater">
+              <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onShowArmyMakerButtonClick" text="Battle maker" />
+                <MenuItem mnemonicParsing="false" onAction="#onShowMainMenuButtonClick" text="Main Menu" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
@@ -35,50 +39,85 @@
         </menus>
       </MenuBar>
    </top>
-   <bottom>
-      <VBox prefHeight="100.0" prefWidth="900.0" BorderPane.alignment="CENTER" />
-   </bottom>
    <left>
-      <Pane prefHeight="725.0" prefWidth="386.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="731.0" prefWidth="449.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
          <children>
-            <StackedAreaChart layoutX="14.0" layoutY="14.0" prefHeight="231.0" prefWidth="349.0">
-              <xAxis>
-                <NumberAxis prefHeight="20.0" prefWidth="290.0" side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </StackedAreaChart>
-            <StackedAreaChart layoutX="29.0" layoutY="279.0" prefHeight="194.0" prefWidth="338.0">
-               <xAxis>
-                  <NumberAxis side="BOTTOM" />
-               </xAxis>
-               <yAxis>
-                  <NumberAxis side="LEFT" />
-               </yAxis>
-            </StackedAreaChart>
-            <StackedAreaChart layoutX="14.0" layoutY="514.0" prefHeight="188.0" prefWidth="354.0">
-               <xAxis>
-                  <NumberAxis side="BOTTOM" />
-               </xAxis>
-               <yAxis>
-                  <NumberAxis side="LEFT" />
-               </yAxis>
-            </StackedAreaChart>
+            <Group layoutX="9.0" layoutY="-34.0">
+               <children>
+                  <ScrollPane layoutX="-2.0" layoutY="92.0" prefWidth="432.0">
+                     <content>
+                        <VBox fx:id="vBoxHitUpdate" alignment="TOP_CENTER" prefWidth="432.0" style="-fx-background-color: lightgrey;" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </Group>
          </children>
       </Pane>
    </left>
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="731.0" prefWidth="813.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Canvas height="505.0" layoutX="8.0" layoutY="209.0" width="1000.0" />
-            <ToggleButton layoutX="464.0" layoutY="62.0" mnemonicParsing="false" text="Start" />
-            <Slider layoutX="148.0" layoutY="68.0" />
-            <ProgressIndicator layoutX="48.0" layoutY="48.0" progress="0.0" />
+            <Label layoutX="382.0" layoutY="14.0" prefHeight="35.0" prefWidth="105.0" style="-fx-text-fill: black;" stylesheets="@../stylesheet/style.css" text="Simulator">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <LineChart fx:id="armySizeLineChart" layoutX="38.0" layoutY="57.0" prefHeight="319.0" prefWidth="791.0" title="Army size">
+              <xAxis>
+                <CategoryAxis label="Time" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis autoRanging="false" label="Unit size" side="LEFT" upperBound="200.0" />
+              </yAxis>
+            </LineChart>
+            <PieChart layoutX="217.0" layoutY="387.0" prefHeight="330.0" prefWidth="451.0" />
          </children>
       </Pane>
    </center>
    <right>
-      <Pane prefHeight="725.0" prefWidth="318.0" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="731.0" prefWidth="432.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableViewArmyOne" layoutY="51.0" prefHeight="680.0" prefWidth="215.0">
+              <columns>
+                <TableColumn fx:id="columnTypeArmyOne" prefWidth="121.0" text="Type" />
+                <TableColumn fx:id="columnHealthArmyOne" prefWidth="93.0" text="Health" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tableViewArmyTwo" layoutX="216.0" layoutY="51.0" prefHeight="680.0" prefWidth="215.0">
+               <columns>
+                  <TableColumn fx:id="columTypeArmyTwo" prefWidth="115.0" text="Type" />
+                  <TableColumn fx:id="columnHealthArmyTwo" prefWidth="99.0" text="Health" />
+               </columns>
+            </TableView>
+            <Label layoutX="82.0" layoutY="14.0" text="Army one" />
+            <Label layoutX="298.0" layoutY="14.0" text="Army two" />
+            <Label layoutX="119.0" layoutY="31.0" text="units" />
+            <Label layoutX="336.0" layoutY="31.0" text="units" />
+            <Label fx:id="armyTwoSizeLabel" layoutX="309.0" layoutY="31.0" text="0" />
+            <Label fx:id="armyOneSizeLabel" layoutX="93.0" layoutY="31.0" text="0" />
+         </children>
+      </Pane>
    </right>
+   <bottom>
+      <Pane prefHeight="94.0" prefWidth="1720.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="807.0" layoutY="27.0" mnemonicParsing="false" onAction="#onStartSimulationButtonClick" stylesheets="@../stylesheet/style.css" text="Simualte">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/icon_pause_play_symbol.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Spinner fx:id="amountOfSimulationSpinner" layoutX="670.0" layoutY="50.0" prefHeight="25.0" prefWidth="63.0" />
+            <ImageView fx:id="currentTerrainImageView" fitHeight="67.0" fitWidth="120.0" layoutX="140.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="36.0" layoutY="42.0" text="Current terrain " />
+            <Label layoutX="641.0" layoutY="28.0" text="Amount of simulations" />
+            <Label layoutX="995.0" layoutY="19.0" text="Speed" />
+            <Label fx:id="currentTerrainLabel" layoutX="182.0" layoutY="6.0" text="Current terrain" />
+            <Spinner fx:id="threadSpeedSpinner" layoutX="978.0" layoutY="44.0" prefHeight="25.0" prefWidth="67.0" />
+         </children>
+      </Pane>
+   </bottom>
 </BorderPane>
