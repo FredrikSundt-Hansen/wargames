@@ -13,15 +13,17 @@ import javafx.scene.control.TextField;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
+/**
+ * Controller class for ArmyEditorDialogView. Sets up every javafx component in the view,
+ * (spinners, choice-boxes and text-field) and holds the values so the user can make new units and
+ * add it to the army of their choice.
+ * Implements initializable interface, replacing the constructor, and is being called by the javafx
+ * runtime upon initialization of the GUI.
+ */
 public class ArmyEditorController implements Initializable {
 
-  private int unitHealth;
-  private int unitAttack;
-  private int unitArmor;
-  private int unitAmount;
-
   @FXML
-  private ChoiceBox<String> choiceBoxArmies;
+  private ChoiceBox<String> choiceBoxArmyNames;
   @FXML
   private ChoiceBox<String> choiceBoxType;
   @FXML
@@ -39,32 +41,33 @@ public class ArmyEditorController implements Initializable {
   public void initialize(URL url, ResourceBundle resourceBundle) {
     choiceBoxType.setItems(
         FXCollections.observableList(WargameFacade.getInstance().getAllDifferentUnits()));
-    choiceBoxArmies.setItems(
+    choiceBoxArmyNames.setItems(
         FXCollections.observableList(WargameFacade.getInstance().getArmyNames()));
+
+    textFieldName.setPromptText("name");
 
     setSpinnerValue(spinnerHealth);
     setSpinnerValue(spinnerAttack);
     setSpinnerValue(spinnerArmor);
     setSpinnerValue(spinnerAmount);
-    spinnerHealth.valueProperty()
-        .addListener((observableValue, oldValue, newValue) -> unitHealth = newValue);
-    spinnerAttack.valueProperty()
-        .addListener((observableValue, oldValue, newValue) -> unitAttack = newValue);
-    spinnerArmor.valueProperty()
-        .addListener((observableValue, oldValue, newValue) -> unitArmor = newValue);
-    spinnerAmount.valueProperty()
-        .addListener(((observableValue, oldValue, newValue) -> unitAmount = newValue));
   }
 
+  /**
+   * Method to set the default spinner values for this view for all spinners being used.
+   * Makes sure that the user cannot write letters in the spinner, only integers.
+   * Adds a value-factory to the spinner with min 1, maks 1000, default value 10,
+   * and increments by 10.
+   * @param spinner The spinner to change.
+   */
   private void setSpinnerValue(Spinner<Integer> spinner) {
     spinner.getEditor().textProperty().addListener((observableValue, oldValue, newValue) -> {
               if (!newValue.matches("\\d*")) {
                 spinner.getEditor().setText(oldValue);
               }});
 
-    SpinnerValueFactory<Integer> valueFactoryHeath =
-        new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000);
-    spinner.setValueFactory(valueFactoryHeath);
+    SpinnerValueFactory<Integer> valueFactory =
+        new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 10, 10);
+    spinner.setValueFactory(valueFactory);
   }
 
   /**
@@ -76,28 +79,34 @@ public class ArmyEditorController implements Initializable {
         .makeUnits(
             choiceBoxType.getValue(),
             textFieldName.getText(),
-            unitHealth,
-            unitAttack,
-            unitArmor,
-            unitAmount);
-
+            spinnerHealth.getValue(),
+            spinnerAttack.getValue(),
+            spinnerArmor.getValue(),
+            spinnerAmount.getValue());
   }
 
   /**
-   * Method to check user input if is not null og below zero.
+   * Method to check user input if it is valid for adding to armies.
+   * Checks that the user has chosen an army, a type and a name.
+   * All these criteria are needed to make a unit.
+   * Spinners does not need to checked because their spinner-factory
+   * makes sure the value cannot be lower than 1, or higher than 1000,
+   * and can only have integer input.
+   *
    * @return True if the user inputs are correct.
    */
   public boolean validInput() {
     return choiceBoxType.getValue() != null
-        && choiceBoxArmies.getValue() != null
-        && textFieldName.getText() != null
-        && unitHealth >= 0
-        && unitArmor >= 0
-        && unitAttack >= 0
-        && unitAmount >= 0;
+        && choiceBoxArmyNames.getValue() != null
+        && textFieldName.getText() != null;
   }
 
-  public String getArmyFromChoiceBox() throws IllegalArgumentException {
-    return choiceBoxArmies.getValue();
+  /**
+   * Accessor method for the {@code choiceBoxArmyNames}. Gets the selected army from the choicebox.
+   *
+   * @return The selected army.
+   */
+  public String getArmyFromChoiceBox() {
+    return choiceBoxArmyNames.getValue();
   }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="189.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.ArmyEditorController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="189.0" prefWidth="600.0" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.ArmyEditorController">
    <top>
       <Pane prefHeight="59.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -18,7 +18,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="choiceBoxArmies" layoutX="99.0" layoutY="22.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="choiceBoxArmyNames" layoutX="99.0" layoutY="22.0" prefWidth="150.0" />
          </children>
       </Pane>
    </top>

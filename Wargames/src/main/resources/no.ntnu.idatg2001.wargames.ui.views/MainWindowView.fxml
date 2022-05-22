@@ -11,7 +11,7 @@
    <center>
       <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="imageMainWindow" fitHeight="465.0" fitWidth="473.0" layoutX="627.0" layoutY="150.0" onMouseClicked="#onMouseDragOverLogo" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imageMainWindow" fitHeight="465.0" fitWidth="473.0" layoutX="627.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/mainMenuPicture_725x724.png" />
                </image>

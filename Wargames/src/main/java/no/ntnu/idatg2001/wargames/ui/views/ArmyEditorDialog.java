@@ -5,70 +5,99 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.ui.controllers.ArmyEditorController;
 
-
+/**
+ * Dialog view for the that returns a list of units made by the use in ArmyEditorDialogView
+ * (ArmyEditorController). This is being used to have a modality view, and can then use
+ * the custom dialog, ArmyEditorDialogView to make units
+ * instead of making one manually in this class.
+ */
 public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializable{
 
   private List<Unit> unitList = new ArrayList<>();
   private String currentArmy;
   private boolean validInput;
 
-  public ArmyEditorDialog() throws IOException {
+  /**
+   * Constructor for the dialog. Adds an apply button and calls showArmyEditor to load the view.
+   */
+  public ArmyEditorDialog() {
     super();
-    getDialogPane().getScene().getWindow().setOnCloseRequest(windowEvent -> close());
     getDialogPane().getButtonTypes().add(ButtonType.APPLY);
-    final Button applyButton = (Button) getDialogPane().lookupButton(ButtonType.APPLY);
-    applyButton.addEventFilter(
-        ActionEvent.ACTION,
-        event -> {
-          if (!validInput) {
-            event.consume();
-          }
-        });
-
-    getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-    showArmyEditorAdd();
+    showArmyEditor();
   }
 
   /**
    * Method to show ArmyEditorView in this dialog. Will also setResultConverter
-   * (what the dialog returns) with from the values in the controller.
-   * @throws IOException - If FXML loader does not load properly.
+   * (what the dialog returns) with values from the controller.
    */
   @FXML
-  public void showArmyEditorAdd() throws IOException {
+  public void showArmyEditor() {
     FXMLLoader loader =
         new FXMLLoader(ArmyEditorDialog.
             class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyEditorDialogView.fxml"));
-    getDialogPane().setContent(loader.load());
+    try {
+      getDialogPane().setContent(loader.load());
+    } catch (IOException e) {
+      showErrorMessage(e.getMessage());
+    }
     ArmyEditorController controller = loader.getController();
 
     setResultConverter(
-          buttonType -> {
-            if (buttonType == ButtonType.APPLY) {
+        buttonType -> {
+          if (buttonType == ButtonType.APPLY) {
+            validInput = controller.validInput();
+            if (validInput) {
               unitList = controller.getUnitList();
               currentArmy = controller.getArmyFromChoiceBox();
-              validInput = controller.validInput();
             }
-            return unitList;
-          });
-
+          }
+          return unitList;
+        });
   }
 
+  /**
+   * Returns the boolean valueValidInput,
+   * is true if the value from the controller is true, and false otherwise.
+   * @return True if user input is valid, and false otherwise.
+   */
+  public boolean getValidInput() {
+    return validInput;
+  }
+
+  /**
+   * Returns the selected army which is collected from the controller class.
+   * @return The selected army to add units.
+   */
   public String getCurrentArmy() {
     return currentArmy;
   }
 
+  /**
+   * Method to show an error message as an alert box.
+   * @param e The error message to show.
+   */
+  private void showErrorMessage(String e) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setTitle("Error not a valid input");
+    alert.setHeaderText(e);
+    alert.setContentText("Please try again");
+    alert.showAndWait();
+  }
+
+  /**
+   * The class implements to Initializable interface to work with JavaFX.
+   * However the view is loaded in showArmyEditorAdd, and nothing else is iniziated.
+   * Hence this method is required, but is empty.
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
 

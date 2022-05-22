@@ -17,23 +17,22 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.ArmyMakerController">
+<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.ArmyMakerController">
    <top>
       <MenuBar styleClass="whiteBackground-over" stylesheets="@../stylesheet/style.css" BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="Battle Maker">
                <items>
-                  <Menu mnemonicParsing="false" text="Add Units">
-                    <items>
-                      <MenuItem mnemonicParsing="false" onAction="#onAddUnitsArmyOneButtonClick" text="Army one" />
-                        <MenuItem mnemonicParsing="false" onAction="#onAddUnitsArmyTwoButtonClick" text="Army two" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Reset">
+                  <Menu mnemonicParsing="false" text="Army one">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#onResetArmyOneButtonClick" text="Reset Army &quot;army name&quot;" />
-                        <MenuItem mnemonicParsing="false" onAction="#onResetArmyTwoButtonClick" text="Reset Army &quot;army name&quot;" />
-                        <MenuItem mnemonicParsing="false" onAction="#onResetArmiesClick" text="Reset all armies" />
+                      <MenuItem mnemonicParsing="false" onAction="#onAddUnitsArmyOneButtonClick" text="Add units" />
+                        <MenuItem mnemonicParsing="false" onAction="#onResetArmyOneButtonClick" text="Reset" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Army two">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onAddUnitsArmyTwoButtonClick" text="Add units" />
+                        <MenuItem mnemonicParsing="false" onAction="#onResetArmyTwoButtonClick" text="Reset" />
                      </items>
                   </Menu>
                </items>
@@ -41,24 +40,19 @@
             <Menu mnemonicParsing="false" onAction="#onSimulateButtonClick" text="Simulate" />
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <Menu mnemonicParsing="false" onAction="#onSaveArmiesButtonClick" text="Army &quot;army name&quot;">
+                  <Menu mnemonicParsing="false" text="Army one">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save as" />
-                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousSaveButtonClick" text="Load previouse save" />
-                        <MenuItem mnemonicParsing="false" onAction="#onLoadFromFileButtonClick" text="Load from file" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyOneButtonClick" text="Load previouse save" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" onAction="#onSaveArmiesButtonClick" text="Army &quot;army name&quot;">
+                  <Menu mnemonicParsing="false" text="Army two">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Save" />
-                        <MenuItem mnemonicParsing="false" text="Save as" />
-                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousSaveButtonClick" text="Load previouse save" />
-                        <MenuItem mnemonicParsing="false" onAction="#onLoadFromFileButtonClick" text="Load from file" />
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyTwoButtonClick" text="Load previous save" />
                      </items>
                   </Menu>
-                  <MenuItem mnemonicParsing="false" text="Load previous Battle" />
-                  <MenuItem mnemonicParsing="false" text="Export Battle" />
+                  <MenuItem mnemonicParsing="false" onAction="#onLoadDemoFileButtonClick" text="Load demo " />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -72,18 +66,60 @@
    <left>
       <Pane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableViewArmyOne" layoutY="66.0" prefHeight="759.0" prefWidth="343.0">
+            <TableView fx:id="armyOneTableView" layoutY="95.0" prefHeight="730.0" prefWidth="343.0">
               <columns>
-                <TableColumn fx:id="columnTypeArmyOne" prefWidth="90.0" text="Type" />
-                  <TableColumn fx:id="columnNameArmyOne" prefWidth="100.0" text="Name" />
-                  <TableColumn fx:id="columnHealthArmyOne" minWidth="5.0" prefWidth="50.0" text="Health" />
-                  <TableColumn fx:id="columnArmorArmyOne" minWidth="5.0" prefWidth="50.0" text="Armor" />
-                  <TableColumn fx:id="columnAttackArmyOne" minWidth="5.0" prefWidth="50.0" text="Attack" />
+                <TableColumn fx:id="typeArmyOneColumn" prefWidth="90.0" text="Type" />
+                  <TableColumn fx:id="nameArmyOneColumn" prefWidth="100.0" text="Name" />
+                  <TableColumn fx:id="healthArmyOneColumn" minWidth="5.0" prefWidth="50.0" text="Health" />
+                  <TableColumn fx:id="armorArmyOneColumn" minWidth="5.0" prefWidth="50.0" text="Armor" />
+                  <TableColumn fx:id="attackArmyOneColumn" minWidth="5.0" prefWidth="50.0" text="Attack" />
               </columns>
             </TableView>
-            <Label fx:id="labelArmyOneName" layoutX="128.0" layoutY="17.0" onMousePressed="#onChangeArmyOneNameMouseClick" text="&quot;No name&quot;">
+            <Label fx:id="armyOneNameLabel" layoutX="144.0" layoutY="13.0" onMouseClicked="#onChangeArmyOneNameButtonClick">
                <font>
                   <Font size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_number_one.png" />
+               </image>
+            </ImageView>
+            <Group layoutX="35.0" layoutY="49.0">
+               <children>
+                  <Label text="Infantry : " />
+                  <Label layoutY="24.0" text="Ranged : " />
+                  <Label layoutX="104.0" layoutY="24.0" text="Cavalry : " />
+                  <Label layoutX="104.0" text="Commander : " />
+                  <Label fx:id="infantryTotalArmyOneLabel" layoutX="62.0" text="X" />
+                  <Label fx:id="rangedTotalArmyOneLabel" layoutX="62.0" layoutY="24.0" text="X" />
+                  <Label fx:id="cavalryTotalArmyOneLabel" layoutX="192.0" layoutY="24.0" text="X" />
+                  <Label fx:id="commanderTotalArmyOneLabel" layoutX="192.0" text="X" />
+               </children>
+            </Group>
+            <Label layoutX="248.0" layoutY="49.0" text="Total : " />
+            <Label fx:id="totalUnitsArmyOneLabel" layoutX="296.0" layoutY="49.0" text="X" />
+            <Button layoutX="291.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" stylesheets="@../stylesheet/style.css">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/icon_save_symbol.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="242.0" layoutY="10.0" mnemonicParsing="false" onAction="#onChangeArmyOneNameButtonClick">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/icon_edit_symbol.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="57.0" layoutY="16.0" text="Army name">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
@@ -92,18 +128,58 @@
    <right>
       <Pane BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableViewArmyTwo" layoutY="73.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="738.0" prefWidth="340.0">
+            <TableView fx:id="armyTwoTableView" layoutY="91.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="720.0" prefWidth="340.0">
               <columns>
-                  <TableColumn fx:id="columnTypeArmyTwo" prefWidth="90.0" text="Type" />
-                  <TableColumn fx:id="columnNameArmyTwo" prefWidth="100.0" text="Name" />
-                  <TableColumn fx:id="columnHealthArmyTwo" minWidth="5.0" prefWidth="50.0" text="Health" />
-                  <TableColumn fx:id="columnArmorArmyTwo" minWidth="5.0" prefWidth="50.0" text="Armor" />
-                  <TableColumn fx:id="columnAttackArmyTwo" minWidth="5.0" prefWidth="50.0" text="Attack" />
+                  <TableColumn fx:id="typeArmyTwoColumn" prefWidth="90.0" text="Type" />
+                  <TableColumn fx:id="nameArmyTwoColumn" prefWidth="100.0" text="Name" />
+                  <TableColumn fx:id="healthArmyTwoColumn" minWidth="5.0" prefWidth="50.0" text="Health" />
+                  <TableColumn fx:id="armorArmyTwoColumn" minWidth="5.0" prefWidth="50.0" text="Armor" />
+                  <TableColumn fx:id="attackArmyTwoColumn" minWidth="5.0" prefWidth="50.0" text="Attack" />
               </columns>
             </TableView>
-            <Label fx:id="labelArmyTwoName" layoutX="126.0" layoutY="17.0" onMousePressed="#onChangeArmyTwoNameMouseClick" text="&quot;No name&quot;">
+            <Label fx:id="armyTwoNameLabel" layoutX="195.0" layoutY="13.0" onMouseClicked="#onChangeArmyTwoNameButtonClick">
                <font>
                   <Font size="18.0" />
+               </font>
+            </Label>
+            <Group layoutX="70.0" layoutY="44.0">
+               <children>
+                  <Label text="Infantry : " />
+                  <Label layoutY="24.0" text="Ranged : " />
+                  <Label layoutX="104.0" layoutY="24.0" text="Cavalry : " />
+                  <Label layoutX="104.0" text="Commander : " />
+                  <Label fx:id="infantryTotalArmyTwoLabel" layoutX="62.0" text="X" />
+                  <Label fx:id="rangedTotalArmyTwoLabel" layoutX="62.0" layoutY="24.0" text="X" />
+                  <Label fx:id="cavalryTotalArmyTwoLabel" layoutX="192.0" layoutY="24.0" text="X" />
+                  <Label fx:id="commanderTotalArmyTwoLabel" layoutX="192.0" text="X" />
+               </children>
+            </Group>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="293.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_number_two.png" />
+               </image>
+            </ImageView>
+            <Button layoutX="22.0" layoutY="11.0" mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/icon_save_symbol.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="70.0" layoutY="11.0" mnemonicParsing="false" onAction="#onChangeArmyTwoNameButtonClick">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/icon_edit_symbol.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="116.0" layoutY="17.0" text="Army name">
+               <font>
+                  <Font size="14.0" />
                </font>
             </Label>
          </children>
@@ -114,7 +190,7 @@
          <children>
             <Group layoutX="-2.0" layoutY="120.0">
                <children>
-                  <ImageView fx:id="imageViewTerrain" fitHeight="600.0" fitWidth="1000.0" layoutX="3.0" layoutY="1.0" onMouseClicked="#onSwitchTerrainMouseClick" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="terrainImageView" fitHeight="600.0" fitWidth="1000.0" layoutX="3.0" layoutY="1.0" onMouseClicked="#onSwitchTerrainMouseClick" pickOnBounds="true" preserveRatio="true" />
                   <Separator layoutX="1.0" layoutY="1.0" maxHeight="600.0" maxWidth="3.0" minHeight="600.0" minWidth="3.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="3.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" />
                   <Separator layoutX="999.0" layoutY="1.0" maxHeight="600.0" maxWidth="3.0" minHeight="600.0" minWidth="3.0" orientation="VERTICAL" prefHeight="600.0" prefWidth="3.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" />
                   <Separator layoutX="4.0" maxHeight="3.0" maxWidth="997.0" minHeight="3.0" minWidth="997.0" prefHeight="3.0" prefWidth="997.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" />
@@ -126,18 +202,18 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <ChoiceBox fx:id="choiceBoxTerrains" layoutX="40.0" layoutY="729.0" prefWidth="150.0" stylesheets="@../stylesheet/style.css">
+            <ChoiceBox fx:id="terrainChoiceBox" layoutX="40.0" layoutY="729.0" prefWidth="150.0" stylesheets="@../stylesheet/style.css">
                <styleClass>
-                  <String fx:value="choiceBox-over" />
-                  <String fx:value="choiceBox" />
+                  <String fx:value="choiceBox-background-blue" />
+                  <String fx:value="choiceBox-label-blue" />
                </styleClass></ChoiceBox>
-            <Button layoutX="2.0" layoutY="729.0" mnemonicParsing="false" onAction="#onSwitchTerrainButtonClick" styleClass="button-over" stylesheets="@../stylesheet/style.css" text="&gt;" />
-            <Label fx:id="labelCurrentTerrain" layoutX="595.0" layoutY="25.0" styleClass="text-fill" stylesheets="@../stylesheet/style.css" text="&quot;plains&quot;" visible="false">
+            <Button layoutX="2.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#onSwitchTerrainMouseClick" styleClass="button-over" stylesheets="@../stylesheet/style.css" text="&gt;" />
+            <Label fx:id="currentTerrainLabel" disable="true" layoutX="559.0" layoutY="63.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="&quot;plains&quot;" visible="false">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="463.0" layoutY="29.0" styleClass="text-fill" stylesheets="@../stylesheet/style.css" text="Terrain" underline="true">
+            <Label layoutX="463.0" layoutY="63.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="Terrain" underline="true">
                <font>
                   <Font size="24.0" />
                </font>

@@ -1,13 +1,10 @@
 package no.ntnu.idatg2001.wargames.ui.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 
@@ -18,31 +15,34 @@ public class MainWindowController implements Initializable {
   @FXML
   private TextField textFieldArmyTwo;
 
+  /**
+   * Class implements Initializable interface to be used by FXML loader.
+   * But does not have anything to initialise.
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
-
   }
 
-  public void onMouseDragOverLogo(MouseEvent mouseDragEvent) {
-
+  @FXML
+  private void onNewBattleButtonClick() {
+    WargamesApplication.goToSetArmyNames();
   }
 
-  public void onNewBattleButtonClick(ActionEvent actionEvent) throws IOException {
-    WargamesApplication.showSetArmyNames();
-  }
-
-  public void onGoToBattleMakerButtonClick(ActionEvent actionEvent) throws IOException {
+  /**
+   * Shows battle maker after setting the new army names.
+   * Army names does not have to be set, and be set later in the application.
+   */
+  @FXML
+  private void onGoToBattleMakerButtonClick() {
     try {
       WargameFacade.getInstance().setArmyOneName(textFieldArmyOne.getText());
       WargameFacade.getInstance().setArmyTwoName(textFieldArmyTwo.getText());
-
-    } catch (IllegalArgumentException ignored) {
-
-    }
+    } catch (IllegalArgumentException ignored) {}
     WargamesApplication.goToBattleMaker();
   }
 
-  public void onGoToMainMenuButtonClick(ActionEvent actionEvent) throws IOException {
+  @FXML
+  private void onGoToMainMenuButtonClick() {
     WargamesApplication.gotToMainMenu();
   }
 }
