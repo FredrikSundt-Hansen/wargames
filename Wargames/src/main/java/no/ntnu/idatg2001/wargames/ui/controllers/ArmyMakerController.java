@@ -69,12 +69,22 @@ public class ArmyMakerController implements Initializable {
    *Updated all the labels showing the different the amount of different types of units.
    */
   private void updateAllTotalLabels() {
-    WargameFacade instance = WargameFacade.getInstance();
-    totalUnitsLabel.setText(String.valueOf(instance.geAmountOfUnits(armyNameLabel.getText())));
-    totalInfantryUnitsUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountInfantry(armyNameLabel.getText())));
-    totalRangedUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountRanged(armyNameLabel.getText())));
-    totalCavalryUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountCavalry(armyNameLabel.getText())));
-    totalCommanderUnitsUnitsLabel.setText(String.valueOf(instance.getArmyOneAmountCommander(armyNameLabel.getText())));
+    List<Integer> unitValues = WargameFacade.getInstance().getArmyOneAmountsUnitTypes();
+
+    setValueToLabel(unitValues, totalUnitsLabel, totalInfantryUnitsUnitsLabel,
+        totalRangedUnitsLabel, totalCavalryUnitsLabel, totalCommanderUnitsUnitsLabel);
+  }
+
+  private void setValueToLabel(List<Integer> unitValuesArmyTwo,
+                               Label totalInfantriesArmyTwoUnitsLabel,
+                               Label totalRangedArmyTwoLabel, Label totalCavalriesArmyTwoLabel,
+                               Label totalCommandersArmyTwoLabel, Label totalArmyTwoLabel) {
+
+    totalInfantriesArmyTwoUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(0)));
+    totalRangedArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(1)));
+    totalCavalriesArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(2)));
+    totalCommandersArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(3)));
+    totalArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(4)));
   }
 
   /**

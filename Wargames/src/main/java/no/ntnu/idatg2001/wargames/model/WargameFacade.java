@@ -97,24 +97,16 @@ public class WargameFacade {
 
   /**
    * Method to make several units using UnitFactory.
-   * @param type The type of the unit (Infantry, Commander etc. )
-   * @param name The name of the unit.
-   * @param health The health value of the unit.
-   * @param attack The attack value of the unit.
-   * @param armor The armor value of the unit.
-   * @param amount The amount of units ot make.
    * @return List of all units with these characteristics.
    */
   public List<Unit> makeUnits(List<String> unitValuesAsString) throws IllegalArgumentException {
-    return UnitFactory.getInstance()
-          .createMultipleUnits(
-              unitValuesAsString.get(0),
-              unitValuesAsString.get(1),
-              Integer.parseInt(unitValuesAsString.get(2)),
-              Integer.parseInt(unitValuesAsString.get(3)),
-              Integer.parseInt(unitValuesAsString.get(4)),
-              Integer.parseInt(unitValuesAsString.get(5)));
-
+    return UnitFactory.getInstance().createMultipleUnits(
+        unitValuesAsString.get(0),
+        unitValuesAsString.get(1),
+        Integer.parseInt(unitValuesAsString.get(2)),
+        Integer.parseInt(unitValuesAsString.get(3)),
+        Integer.parseInt(unitValuesAsString.get(4)),
+        Integer.parseInt(unitValuesAsString.get(5)));
   }
 
   public void saveArmyOneToResources() throws IOException, IllegalArgumentException {
@@ -151,54 +143,23 @@ public class WargameFacade {
     return army.getUnits();
   }
 
-  public int geAmountOfUnits(String armyName) {
-    if (armyName.equalsIgnoreCase(armyOne.getName())) {
-      return armyOne.getAllUnits().size();
-    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
-      return armyTwo.getAllUnits().size();
-    } else {
-      return 0;
-    }
+  public List<Integer> getArmyOneAmountsUnitTypes() {
+    return getUnitValues(armyOne);
   }
 
-  public int getArmyOneAmountInfantry(String armyName) {
-    if (armyName.equalsIgnoreCase(armyOne.getName())) {
-      return armyOne.getAllInfantryUnits().size();
-    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
-      return armyTwo.getAllInfantryUnits().size();
-    } else {
-      return 0;
-    }
+  public List<Integer> getArmyTwoAmountsUnitTypes() {
+    return getUnitValues(armyTwo);
   }
 
-  public int getArmyOneAmountRanged(String armyName) {
-    if (armyName.equalsIgnoreCase(armyOne.getName())) {
-      return armyOne.getAllRangedUnits().size();
-    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
-      return armyTwo.getAllRangedUnits().size();
-    } else {
-      return 0;
-    }
-  }
+  private List<Integer> getUnitValues(Army army) {
+    List<Integer> values = new ArrayList<>();
+    values.add(army.getUnits().size());
+    values.add(army.getAllInfantryUnits().size());
+    values.add(army.getAllRangedUnits().size());
+    values.add(army.getAllCavalryUnits().size());
+    values.add(army.getAllCommanderUnits().size());
 
-  public int getArmyOneAmountCavalry(String armyName) {
-    if (armyName.equalsIgnoreCase(armyOne.getName())) {
-      return armyOne.getAllCavalryUnits().size();
-    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
-      return armyTwo.getAllCavalryUnits().size();
-    } else {
-      return 0;
-    }
-  }
-
-  public int getArmyOneAmountCommander(String armyName) {
-    if (armyName.equalsIgnoreCase(armyOne.getName())) {
-      return armyOne.getAllCommanderUnits().size();
-    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
-      return armyTwo.getAllCommanderUnits().size();
-    } else {
-      return 0;
-    }
+    return values;
   }
 
   public void setCurrentTerrain(String terrain) {
@@ -214,11 +175,28 @@ public class WargameFacade {
     return battle.simulateStep();
   }
 
-  public void simulate() {
-    battle.simulate(currentTerrain);
+  public List<Long> simulateMultipleTimes(int n) {
+    List<Long> distributionOfWinners = new ArrayList<>();
+    List<Army> battles = new ArrayList<>();
+    for (int i = 0; i < 1000; i++) {
+      Army army = new Battle(armyOne,armyTwo).simulate(currentTerrain);
+      battles.add(army);
+    }
+    long a = battles.stream().filter(army -> army.getName().equals(armyOne.getName())).count();
+    long b = battles.stream().filter(army -> army.getName().equals(armyTwo.getName())).count();
+    distributionOfWinners.add(a);
+    distributionOfWinners.add(b);
+
+    return distributionOfWinners;
   }
+
+
 
   public void setBattle() {
     this.battle = new Battle(armyOne, armyTwo);
+  }
+
+  public Battle getBattle() {
+    return battle;
   }
 }

@@ -19,45 +19,40 @@
    <top>
       <MenuBar styleClass="whiteBackground-over" stylesheets="@../stylesheet/style.css" BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="Battle Maker">
+          <Menu mnemonicParsing="false" text="Go to">
                <items>
-                  <Menu mnemonicParsing="false" text="Army one">
-                     <items>
-                      <MenuItem mnemonicParsing="false" text="Add units" />
-                        <MenuItem mnemonicParsing="false" text="Reset" />
-                     </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Army two">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Add units" />
-                        <MenuItem mnemonicParsing="false" text="Reset" />
-                     </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#onSimulateButtonClick" text="Simulator" />
                </items>
           </Menu>
-            <Menu mnemonicParsing="false" onAction="#onSimulateButtonClick" text="Simulate" />
-            <Menu mnemonicParsing="false" text="File">
-               <items>
-                  <Menu mnemonicParsing="false" text="Army one">
-                    <items>
-                        <MenuItem fx:id="onSaveArmyOneButtonClick" mnemonicParsing="false" text="Save" />
-                        <MenuItem fx:id="onLoadPreviousArmyOneButtonClick" mnemonicParsing="false" text="Load previouse save" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Army two">
-                     <items>
-                        <MenuItem fx:id="onSaveArmyTwoButtonClick" mnemonicParsing="false" text="Save" />
-                        <MenuItem fx:id="onLoadPreviousArmyTwoButtonClick" mnemonicParsing="false" text="Load previous save" />
-                     </items>
-                  </Menu>
-                  <MenuItem mnemonicParsing="false" onAction="#onLoadDemoFileButtonClick" text="Load demo " />
-               </items>
-            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <Menu mnemonicParsing="false" text="Army one">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyOneButtonClick" text="Load previouse save" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Army two">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyTwoButtonClick" text="Load previous save" />
+                     </items>
+                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#onLoadDemoFileButtonClick" text="Load demo " />
+               </items>
+               <graphic>
+                  <Label text="&quot;Path&quot;">
+                     <graphic>
+                        <Label fx:id="filePathLabel" text="Loaded from" />
+                     </graphic>
+                  </Label>
+               </graphic>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
