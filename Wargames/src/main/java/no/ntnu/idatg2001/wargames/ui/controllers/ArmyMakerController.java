@@ -243,8 +243,8 @@ public class ArmyMakerController implements Initializable {
    * If the user input is not valid, it will simply not add.
    */
   private void showDialogAddUnits() {
-    if (!armyOneNameLabel.getText().isEmpty()
-        || !armyTwoNameLabel.getText().isEmpty()) {
+    if ((armyOneNameLabel.getText() != null && !armyOneNameLabel.getText().isEmpty())
+        || (armyTwoNameLabel.getText() != null && !armyTwoNameLabel.getText().isEmpty())) {
 
       ArmyEditorDialog dialog = new ArmyEditorDialog();
       Optional<List<Unit>> result = dialog.showAndWait();

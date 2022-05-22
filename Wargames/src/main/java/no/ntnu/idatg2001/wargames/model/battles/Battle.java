@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.wargames.model.battles;
 
+import java.util.ArrayList;
 import java.util.Random;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
@@ -50,35 +51,42 @@ public class Battle extends UnitUpdater {
    * @param armyOne The first army in the battle.
    * @param armyTwo The second army in the battle.
    */
-  private void randomAttack(Army armyOne, Army armyTwo) {
+  private void randomAttack(Army armyOne, Army armyTwo) throws IllegalArgumentException {
     Unit u1 = armyOne.getRandom();
     Unit u2 = armyTwo.getRandom();
 
     int n = rand.nextInt(2);
     if (n == 0) {
       u1.attack(u2);
-      hitUpdateAll(u1,u2);
       if (u2.getHealth() <= 0) {
         armyTwo.removeUnit(u2);
-        sizeUpdate(armyTwo);
+        sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
       }
+      hitUpdate(u1,u2);
     }
     if (n == 1) {
       u2.attack(u1);
-      hitUpdateAll(u2,u1);
       if (u1.getHealth() <= 0) {
         armyOne.removeUnit(u1);
-        sizeUpdate(armyOne);
+        sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
       }
+      hitUpdate(u2,u1);
     }
   }
 
-  private void sizeUpdate(Army army) {
-    sizeUpdateAll(armyTwo.getAllUnits().size(),
-        armyTwo.getAllInfantryUnits().size(),
-        armyTwo.getAllRangedUnits().size(),
-        armyTwo.getAllCavalryUnits().size(),
-        armyTwo.getAllCommanderUnits().size());
+  private void hitUpdate(Unit attacker, Unit defender) {
+      hitUpdateAll(
+          attacker.getName(),
+          attacker.getAttack(),
+          attacker.getAttackBonus(),
+          defender.getName(),
+          defender.getHealth(),
+          defender.getResistBonus());
+
+  }
+
+  private void sizeUpdate(int armyOneSize, int armyTwoSize) {
+    sizeUpdateAll(armyOneSize, armyTwoSize);
   }
 
   /**
@@ -88,8 +96,7 @@ public class Battle extends UnitUpdater {
    * @return The winner of the armies.
    */
   public Army simulate(String terrain) {
-    armyOne.setTerrainToUnits(terrain);
-    armyTwo.setTerrainToUnits(terrain);
+    setTerrain(terrain);
     boolean simulating = true;
     Army army = null;
     while (simulating) {
@@ -106,6 +113,21 @@ public class Battle extends UnitUpdater {
       }
     }
     return army;
+  }
+
+  public boolean simulateStep() {
+    boolean finished = false;
+    try {
+      randomAttack(armyOne, armyTwo);
+    } catch (IllegalArgumentException e) {
+      finished = true;
+    }
+    return finished;
+  }
+
+  public void setTerrain(String terrain) {
+    armyOne.setTerrainToUnits(terrain);
+    armyTwo.setTerrainToUnits(terrain);
   }
 
   /**
