@@ -18,7 +18,7 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
  * @version 1.0.1
  */
 public class Army {
-  private final List<Unit> units;
+  private List<Unit> units;
   private final Random rand;
   private String name;
 
@@ -66,6 +66,10 @@ public class Army {
     this.name = null;
     this.units = new ArrayList<>();
     rand = new Random();
+  }
+
+  public void setUnits(List<Unit> units) {
+    this.units = units;
   }
 
   public String getName() {

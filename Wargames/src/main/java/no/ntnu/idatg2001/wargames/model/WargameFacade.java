@@ -44,9 +44,7 @@ public class WargameFacade {
     return instance;
   }
 
-  public void setBattle(List<Unit> armyOne, List<Unit> armyTwo, String armyOneName, String armyTwoName) {
-    this.battle = new Battle(new Army(armyOneName, armyOne), new Army(armyTwoName, armyTwo));
-  }
+
 
   public List<Unit> getArmyOneUnits() {
     return armyOne.getAllUnits();
@@ -72,20 +70,20 @@ public class WargameFacade {
     return armyTwo.getName();
   }
 
-  public void addUnitsArmyOne(List<Unit> units) {
-    armyOne.addAllUnits(units);
+  public void addUnits(List<Unit> units, String armyName) {
+    if (armyName.equalsIgnoreCase(armyOne.getName())) {
+      armyOne.addAllUnits(units);
+    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
+      armyTwo.addAllUnits(units);
+    }
   }
 
-  public void addUnitsArmyTwo(List<Unit> units) {
-    armyTwo.addAllUnits(units);
-  }
-
-  public void setCurrentTerrain(String terrain) {
-    currentTerrain = terrain;
-  }
-
-  public void simulate() {
-    battle.simulate(currentTerrain);
+  public void setUnits(List<Unit> units, String armyName) {
+    if (armyName.equalsIgnoreCase(armyOne.getName())) {
+      armyOne.setUnits(units);
+    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
+      armyTwo.setUnits(units);
+    }
   }
 
   /**
@@ -112,23 +110,6 @@ public class WargameFacade {
   }
 
   /**
-   * Method to get a list of the army names.
-   * @return List of the army names.
-   */
-  public List<String> getArmyNames() {
-    List<String> armiesNames = new ArrayList<>();
-    String armyOneName = armyOne.getName();
-    String armyTwoName = armyTwo.getName();
-    if (armyOneName != null) {
-      armiesNames.add(armyOneName);
-    }
-    if (armyTwoName != null) {
-      armiesNames.add(armyTwoName);
-    }
-    return armiesNames;
-  }
-
-  /**
    * Method to make several units using UnitFactory.
    * @param type The type of the unit (Infantry, Commander etc. )
    * @param name The name of the unit.
@@ -145,6 +126,15 @@ public class WargameFacade {
 
   }
 
+  public void saveArmyOneToResources() throws IOException, IllegalArgumentException {
+    ArmyFileHandler.writeArmyCsv(armyOne,"src/main/resources/savefiles/armyOneSaveFile.csv");
+  }
+
+  public void saveArmyTwoToResources() throws IOException, IllegalArgumentException {
+    ArmyFileHandler.writeArmyCsv(armyTwo, "src/main/resources/savefiles/armyTwoSaveFile.csv");
+
+  }
+
   public List<Unit> getArmyOneFromResources() throws IOException {
     Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneSaveFile.csv");
     armyOne.setName(army.getName());
@@ -157,52 +147,12 @@ public class WargameFacade {
     return army.getUnits();
   }
 
-  public void saveArmyOneToResources() throws IOException, IllegalArgumentException {
-    ArmyFileHandler.writeArmyCsv(armyOne,"src/main/resources/savefiles/armyOneSaveFile.csv");
-  }
-
-  public void saveArmyTwoToResources() throws IOException, IllegalArgumentException {
-    ArmyFileHandler.writeArmyCsv(armyTwo, "src/main/resources/savefiles/armyTwoSaveFile.csv");
-
-  }
-
-  public int getArmyOneAmountInfantry() {
-    return armyOne.getAllInfantryUnits().size();
-  }
-
-  public int getArmyOneAmountRanged() {
-    return armyOne.getAllRangedUnits().size();
-  }
-
-  public int getArmyOneAmountCavalry() {
-    return armyOne.getAllCavalryUnits().size();
-  }
-
-  public int getArmyOneAmountCommander() {
-    return armyOne.getAllCommanderUnits().size();
-  }
-
-  public int getArmyTwoAmountInfantry() {
-    return armyTwo.getAllInfantryUnits().size();
-  }
-
-  public int getArmyTwoAmountRanged() {
-    return armyTwo.getAllRangedUnits().size();
-  }
-
-  public int getArmyTwoAmountCavalry() {
-    return armyTwo.getAllCavalryUnits().size();
-  }
-
-  public int getArmyTwoAmountCommander() {
-    return armyTwo.getAllCommanderUnits().size();
-  }
-
   public List<Unit> getArmyOneFromDemoFile() throws IOException {
     Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneDemoFile.csv");
     armyOne.setName(army.getName());
     return army.getUnits();
   }
+
 
   public List<Unit> getArmyTwoFromDemoFile() throws IOException {
     Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyTwoDemoFile.csv");
@@ -210,15 +160,74 @@ public class WargameFacade {
     return army.getUnits();
   }
 
+  public int geAmountOfUnits(String armyName) {
+    if (armyName.equalsIgnoreCase(armyOne.getName())) {
+      return armyOne.getAllUnits().size();
+    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
+      return armyTwo.getAllUnits().size();
+    } else {
+      return 0;
+    }
+  }
+
+  public int getArmyOneAmountInfantry(String armyName) {
+    if (armyName.equalsIgnoreCase(armyOne.getName())) {
+      return armyOne.getAllInfantryUnits().size();
+    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
+      return armyTwo.getAllInfantryUnits().size();
+    } else {
+      return 0;
+    }
+  }
+
+  public int getArmyOneAmountRanged(String armyName) {
+    if (armyName.equalsIgnoreCase(armyOne.getName())) {
+      return armyOne.getAllRangedUnits().size();
+    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
+      return armyTwo.getAllRangedUnits().size();
+    } else {
+      return 0;
+    }
+  }
+
+  public int getArmyOneAmountCavalry(String armyName) {
+    if (armyName.equalsIgnoreCase(armyOne.getName())) {
+      return armyOne.getAllCavalryUnits().size();
+    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
+      return armyTwo.getAllCavalryUnits().size();
+    } else {
+      return 0;
+    }
+  }
+
+  public int getArmyOneAmountCommander(String armyName) {
+    if (armyName.equalsIgnoreCase(armyOne.getName())) {
+      return armyOne.getAllCommanderUnits().size();
+    } else if (armyName.equalsIgnoreCase(armyTwo.getName())) {
+      return armyTwo.getAllCommanderUnits().size();
+    } else {
+      return 0;
+    }
+  }
+
+  public void setCurrentTerrain(String terrain) {
+    currentTerrain = terrain;
+    battle.setTerrain(currentTerrain);
+  }
+
   public String getCurrentTerrain() {
     return currentTerrain;
   }
 
-  public void setBattleTerrain() {
-    battle.setTerrain(currentTerrain);
-  }
-
   public boolean simulateStep() {
     return battle.simulateStep();
+  }
+
+  public void simulate() {
+    battle.simulate(currentTerrain);
+  }
+
+  public void setBattle() {
+    this.battle = new Battle(armyOne, armyTwo);
   }
 }

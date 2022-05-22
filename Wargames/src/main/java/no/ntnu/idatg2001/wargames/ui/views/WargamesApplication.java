@@ -58,7 +58,7 @@ public class WargamesApplication extends Application {
   @FXML
   public static void goToBattleMaker() {
     FXMLLoader loader =
-        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyMakerView.fxml"));
+        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/BattleMakerView.fxml"));
     try {
       Parent root = loader.load();
       Scene scene = new Scene(root);

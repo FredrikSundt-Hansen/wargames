@@ -23,16 +23,15 @@ import no.ntnu.idatg2001.wargames.ui.controllers.ArmyEditorController;
 public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializable{
 
   private List<Unit> unitList = new ArrayList<>();
-  private String currentArmy;
   private boolean validInput;
 
   /**
    * Constructor for the dialog. Adds an apply button and calls showArmyEditor to load the view.
    */
-  public ArmyEditorDialog() {
+  public ArmyEditorDialog(String armyName) {
     super();
     getDialogPane().getButtonTypes().add(ButtonType.APPLY);
-    showArmyEditor();
+    showArmyEditor(armyName);
   }
 
   /**
@@ -40,7 +39,7 @@ public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializabl
    * (what the dialog returns) with values from the controller.
    */
   @FXML
-  public void showArmyEditor() {
+  public void showArmyEditor(String armyName) {
     FXMLLoader loader =
         new FXMLLoader(ArmyEditorDialog.
             class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyEditorDialogView.fxml"));
@@ -50,6 +49,7 @@ public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializabl
       showErrorMessage(e.getMessage());
     }
     ArmyEditorController controller = loader.getController();
+    controller.setArmyNameLabel(armyName);
 
     setResultConverter(
         buttonType -> {
@@ -57,7 +57,6 @@ public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializabl
             validInput = controller.validInput();
             if (validInput) {
               unitList = controller.getUnitList();
-              currentArmy = controller.getArmyFromChoiceBox();
             }
           }
           return unitList;
@@ -71,14 +70,6 @@ public class ArmyEditorDialog extends Dialog<List<Unit>> implements Initializabl
    */
   public boolean getValidInput() {
     return validInput;
-  }
-
-  /**
-   * Returns the selected army which is collected from the controller class.
-   * @return The selected army to add units.
-   */
-  public String getCurrentArmy() {
-    return currentArmy;
   }
 
   /**

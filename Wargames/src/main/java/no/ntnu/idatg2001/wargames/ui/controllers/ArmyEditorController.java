@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
@@ -23,7 +24,7 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
 public class ArmyEditorController implements Initializable {
 
   @FXML
-  private ChoiceBox<String> choiceBoxArmyNames;
+  private Label armyNameLabel;
   @FXML
   private ChoiceBox<String> choiceBoxType;
   @FXML
@@ -37,12 +38,14 @@ public class ArmyEditorController implements Initializable {
   @FXML
   private Spinner<Integer> spinnerAmount;
 
+  public void setArmyNameLabel(String armyName) {
+    armyNameLabel.setText("'"+armyName+"'");
+  }
+
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     choiceBoxType.setItems(
         FXCollections.observableList(WargameFacade.getInstance().getAllDifferentUnits()));
-    choiceBoxArmyNames.setItems(
-        FXCollections.observableList(WargameFacade.getInstance().getArmyNames()));
 
     textFieldName.setPromptText("name");
 
@@ -97,16 +100,6 @@ public class ArmyEditorController implements Initializable {
    */
   public boolean validInput() {
     return choiceBoxType.getValue() != null
-        && choiceBoxArmyNames.getValue() != null
         && textFieldName.getText() != null;
-  }
-
-  /**
-   * Accessor method for the {@code choiceBoxArmyNames}. Gets the selected army from the choicebox.
-   *
-   * @return The selected army.
-   */
-  public String getArmyFromChoiceBox() {
-    return choiceBoxArmyNames.getValue();
   }
 }

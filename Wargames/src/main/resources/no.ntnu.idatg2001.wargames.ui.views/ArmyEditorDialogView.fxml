@@ -18,7 +18,11 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="choiceBoxArmyNames" layoutX="99.0" layoutY="22.0" prefWidth="150.0" />
+            <Label fx:id="armyNameLabel" layoutX="106.0" layoutY="21.0" text="&quot;name&quot;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </top>
