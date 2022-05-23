@@ -63,6 +63,7 @@ class BattleTest {
   void testSimulate() {
       List<Army> battles = new ArrayList<>();
     for (int i = 0; i < 1000; i++) {
+      setUp();
       Army army = new Battle(humanArmy,orcishHorde).simulate("hills");
       battles.add(army);
     }
@@ -81,9 +82,13 @@ class BattleTest {
       "not working.")
   void testSimulate2() {
     Army a1 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    setUp();
     Army a2 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    setUp();
     Army a3 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    setUp();
     Army a4 = new Battle(humanArmy,orcishHorde).simulate("plains");
+    setUp();
     Army a5 = new Battle(humanArmy,orcishHorde).simulate("plains");
 
     assertFalse(a1.equals(a2) && a1.equals(a3) && a1.equals(a4) && a1.equals(a5));

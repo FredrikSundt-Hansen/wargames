@@ -1,5 +1,6 @@
 package no.ntnu.idatg2001.wargames.model.battles;
 
+import java.util.Objects;
 import java.util.Random;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
@@ -13,6 +14,7 @@ public class Battle extends UnitUpdater {
   private Army armyOne;
   private Army armyTwo;
   private final Random rand;
+  private boolean firstStep;
 
   /**
    * Constructs a new battle between two armies.
@@ -21,10 +23,11 @@ public class Battle extends UnitUpdater {
    * @param armyTwo The second army.
    */
   public Battle(Army armyOne, Army armyTwo) {
-    this.armyOne = new Army(armyOne.getName(), armyOne.getAllUnits());
-    this.armyTwo = new Army(armyTwo.getName(), armyTwo.getAllUnits());
+    this.armyOne = armyOne;
+    this.armyTwo = armyTwo;
     rand = new Random();
   }
+
 
 
 
@@ -57,18 +60,24 @@ public class Battle extends UnitUpdater {
     int n = rand.nextInt(2);
     if (n == 0) {
       u1.attack(u2);
+      hitUpdate(u1,u2);
       if (u2.getHealth() <= 0) {
         armyTwo.removeUnit(u2);
+        sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
       }
-      hitUpdate(u1,u2);
     }
     if (n == 1) {
       u2.attack(u1);
+      hitUpdate(u2,u1);
       if (u1.getHealth() <= 0) {
         armyOne.removeUnit(u1);
+        sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
       }
-      hitUpdate(u2,u1);
+
     }
+
+
+
   }
 
   private void hitUpdate(Unit attacker, Unit defender) {
@@ -115,7 +124,10 @@ public class Battle extends UnitUpdater {
   public boolean simulateStep() {
     boolean finished = false;
     try {
-      sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
+      if (!firstStep) {
+        sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
+        firstStep = true;
+      }
       randomAttack(armyOne, armyTwo);
     } catch (IllegalArgumentException e) {
       finished = true;

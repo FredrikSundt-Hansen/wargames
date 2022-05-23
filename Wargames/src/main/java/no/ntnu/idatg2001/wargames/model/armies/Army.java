@@ -1,7 +1,6 @@
 package no.ntnu.idatg2001.wargames.model.armies;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -33,6 +32,7 @@ public class Army {
     this.units = units;
     rand = new Random();
   }
+
 
   /**
    * Constructs an empty army with name.
@@ -180,11 +180,7 @@ public class Army {
    * @param unit The unit to remove,
    */
   public void removeUnit(Unit unit) {
-    if (this.units.contains(unit)) {
-      this.units.remove(unit);
-    } else {
-      throw new IllegalArgumentException("Unit already exists in the army.");
-    }
+    this.units.remove(unit);
   }
 
   /**
