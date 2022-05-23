@@ -8,7 +8,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
@@ -22,24 +21,12 @@ import javafx.scene.control.TextField;
  */
 public class ArmyEditorController implements Initializable {
 
-  @FXML
-  private Label armyNameLabel;
-  @FXML
-  private ChoiceBox<String> choiceBoxType;
-  @FXML
-  private TextField textFieldName;
-  @FXML
-  private Spinner<Integer> spinnerHealth;
-  @FXML
-  private Spinner<Integer> spinnerAttack;
-  @FXML
-  private Spinner<Integer> spinnerArmor;
-  @FXML
-  private Spinner<Integer> spinnerAmount;
-
-  public void setArmyNameLabel(String armyName) {
-    armyNameLabel.setText("'"+armyName+"'");
-  }
+  @FXML private ChoiceBox<String> choiceBoxType;
+  @FXML private TextField textFieldName;
+  @FXML private Spinner<Integer> spinnerHealth;
+  @FXML private Spinner<Integer> spinnerAttack;
+  @FXML private Spinner<Integer> spinnerArmor;
+  @FXML private Spinner<Integer> spinnerAmount;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -52,6 +39,14 @@ public class ArmyEditorController implements Initializable {
         FXCollections.observableList(unitTypes));
 
     textFieldName.setPromptText("name");
+
+    textFieldName
+        .textProperty()
+        .addListener(
+            ((observableValue, oldValue, newValue) -> {
+              if (newValue.matches("[,]*")) {
+                textFieldName.setText(newValue.replace(",",""));
+              }}));
 
     setSpinnerValue(spinnerHealth);
     setSpinnerValue(spinnerAttack);
@@ -67,13 +62,14 @@ public class ArmyEditorController implements Initializable {
    * @param spinner The spinner to change.
    */
   private void setSpinnerValue(Spinner<Integer> spinner) {
+
     spinner.getEditor().textProperty().addListener((observableValue, oldValue, newValue) -> {
               if (!newValue.matches("\\d*")) {
                 spinner.getEditor().setText(oldValue);
               }});
 
     SpinnerValueFactory<Integer> valueFactory =
-        new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 10, 10);
+        new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 1000, 10, 5);
     spinner.setValueFactory(valueFactory);
   }
 

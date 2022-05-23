@@ -2,9 +2,12 @@ package no.ntnu.idatg2001.wargames.model.battles;
 
 import java.util.ArrayList;
 import java.util.List;
-import no.ntnu.idatg2001.wargames.model.UnitObserver;
 
-public abstract class UnitUpdater {
+/**
+ * This is the updating class of the observable pattern. Holds a register of all
+ * UnitObservers, and calls them to update.
+ */
+public abstract class BattleUpdater {
   protected List<UnitObserver> observerList = new ArrayList<>();
 
   public void register(UnitObserver observer) {

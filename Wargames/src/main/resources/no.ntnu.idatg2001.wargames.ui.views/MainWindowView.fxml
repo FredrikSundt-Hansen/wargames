@@ -22,12 +22,7 @@
    <bottom>
       <Pane prefHeight="86.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="1015.0" layoutY="23.0" mnemonicParsing="false" onAction="#onNewBattleButtonClick" onMouseClicked="#onNewBattleButtonClick" styleClass="mainMenuButton-over" stylesheets="@../stylesheet/style.css" text="New Battle" textAlignment="CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Button>
-            <Button layoutX="595.0" layoutY="24.0" mnemonicParsing="false" styleClass="mainMenuButton-over" stylesheets="@../stylesheet/style.css" text="Load Battle" textAlignment="CENTER">
+            <Button layoutX="805.0" layoutY="24.0" mnemonicParsing="false" onAction="#onNewBattleButtonClick" onMouseClicked="#onNewBattleButtonClick" styleClass="mainMenuButton-over" stylesheets="@../stylesheet/style.css" text="New Battle" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>

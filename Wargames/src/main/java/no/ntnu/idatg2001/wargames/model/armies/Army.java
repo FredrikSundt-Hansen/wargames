@@ -179,8 +179,12 @@ public class Army {
    *
    * @param unit The unit to remove,
    */
-  public void removeUnit(Unit unit) {
-    this.units.remove(unit);
+  public void removeUnit(Unit unit) throws IllegalArgumentException {
+    if (units.contains(unit)) {
+      this.units.remove(unit);
+    } else {
+      throw new IllegalArgumentException("Unit is not in army.");
+    }
   }
 
   /**

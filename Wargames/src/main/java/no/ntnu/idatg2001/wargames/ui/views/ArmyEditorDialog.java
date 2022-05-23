@@ -26,10 +26,10 @@ public class ArmyEditorDialog extends Dialog<List<String>> implements Initializa
   /**
    * Constructor for the dialog. Adds an apply button and calls showArmyEditor to load the view.
    */
-  public ArmyEditorDialog(String armyName) {
+  public ArmyEditorDialog() {
     super();
     getDialogPane().getButtonTypes().add(ButtonType.APPLY);
-    showArmyEditor(armyName);
+    showArmyEditor();
   }
 
   /**
@@ -37,17 +37,16 @@ public class ArmyEditorDialog extends Dialog<List<String>> implements Initializa
    * (what the dialog returns) with values from the controller.
    */
   @FXML
-  public void showArmyEditor(String armyName) {
+  public void showArmyEditor() {
     FXMLLoader loader =
-        new FXMLLoader(ArmyEditorDialog.
-            class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyEditorDialogView.fxml"));
+        new FXMLLoader(ArmyEditorDialog.class.getClassLoader()
+            .getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyEditorDialogView.fxml"));
     try {
       getDialogPane().setContent(loader.load());
     } catch (IOException e) {
       showErrorMessage(e.getMessage());
     }
     ArmyEditorController controller = loader.getController();
-    controller.setArmyNameLabel(armyName);
 
     setResultConverter(
         buttonType -> {
@@ -65,6 +64,7 @@ public class ArmyEditorDialog extends Dialog<List<String>> implements Initializa
 
   /**
    * Method to show an error message as an alert box.
+   *
    * @param e The error message to show.
    */
   private void showErrorMessage(String e) {
@@ -75,16 +75,10 @@ public class ArmyEditorDialog extends Dialog<List<String>> implements Initializa
     alert.showAndWait();
   }
 
-  /**
-   * The class implements to Initializable interface to work with JavaFX.
-   * However the view is loaded in showArmyEditorAdd, and nothing else is iniziated.
-   * Hence this method is required, but is empty.
-   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
-
+    // The class implements to Initializable interface to work with JavaFX.
+    // However, the view is loaded in showArmyEditorAdd, and nothing else is initiated.
+    // Hence, this method is required, but is empty.
   }
-
-
-
 }

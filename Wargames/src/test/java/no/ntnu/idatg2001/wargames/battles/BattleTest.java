@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BattleTest {
     private Army humanArmy;
@@ -59,7 +60,8 @@ class BattleTest {
   @Test
   @DisplayName("Shows the distribution of wins over many battles. " +
       "If it is about equally many wins, then the random generator " +
-      "is working correctly ( 50/50 chance for an army to win).")
+      "is working correctly ( 50/50 chance for an army to win), or a ration of 1 (a/b)." +
+      "Uses Math.round to round the number up, if the rounded number equals 1, test passes.")
   void testSimulate() {
       List<Army> battles = new ArrayList<>();
     for (int i = 0; i < 1000; i++) {
@@ -71,9 +73,8 @@ class BattleTest {
     long a = battles.stream().filter(army -> army.getName().equals("Human army")).count();
     long b = battles.stream().filter(army -> army.getName().equals("Orcish horde")).count();
 
-    System.out.println("Human wins : " + a + "\n" +
-                       "Orcish wins: " + b + "\n" +
-                       "Ratio      : " + (float) a/b );
+    float ratio = (float) a / b;
+    assertEquals(1, Math.round(ratio));
   }
 
   @Test

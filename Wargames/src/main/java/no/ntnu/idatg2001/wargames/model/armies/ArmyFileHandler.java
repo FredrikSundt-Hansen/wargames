@@ -14,8 +14,11 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 /** File handler for Army class. Writes and reads armies using buffered-writer and - reader. */
 public class ArmyFileHandler {
+  //Represents the info about the path of the last loaded file.
   private static String lastLoadedFilePath;
+  //Represents the file name of the last loaded file.
   private static String lastLoadedFileName;
+  //Represents the Army name of the last loaded file.
   private static String lastLoadedFileArmyName;
 
   public static String getLastLoadedFilePath() {

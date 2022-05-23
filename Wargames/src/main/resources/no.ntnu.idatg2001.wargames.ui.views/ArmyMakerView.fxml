@@ -21,7 +21,7 @@
             <TableColumn fx:id="attackColumn" minWidth="5.0" prefWidth="50.0" text="Attack" />
          </columns>
       </TableView>
-      <Label fx:id="armyNameLabel" layoutX="125.0" layoutY="18.0" onMouseClicked="#onChangeArmyOneNameButtonClick" underline="true">
+      <Label fx:id="armyNameLabel" layoutX="125.0" layoutY="18.0" onMouseClicked="#onChangeArmyNameButtonClick" underline="true">
          <font>
             <Font size="18.0" />
          </font>
@@ -40,7 +40,7 @@
             <Label fx:id="totalUnitsLabel" layoutX="105.0" text="X" />
          </children>
       </Group>
-      <Button layoutX="287.0" layoutY="16.0" mnemonicParsing="false" onAction="#onChangeArmyOneNameButtonClick">
+      <Button layoutX="287.0" layoutY="16.0" mnemonicParsing="false" onAction="#onChangeArmyNameButtonClick">
          <graphic>
             <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                <image>

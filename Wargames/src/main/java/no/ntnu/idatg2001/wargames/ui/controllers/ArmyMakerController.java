@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
@@ -25,6 +24,7 @@ import no.ntnu.idatg2001.wargames.ui.views.ArmyEditorDialog;
 public class ArmyMakerController implements Initializable {
 
   private List<Unit> unitList;
+  private boolean isArmyOne;
 
   @FXML private Label totalUnitsLabel;
   @FXML private Label totalInfantryUnitsUnitsLabel;
@@ -39,8 +39,6 @@ public class ArmyMakerController implements Initializable {
   @FXML private TableColumn<Unit, String> attackColumn;
   @FXML private Label armyNameLabel;
 
-  private boolean armyOne;
-
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     ObservableList<Unit> unitObservableListArmyOne =
@@ -54,14 +52,14 @@ public class ArmyMakerController implements Initializable {
   }
 
   public void setArmyOne(boolean armyOne) {
-    this.armyOne = armyOne;
+    this.isArmyOne = armyOne;
   }
 
   /**
    * Updated the units in the facade to the actual units from the tableView.
    */
   public void updateArmyUnits() {
-    WargameFacade.getInstance().setUnits(armyTableView.getItems(), armyNameLabel.getText());
+    WargameFacade.getInstance().setUnits(armyTableView.getItems(), isArmyOne);
     updateAllTotalLabels();
   }
 
@@ -69,22 +67,22 @@ public class ArmyMakerController implements Initializable {
    *Updated all the labels showing the different the amount of different types of units.
    */
   private void updateAllTotalLabels() {
-    List<Integer> unitValues = WargameFacade.getInstance().getArmyOneAmountsUnitTypes();
-
+    List<Integer> unitValues = WargameFacade.getInstance().getArmyUnitValues(isArmyOne);
     setValueToLabel(unitValues, totalUnitsLabel, totalInfantryUnitsUnitsLabel,
         totalRangedUnitsLabel, totalCavalryUnitsLabel, totalCommanderUnitsUnitsLabel);
   }
 
   private void setValueToLabel(List<Integer> unitValuesArmyTwo,
-                               Label totalInfantriesArmyTwoUnitsLabel,
-                               Label totalRangedArmyTwoLabel, Label totalCavalriesArmyTwoLabel,
-                               Label totalCommandersArmyTwoLabel, Label totalArmyTwoLabel) {
+                               Label totalInfantriesUnitsLabel,
+                               Label totalRangedUnitsLabel, Label totalCavalriesUnitsLabel,
+                               Label totalCommandersUnitsLabel, Label totalUnitsLabel) {
 
-    totalInfantriesArmyTwoUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(0)));
-    totalRangedArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(1)));
-    totalCavalriesArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(2)));
-    totalCommandersArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(3)));
-    totalArmyTwoLabel.setText(String.valueOf(unitValuesArmyTwo.get(4)));
+    totalUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(0)));
+    totalInfantriesUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(1)));
+    totalRangedUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(2)));
+    totalCavalriesUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(3)));
+    totalCommandersUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(4)));
+
   }
 
   /**
@@ -120,27 +118,22 @@ public class ArmyMakerController implements Initializable {
    * If the user input is not valid, it will simply not add.
    */
   private void showDialogAddUnits() {
-    if ((armyNameLabel.getText() != null && !armyNameLabel.getText().isEmpty())) {
-      ArmyEditorDialog dialog = new ArmyEditorDialog(armyNameLabel.getText());
+      ArmyEditorDialog dialog = new ArmyEditorDialog();
       Optional<List<String>> result = dialog.showAndWait();
-
       if (result.isPresent()) {
         try {
           unitList.addAll(WargameFacade.getInstance().makeUnits(result.get()));
           updateArmyUnits();
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
           showErrorMessage(e.getMessage());
         }
       }
-    } else {
-      showErrorMessage("Need to have a name on at least on army");
-    }
+
   }
 
-  /** Method to remove all selected rows form the tableviewArmyOne when remove button is pressed.
-   * Activated by button.
-   */
-  public void onRemoveUnitsButtonClick() {
+  /** Method to remove all selected rows form the tableviewArmyOne when remove button is pressed.*/
+  @FXML
+  private void onRemoveUnitsButtonClick() {
     ObservableList<Unit> selectedRows = armyTableView.getSelectionModel().getSelectedItems();
     ArrayList<Unit> rows = new ArrayList<>(selectedRows);
     if (showAlertDelete(rows.size(), armyNameLabel.getText())) {
@@ -190,35 +183,21 @@ public class ArmyMakerController implements Initializable {
     TextInputDialog textInputDialog = new TextInputDialog("name");
     textInputDialog.setHeaderText("Change name?");
     textInputDialog.setTitle("Army name");
-    textInputDialog.getDialogPane().setContentText("Army name : ");
-    TextField input = textInputDialog.getEditor();
+    textInputDialog.setContentText("Army name : ");
 
     Optional<String> result = textInputDialog.showAndWait();
-    if (result.isPresent()) {
-      return input.getText();
-    } else {
-      return null;
-    }
+    return result.orElse(null);
   }
 
   /**Method to change the name army one. Activated by button.*/
   @FXML
-  private void onChangeArmyOneNameButtonClick() {
-    String name = showNameTextInputDialog();
-    if (name != null && !name.isEmpty()) {
-      setArmyNameLabel(name);
-
-    }
-  }
-
-  private void setArmyNameLabel(String name) {
-    if (name != null && !name.isEmpty()) {
+  private void onChangeArmyNameButtonClick() {
+    try {
+      String name = showNameTextInputDialog();
+      WargameFacade.getInstance().setArmyName(name, isArmyOne);
       armyNameLabel.setText(name);
-      if (armyOne) {
-        WargameFacade.getInstance().setArmyOneName(name);
-      } else {
-        WargameFacade.getInstance().setArmyTwoName(name);
-      }
+    } catch (IllegalArgumentException e) {
+      showErrorMessage(e.getMessage());
     }
   }
 
@@ -240,16 +219,14 @@ public class ArmyMakerController implements Initializable {
     return unitList;
   }
 
-  public void setUnitList(List<Unit> unitList) {
+  public void setArmyControllerValues(List<Unit> unitList, String armyName) {
+    WargameFacade.getInstance().setArmyName(armyName, isArmyOne);
+    this.armyNameLabel.setText(armyName);
     this.unitList.addAll(unitList);
-
+    updateArmyUnits();
   }
 
   public String getArmyName() {
     return armyNameLabel.getText();
-  }
-
-  public void setArmyName(String armyName) {
-    this.armyNameLabel.setText(armyName);
   }
 }

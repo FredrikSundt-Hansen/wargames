@@ -1,16 +1,16 @@
 package no.ntnu.idatg2001.wargames.model.battles;
 
-import java.util.Objects;
 import java.util.Random;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
 /**
  * Battle class, simulates a battle between two armies.
+ * Battle also extends BattleUpdater to update information about the battle.
  *
  * @version 1.0.1
  */
-public class Battle extends UnitUpdater {
+public class Battle extends BattleUpdater {
   private Army armyOne;
   private Army armyTwo;
   private final Random rand;

@@ -78,6 +78,7 @@ class ArmyTest {
     assertEquals("Commander",army2.getUnits().get(2).getName());
   }
 
+
   @Test
   void testRemoveInvalidUnit() {
     InfantryUnit infantry4 = new InfantryUnit("Infantry4", 100);
