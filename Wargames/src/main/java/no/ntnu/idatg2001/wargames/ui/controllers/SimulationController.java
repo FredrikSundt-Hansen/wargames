@@ -111,9 +111,15 @@ public class SimulationController implements UnitObserver, Initializable {
   private void setCurrentTerrainImageView() {
     String terrain = WargameFacade.getInstance().getCurrentTerrain();
     currentTerrainLabel.setText(terrain);
-    currentTerrainImageView.setImage(new Image(
-        new File("src/main/resources/no.ntnu.idatg2001.wargames.ui.controllers/images/"
-            + terrain + "_Image.jpg").toURI().toString()));
+    try {
+      File terrainImage = new File(
+              "src/main/resources/no.ntnu.idatg2001.wargames.ui.controllers/images/"
+                  + terrain + "_Image.jpg");
+
+      currentTerrainImageView.setImage(new Image(terrainImage.toURI().toString()));
+    } catch (NullPointerException ignored) {
+      //if image does not load, this is ignored.
+    }
   }
 
   /**

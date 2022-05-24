@@ -3,6 +3,7 @@ package no.ntnu.idatg2001.wargames.ui.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -51,12 +52,24 @@ public class BattleMakerController implements Initializable {
    */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
-    plains = new Image(new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
-                        + ".controllers/images/Plains_Image.jpg").toURI().toString());
-    hills = new Image(new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
-                        + ".controllers/images/Hills_Image.jpg").toURI().toString());
-    forest = new Image(new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
-                        + ".controllers/images/Forest_Image.jpg").toURI().toString());
+    try {
+      File plainImage =
+          new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
+                  + ".controllers/images/Plains_Image.jpg");
+      File hillsImage =
+          new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
+                  + ".controllers/images/Hills_Image.jpg");
+      File forestImage =
+          new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
+                  + ".controllers/images/Forest_Image.jpg");
+      plains = new Image(plainImage.toURI().toString());
+      hills = new Image(hillsImage.toURI().toString());
+      forest = new Image(forestImage.toURI().toString());
+    } catch (NullPointerException e) {
+      showErrorMessage("Image did not load properly, because of the image location is wrong." +
+          "You can ignore this message.");
+    }
+
     terrainImageView.setImage(plains);
 
     List<String> differentTerrains = new ArrayList<>();
