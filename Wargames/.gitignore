@@ -3,9 +3,9 @@ Wargames.iml
 target/
 src/main/resources/savefiles/armyOneSaveFile.csv
 src/main/resources/savefiles/armyTwoSaveFile.csv
-src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithoutName.csv
-src/test/java/no/ntnu/idatg2001/wargames/armies/nullArmyFile.csv
-src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithInvalidUnit.csv
-src/test/java/no/ntnu/idatg2001/wargames/armies/armyOneSaveFile.csv
-src/test/java/no/ntnu/idatg2001/wargames/armies/armyTwoSaveFile.csv
+src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithoutName.csv
+src/test/java/no/ntnu/idatg2001/wargames/model/armies/nullArmyFile.csv
+src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithInvalidUnit.csv
+src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyOneSaveFile.csv
+src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyTwoSaveFile.csv
 

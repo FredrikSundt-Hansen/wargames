@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargames.armies;
+package no.ntnu.idatg2001.wargames.model.armies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -57,7 +57,7 @@ class ArmyFileHandlerTest {
 
   @Test
   void readAndWriteArmyCsv() {
-    String path = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyOneSaveFile.csv";
+    String path = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyOneSaveFile.csv";
     try {
       ArmyFileHandler.writeArmyCsv(humanArmy,path);
       Army army = ArmyFileHandler.readCsv(path);
@@ -71,8 +71,8 @@ class ArmyFileHandlerTest {
   @Test
   @DisplayName("Writees and read two armies used in a battle.")
   void readAndWriteBattleCsv() {
-    String pathArmyOne = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyOneSaveFile.csv";
-    String pathArmyTwo = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyTwoSaveFile.csv";
+    String pathArmyOne = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyOneSaveFile.csv";
+    String pathArmyTwo = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyTwoSaveFile.csv";
 
     try {
       ArmyFileHandler.writeArmyCsv(humanArmy, pathArmyOne);
@@ -88,7 +88,7 @@ class ArmyFileHandlerTest {
   @Test
   @DisplayName("Tires to read to a new path. Deletes the file afterwards.")
   void readNewPath() {
-    String path = "src/test/java/no/ntnu/idatg2001/wargames/newArmyTestFile.csv";
+    String path = "src/test/java/no/ntnu/idatg2001/wargames/model/newArmyTestFile.csv";
 
     try {
       ArmyFileHandler.writeArmyCsv(humanArmy, path);
@@ -107,7 +107,7 @@ class ArmyFileHandlerTest {
   @Test
   void readNullArmy() {
     try {
-      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/armies/nullArmyFile.csv");
+      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/model/wargames/armies/nullArmyFile.csv");
       fail();
     } catch (IOException | IllegalArgumentException e) {
       assertTrue(true);
@@ -116,7 +116,7 @@ class ArmyFileHandlerTest {
 
   @Test
   void readArmyWithoutName() {
-    String path = "src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithoutName.csv";
+    String path = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithoutName.csv";
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       for (Unit unit : humanArmy.getUnits()) {
         writer.write(
@@ -148,7 +148,7 @@ class ArmyFileHandlerTest {
   @DisplayName("File already contains one army, with one line not containing a the right size.")
   void readArmyWithInvalidUnit() {
     try {
-      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/armies/armyWithInvalidUnit.csv");
+      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithInvalidUnit.csv");
       fail();
     } catch (IOException | IllegalArgumentException e) {
       assertTrue(true);

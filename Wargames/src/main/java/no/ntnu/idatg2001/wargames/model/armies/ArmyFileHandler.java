@@ -57,7 +57,6 @@ public class ArmyFileHandler {
   public static void writeArmyCsv(Army army, String path)
       throws IOException, NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(army);
-    clearFile(path);
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       if (army.getName() != null || !army.getName().isEmpty()) {
         writer.write(army.getName());

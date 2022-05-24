@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.BattleMakerController">
+<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.BattleMakerController">
    <top>
       <MenuBar styleClass="whiteBackground-over" stylesheets="@../stylesheet/style.css" BorderPane.alignment="CENTER">
         <menus>

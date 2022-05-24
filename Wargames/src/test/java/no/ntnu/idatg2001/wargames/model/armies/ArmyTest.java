@@ -1,4 +1,4 @@
-package no.ntnu.idatg2001.wargames.armies;
+package no.ntnu.idatg2001.wargames.model.armies;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
