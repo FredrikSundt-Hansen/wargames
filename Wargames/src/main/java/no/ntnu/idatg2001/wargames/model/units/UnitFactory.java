@@ -45,10 +45,10 @@ public class UnitFactory {
       throw new IllegalArgumentException("Type is not chosen.");
     }
     return switch (type) {
-      case "infantry" -> new InfantryUnit(name, health, attack, armor);
-      case "cavalry" -> new CavalryUnit(name, health, attack, armor);
-      case "ranged" -> new RangedUnit(name, health, attack, armor);
-      case "commander" -> new CommanderUnit(name, health, attack, armor);
+      case "infantryunit" -> new InfantryUnit(name, health, attack, armor);
+      case "cavalryunit" -> new CavalryUnit(name, health, attack, armor);
+      case "rangedunit" -> new RangedUnit(name, health, attack, armor);
+      case "commanderunit" -> new CommanderUnit(name, health, attack, armor);
       default -> null;
     };
   }

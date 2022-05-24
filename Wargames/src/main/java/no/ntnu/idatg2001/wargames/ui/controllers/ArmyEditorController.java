@@ -31,10 +31,10 @@ public class ArmyEditorController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     List<String> unitTypes = new ArrayList<>();
-    unitTypes.add("Infantry");
-    unitTypes.add("Ranged");
-    unitTypes.add("Cavalry");
-    unitTypes.add("Commander");
+    unitTypes.add("InfantryUnit");
+    unitTypes.add("RangedUnit");
+    unitTypes.add("CavalryUnit");
+    unitTypes.add("CommanderUnit");
     choiceBoxType.setItems(
         FXCollections.observableList(unitTypes));
 

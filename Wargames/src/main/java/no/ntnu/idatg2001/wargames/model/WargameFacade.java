@@ -27,6 +27,11 @@ public class WargameFacade {
   private Battle battle;
   private String currentTerrain;
 
+  private Army armyOneDuplicate;
+  private Army armyTwoDuplicate;
+
+  private boolean firstSimulationRun;
+
   /**
    * Constructor creates an instance.
    * Notice this is a singleton, so this will only be initiated once.
@@ -93,15 +98,15 @@ public class WargameFacade {
    * Checks if the current army is of valid input, that is the armies has units and the names
    * are not the same.
    *
-   * @throws IllegalArgumentException - If the armies are empty or the names are the same.
+   * @throws IllegalArgumentException - If units of one of the armies are empty,
+   * or the names of the armies are null og empty.
    */
   public void checkValidArmies() throws NullPointerException, IllegalArgumentException {
-    try {
-      if (!armyOne.hasUnits() && !armyTwo.hasUnits()) {
-        throw new IllegalArgumentException("Both armies need to have units in them.");
-      }
-    } catch (NullPointerException e) {
-      throw new IllegalArgumentException(e.getMessage());
+    if (!armyOne.hasUnits() || !armyTwo.hasUnits()) {
+       throw new IllegalArgumentException("Both armies need to have units in them.");
+    } else if (armyOne.getName() == null || armyTwo.getName() == null
+        || armyOne.getName().isEmpty() || armyTwo.getName().isEmpty()) {
+      throw new IllegalArgumentException("Both armies need to have a name.");
     }
   }
 
@@ -120,10 +125,14 @@ public class WargameFacade {
 
   /**
    * Method to set the units of both armies at once, uses setUnits and checksValidArmies.
+   *
    * @param unitsOne The list of units to army one.
    * @param unitsTwo The list of units to army two.
+   * @throws IllegalArgumentException - If units of one of the armies are empty.
    */
-  public void setUnitsNameArmyOneAndTwo(List<Unit> unitsOne, List<Unit> unitsTwo ) {
+  public void setUnitsNameArmyOneAndTwo(List<Unit> unitsOne, List<Unit> unitsTwo )
+      throws NullPointerException, IllegalArgumentException {
+    checkValidArmies();
     setUnits(unitsOne, true);
     setUnits(unitsTwo, false);
   }
@@ -205,14 +214,54 @@ public class WargameFacade {
    *
    * @return True if this simulation is finish, false if it is not and still running.
    */
-  public boolean simulateStep() {
+  public boolean simulateStep() throws IllegalArgumentException {
     return battle.simulateStep();
   }
 
-  public List<Long> simulateMultipleTimes(int n) {
+
+
+  public void duplicateArmies() throws IllegalArgumentException {
+    armyOneDuplicate = new Army(armyOne.getName());
+    armyTwoDuplicate = new Army(armyTwo.getName());
+
+
+      for (Unit unit : armyOne.getUnits()) {
+        armyOneDuplicate.addUnit(UnitFactory.getInstance().createUnit(
+                    unit.getType(),
+                    unit.getName(),
+                    unit.getHealth(),
+                    unit.getAttack(),
+                    unit.getArmor()));
+      }
+
+      for (Unit unit : armyTwo.getUnits()) {
+        armyTwoDuplicate.addUnit(UnitFactory.getInstance().createUnit(
+                    unit.getType(),
+                    unit.getName(),
+                    unit.getHealth(),
+                    unit.getAttack(),
+                    unit.getArmor()));
+      }
+  }
+
+  public List<Unit> getArmyOneDuplicate() {
+    return armyOneDuplicate.getUnits();
+  }
+
+  public List<Unit> getArmyTwoDuplicate() {
+    return armyTwoDuplicate.getUnits();
+  }
+
+  public void setBattleDuplicatedArmies() {
+    this.battle = new Battle(armyOneDuplicate, armyTwoDuplicate);
+    battle.setTerrain(currentTerrain);
+  }
+
+  public List<Long> simulateMultipleTimes(int n) throws IllegalArgumentException {
     List<Long> distributionOfWinners = new ArrayList<>();
     List<Army> battles = new ArrayList<>();
-    for (int i = 0; i < 1000; i++) {
+    duplicateArmies();
+    for (int i = 0; i < n; i++) {
       Army army = new Battle(new Army(armyOne.getName(), armyOne.getUnits()),new Army(armyTwo.getName(), armyTwo.getUnits()))
           .simulate(currentTerrain);
       battles.add(army);
@@ -236,7 +285,6 @@ public class WargameFacade {
   public void saveArmyOneToResources(String armyName, List<Unit> units) throws IOException, IllegalArgumentException {
     ArmyFileHandler.writeArmyCsv(
         new Army(armyName, units), "src/main/resources/savefiles/armyOneSaveFile.csv");
-
   }
 
   /**
@@ -251,7 +299,6 @@ public class WargameFacade {
   public void saveArmyTwoToResources(String armyName, List<Unit> units) throws IOException, IllegalArgumentException {
       ArmyFileHandler.writeArmyCsv(
           new Army(armyName, units), "src/main/resources/savefiles/armyTwoSaveFile.csv");
-      throw new IllegalArgumentException("Could not save. Invalid name.");
   }
 
   /**

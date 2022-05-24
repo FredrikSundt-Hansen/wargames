@@ -24,7 +24,7 @@ class UnitFactoryTest {
     int unitHealth = 200;
     int unitAttack = 5;
     int unitArmor = 30;
-    Unit unit = UnitFactory.getInstance().createUnit("Infantry", unitName, unitHealth, unitAttack, unitArmor);
+    Unit unit = UnitFactory.getInstance().createUnit("InfantryUnit", unitName, unitHealth, unitAttack, unitArmor);
     assertEquals(unit.getName(), unitName);
     assertEquals(unit.getHealth(), unitHealth);
     assertEquals(unit.getAttack(), unitAttack);
@@ -32,13 +32,13 @@ class UnitFactoryTest {
 
     assertTrue(unit instanceof InfantryUnit);
 
-    Unit unit2 = UnitFactory.getInstance().createUnit("cavalry", unitName, unitHealth, unitAttack, unitArmor);
+    Unit unit2 = UnitFactory.getInstance().createUnit("CavalryUnit", unitName, unitHealth, unitAttack, unitArmor);
     assertTrue(unit2 instanceof CavalryUnit);
 
-    Unit unit3 = UnitFactory.getInstance().createUnit("ranged", unitName, unitHealth, unitAttack, unitArmor);
+    Unit unit3 = UnitFactory.getInstance().createUnit("RangedUnit", unitName, unitHealth, unitAttack, unitArmor);
     assertTrue(unit3 instanceof RangedUnit);
 
-    Unit unit4 = UnitFactory.getInstance().createUnit("commander", unitName, unitHealth, unitAttack, unitArmor);
+    Unit unit4 = UnitFactory.getInstance().createUnit("CommanderUnit", unitName, unitHealth, unitAttack, unitArmor);
     assertTrue(unit4 instanceof CommanderUnit);
 
   }
@@ -50,7 +50,7 @@ class UnitFactoryTest {
     int unitAttack = 5;
     int unitArmor = 30;
     List<Unit>
-        unitList = UnitFactory.getInstance().createMultipleUnits("Infantry", unitName, unitHealth, unitAttack, unitArmor, 500);
+        unitList = UnitFactory.getInstance().createMultipleUnits("InfantryUnit", unitName, unitHealth, unitAttack, unitArmor, 500);
     assertEquals(500, unitList.size());
 
     for (Unit unit : unitList) {
@@ -62,7 +62,7 @@ class UnitFactoryTest {
     }
 
     List<Unit>
-        unitList2 = UnitFactory.getInstance().createMultipleUnits("cavalry", unitName, unitHealth, unitAttack, unitArmor, 300);
+        unitList2 = UnitFactory.getInstance().createMultipleUnits("CavalryUnit", unitName, unitHealth, unitAttack, unitArmor, 300);
     assertEquals(300, unitList2.size());
 
     for (Unit unit : unitList2) {
@@ -74,7 +74,7 @@ class UnitFactoryTest {
     }
 
     List<Unit>
-        unitList3 = UnitFactory.getInstance().createMultipleUnits("commander", unitName, unitHealth, unitAttack, unitArmor, 600);
+        unitList3 = UnitFactory.getInstance().createMultipleUnits("CommanderUnit", unitName, unitHealth, unitAttack, unitArmor, 600);
     assertEquals(600, unitList3.size());
 
     for (Unit unit : unitList3) {
@@ -86,7 +86,7 @@ class UnitFactoryTest {
     }
 
     List<Unit>
-        unitList4 = UnitFactory.getInstance().createMultipleUnits("ranged", unitName, unitHealth, unitAttack, unitArmor, 800);
+        unitList4 = UnitFactory.getInstance().createMultipleUnits("RangedUnit", unitName, unitHealth, unitAttack, unitArmor, 800);
     assertEquals(800, unitList4.size());
 
     for (Unit unit : unitList4) {
