@@ -21,6 +21,10 @@ import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.ui.views.ArmyEditorDialog;
 
+/**
+ * Controller for ArmyMakerView. Control buttons to add, remove and refresh units.
+ * Also shows how many units of each type.
+ */
 public class ArmyMakerController implements Initializable {
 
   private List<Unit> unitList;
@@ -39,6 +43,7 @@ public class ArmyMakerController implements Initializable {
   @FXML private TableColumn<Unit, String> attackColumn;
   @FXML private Label armyNameLabel;
 
+  /** Initiates the this.unitsList, tableView and columns. */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     ObservableList<Unit> unitObservableListArmyOne =
@@ -47,42 +52,36 @@ public class ArmyMakerController implements Initializable {
     armyTableView.setItems(unitObservableListArmyOne);
     armyTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-    setTableView(typeColumn, nameColumn, healthColumn, armorColumn,
-        attackColumn);
+    setTableView(typeColumn, nameColumn, healthColumn, armorColumn, attackColumn);
   }
 
   public void setArmyOne(boolean armyOne) {
     this.isArmyOne = armyOne;
   }
 
-  /**
-   * Updated the units in the facade to the actual units from the tableView.
-   */
+  /** Updated the units in the facade to the actual units from the tableView. */
   public void updateArmyUnits() {
     WargameFacade.getInstance().setUnits(armyTableView.getItems(), isArmyOne);
     updateAllTotalLabels();
   }
 
-  /**
-   *Updated all the labels showing the different the amount of different types of units.
-   */
+  /** Updated all the labels showing the different the amount of different types of units. */
   private void updateAllTotalLabels() {
     List<Integer> unitValues = WargameFacade.getInstance().getArmyUnitValues(isArmyOne);
-    setValueToLabel(unitValues, totalUnitsLabel, totalInfantryUnitsUnitsLabel,
-        totalRangedUnitsLabel, totalCavalryUnitsLabel, totalCommanderUnitsUnitsLabel);
+    setValueToLabel(
+        unitValues, totalUnitsLabel, totalInfantryUnitsUnitsLabel, totalRangedUnitsLabel,
+        totalCavalryUnitsLabel, totalCommanderUnitsUnitsLabel);
   }
 
-  private void setValueToLabel(List<Integer> unitValuesArmyTwo,
-                               Label totalInfantriesUnitsLabel,
-                               Label totalRangedUnitsLabel, Label totalCavalriesUnitsLabel,
-                               Label totalCommandersUnitsLabel, Label totalUnitsLabel) {
+  private void setValueToLabel(List<Integer> unitValuesArmyTwo, Label totalInfantriesUnitsLabel,
+      Label totalRangedUnitsLabel, Label totalCavalriesUnitsLabel, Label totalCommandersUnitsLabel,
+      Label totalUnitsLabel) {
 
     totalUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(0)));
     totalInfantriesUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(1)));
     totalRangedUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(2)));
     totalCavalriesUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(3)));
     totalCommandersUnitsLabel.setText(String.valueOf(unitValuesArmyTwo.get(4)));
-
   }
 
   /**
@@ -114,24 +113,23 @@ public class ArmyMakerController implements Initializable {
   }
 
   /**
-   * Method to show the dialog to add units to the army.
-   * If the user input is not valid, it will simply not add.
+   * Method to show the dialog to add units to the army. If the user input is not valid, it will
+   * simply not add.
    */
   private void showDialogAddUnits() {
-      ArmyEditorDialog dialog = new ArmyEditorDialog();
-      Optional<List<String>> result = dialog.showAndWait();
-      if (result.isPresent()) {
-        try {
-          unitList.addAll(WargameFacade.getInstance().makeUnits(result.get()));
-          updateArmyUnits();
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-          showErrorMessage(e.getMessage());
-        }
+    ArmyEditorDialog dialog = new ArmyEditorDialog();
+    Optional<List<String>> result = dialog.showAndWait();
+    if (result.isPresent()) {
+      try {
+        unitList.addAll(WargameFacade.getInstance().makeUnits(result.get()));
+        updateArmyUnits();
+      } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
+        showErrorMessage(e.getMessage());
       }
-
+    }
   }
 
-  /** Method to remove all selected rows form the tableviewArmyOne when remove button is pressed.*/
+  /** Method to remove all selected rows form the tableviewArmyOne when remove button is pressed. */
   @FXML
   private void onRemoveUnitsButtonClick() {
     ObservableList<Unit> selectedRows = armyTableView.getSelectionModel().getSelectedItems();
@@ -152,9 +150,9 @@ public class ArmyMakerController implements Initializable {
   }
 
   /**
-   * Method to show an alert when deleting units.
-   * Will trigger if the size are more than 0 and more than 10.
-   * Between those it will not trigger, to get a confirmation when deleting many units, but not few.
+   * Method to show an alert when deleting units. Will trigger if the size are more than 0 and more
+   * than 10. Between those it will not trigger, to get a confirmation when deleting many units, but
+   * not few.
    *
    * @param size How many units are selected.
    * @param army The army name that was deleted from.
@@ -169,7 +167,9 @@ public class ArmyMakerController implements Initializable {
         alert.setContentText("Are you sure you want to delete " + size + " units?");
         Optional<ButtonType> result = alert.showAndWait();
         return result.isPresent() && result.get() == ButtonType.OK;
-      } else return size < 10;
+      } else {
+        return size < 10;
+      }
     }
     return false;
   }
@@ -189,7 +189,7 @@ public class ArmyMakerController implements Initializable {
     return result.orElse(null);
   }
 
-  /**Method to change the name army one. Activated by button.*/
+  /** Method to change the name army one. Activated by button. */
   @FXML
   private void onChangeArmyNameButtonClick() {
     try {
@@ -200,7 +200,6 @@ public class ArmyMakerController implements Initializable {
       showErrorMessage(e.getMessage());
     }
   }
-
 
   /**
    * Method to show an alert error message.
@@ -219,6 +218,12 @@ public class ArmyMakerController implements Initializable {
     return unitList;
   }
 
+  /**
+   * Method to set the unitList and armyName for this controller.
+   *
+   * @param unitList The unitList to add.
+   * @param armyName The army name to set.
+   */
   public void setArmyControllerValues(List<Unit> unitList, String armyName) {
     WargameFacade.getInstance().setArmyName(armyName, isArmyOne);
     this.armyNameLabel.setText(armyName);

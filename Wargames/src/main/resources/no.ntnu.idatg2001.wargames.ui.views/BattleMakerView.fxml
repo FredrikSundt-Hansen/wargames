@@ -22,6 +22,7 @@
           <Menu mnemonicParsing="false" text="Go to">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#onSimulateButtonClick" text="Simulator" />
+                  <MenuItem mnemonicParsing="false" onAction="#onShowMainMenuButtonClick" text="Main menu" />
                </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">

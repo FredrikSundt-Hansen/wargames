@@ -27,11 +27,6 @@ public class WargameFacade {
   private Battle battle;
   private String currentTerrain;
 
-  private Army armyOneDuplicate;
-  private Army armyTwoDuplicate;
-
-  private boolean firstSimulationRun;
-
   /**
    * Constructor creates an instance.
    * Notice this is a singleton, so this will only be initiated once.
@@ -102,11 +97,11 @@ public class WargameFacade {
    * or the names of the armies are null og empty.
    */
   public void checkValidArmies() throws NullPointerException, IllegalArgumentException {
-    if (!armyOne.hasUnits() || !armyTwo.hasUnits()) {
-       throw new IllegalArgumentException("Both armies need to have units in them.");
-    } else if (armyOne.getName() == null || armyTwo.getName() == null
+    if (armyOne.getName() == null || armyTwo.getName() == null
         || armyOne.getName().isEmpty() || armyTwo.getName().isEmpty()) {
-      throw new IllegalArgumentException("Both armies need to have a name.");
+       throw new IllegalArgumentException("Both armies need to have a name.");
+    } else if (!armyOne.hasUnits() || !armyTwo.hasUnits()) {
+      throw new IllegalArgumentException("Both armies need to have units in them.");
     }
   }
 
@@ -218,59 +213,14 @@ public class WargameFacade {
     return battle.simulateStep();
   }
 
-
-
-  public void duplicateArmies() throws IllegalArgumentException {
-    armyOneDuplicate = new Army(armyOne.getName());
-    armyTwoDuplicate = new Army(armyTwo.getName());
-
-
-      for (Unit unit : armyOne.getUnits()) {
-        armyOneDuplicate.addUnit(UnitFactory.getInstance().createUnit(
-                    unit.getType(),
-                    unit.getName(),
-                    unit.getHealth(),
-                    unit.getAttack(),
-                    unit.getArmor()));
-      }
-
-      for (Unit unit : armyTwo.getUnits()) {
-        armyTwoDuplicate.addUnit(UnitFactory.getInstance().createUnit(
-                    unit.getType(),
-                    unit.getName(),
-                    unit.getHealth(),
-                    unit.getAttack(),
-                    unit.getArmor()));
-      }
-  }
-
-  public List<Unit> getArmyOneDuplicate() {
-    return armyOneDuplicate.getUnits();
-  }
-
-  public List<Unit> getArmyTwoDuplicate() {
-    return armyTwoDuplicate.getUnits();
-  }
-
-  public void setBattleDuplicatedArmies() {
-    this.battle = new Battle(armyOneDuplicate, armyTwoDuplicate);
-    battle.setTerrain(currentTerrain);
-  }
-
-  public List<Long> simulateMultipleTimes(int n) throws IllegalArgumentException {
-    List<Long> distributionOfWinners = new ArrayList<>();
-    List<Army> battles = new ArrayList<>();
-    duplicateArmies();
-    for (int i = 0; i < n; i++) {
-      Army army = new Battle(new Army(armyOne.getName(), armyOne.getUnits()),new Army(armyTwo.getName(), armyTwo.getUnits()))
-          .simulate(currentTerrain);
-      battles.add(army);
-    }
-    long a = battles.stream().filter(army -> army.getName().equals(armyOne.getName())).count();
-    long b = battles.stream().filter(army -> army.getName().equals(armyTwo.getName())).count();
-    distributionOfWinners.add(a);
-    distributionOfWinners.add(b);
-    return distributionOfWinners;
+  /**
+   * If write method has been called in {@ArmyFilehandler}.
+   * (If one of the save filed has been written to).
+   *
+   * @return True if one save file has been written to, false otherwise.
+   */
+  public boolean isSaveFileFilled() {
+    return ArmyFileHandler.hasSavedFile();
   }
 
   /**

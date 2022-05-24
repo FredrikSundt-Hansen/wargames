@@ -9,7 +9,7 @@
 
 <BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.MainWindowController">
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" BorderPane.alignment="CENTER">
          <children>
             <ImageView fx:id="imageMainWindow" fitHeight="465.0" fitWidth="473.0" layoutX="627.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
                <image>

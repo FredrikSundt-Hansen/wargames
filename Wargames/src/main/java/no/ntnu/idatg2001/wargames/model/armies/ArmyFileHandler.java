@@ -21,6 +21,12 @@ public class ArmyFileHandler {
   //Represents the Army name of the last loaded file.
   private static String lastLoadedFileArmyName;
 
+  private static boolean hasSavedFile; //True if the write method has been called.
+
+  public static boolean hasSavedFile() {
+    return hasSavedFile;
+  }
+
   public static String getLastLoadedFilePath() {
     return lastLoadedFilePath;
   }
@@ -63,7 +69,7 @@ public class ArmyFileHandler {
         writer.write(
             unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
       }
-
+      hasSavedFile = true;
     }
   }
 

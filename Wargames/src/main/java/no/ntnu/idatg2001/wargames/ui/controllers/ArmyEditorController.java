@@ -28,6 +28,9 @@ public class ArmyEditorController implements Initializable {
   @FXML private Spinner<Integer> spinnerArmor;
   @FXML private Spinner<Integer> spinnerAmount;
 
+  /**
+   *Initiates the all fxml elements, sets textFieldName to not take comma as input.
+   */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     List<String> unitTypes = new ArrayList<>();
@@ -44,7 +47,7 @@ public class ArmyEditorController implements Initializable {
         .textProperty()
         .addListener(
             ((observableValue, oldValue, newValue) -> {
-              if (newValue.matches("[,]*")) {
+              if (!newValue.matches("\\d*")) {
                 textFieldName.setText(newValue.replace(",",""));
               }}));
 

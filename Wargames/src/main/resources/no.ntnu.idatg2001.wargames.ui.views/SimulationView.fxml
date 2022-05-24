@@ -4,21 +4,18 @@
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.SimulationController">
@@ -42,12 +39,12 @@
    <center>
       <Pane prefHeight="731.0" prefWidth="813.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="382.0" layoutY="14.0" prefHeight="35.0" prefWidth="105.0" style="-fx-text-fill: black;" stylesheets="@../stylesheet/style.css" text="Simulator">
+            <Label layoutX="359.0" layoutY="14.0" prefHeight="35.0" prefWidth="105.0" style="-fx-text-fill: black;" stylesheets="@../stylesheet/style.css" text="Simulator">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <LineChart fx:id="armySizeLineChart" layoutX="38.0" layoutY="57.0" prefHeight="319.0" prefWidth="791.0" title="Army size">
+            <LineChart fx:id="armySizeLineChart" layoutX="1.0" layoutY="61.0" prefHeight="388.0" prefWidth="823.0">
               <xAxis>
                 <CategoryAxis label="Time" side="BOTTOM" />
               </xAxis>
@@ -55,14 +52,23 @@
                 <NumberAxis autoRanging="false" label="Unit size" side="LEFT" upperBound="200.0" />
               </yAxis>
             </LineChart>
-            <PieChart fx:id="simulationResultPieChart" layoutX="217.0" layoutY="376.0" prefHeight="330.0" prefWidth="451.0" />
+            <ImageView fx:id="winnerTrophyImageView" fitHeight="212.0" fitWidth="209.0" layoutX="307.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_trophy.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="winnerLabel" contentDisplay="CENTER" layoutX="370.0" layoutY="461.0" text="Label">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </center>
    <right>
       <Pane prefHeight="731.0" prefWidth="432.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="armyOneTableView" layoutY="68.0" prefHeight="663.0" prefWidth="215.0">
+            <TableView fx:id="armyOneTableView" layoutY="67.0" prefHeight="664.0" prefWidth="215.0">
               <columns>
                 <TableColumn fx:id="armyOneTypeColumn" prefWidth="121.0" text="Type" />
                 <TableColumn fx:id="armyOneHealthColumn" prefWidth="93.0" text="Health" />
@@ -100,7 +106,7 @@
    <bottom>
       <Pane prefHeight="94.0" prefWidth="1720.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="807.0" layoutY="27.0" mnemonicParsing="false" onAction="#onStartSimulationButtonClick" stylesheets="@../stylesheet/style.css" text="Simualte">
+            <Button layoutX="884.0" layoutY="27.0" mnemonicParsing="false" onAction="#onStartSimulationButtonClick" stylesheets="@../stylesheet/style.css" text="Simualte">
                <graphic>
                   <ImageView fitHeight="40.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -109,20 +115,16 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Spinner fx:id="amountOfSimulationSpinner" layoutX="670.0" layoutY="50.0" prefHeight="25.0" prefWidth="63.0" />
             <ImageView fx:id="currentTerrainImageView" fitHeight="67.0" fitWidth="120.0" layoutX="173.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="14.0" layoutY="38.0" text="Current terrain : ">
                <font>
                   <Font size="18.0" />
                </font></Label>
-            <Label layoutX="641.0" layoutY="28.0" text="Amount of simulations" />
-            <Label layoutX="995.0" layoutY="19.0" text="Speed" />
-            <Label fx:id="currentTerrainLabel" layoutX="182.0" layoutY="4.0" text="&quot;Current terrain&quot;">
+            <Label fx:id="currentTerrainLabel" contentDisplay="CENTER" layoutX="182.0" layoutY="4.0" text="&quot;Current terrain&quot;">
                <font>
                   <Font size="14.0" />
                </font></Label>
-            <Spinner fx:id="threadSpeedSpinner" layoutX="978.0" layoutY="44.0" prefHeight="25.0" prefWidth="67.0" />
-            <Button layoutX="570.0" layoutY="33.0" mnemonicParsing="false" onAction="#onResetSimulationButtonClick" prefHeight="36.0" prefWidth="50.0">
+            <Button layoutX="730.0" layoutY="28.0" mnemonicParsing="false" onAction="#onResetSimulationButtonClick" prefHeight="48.0" prefWidth="141.0" text="Reset simulation">
                <graphic>
                   <ImageView fitHeight="29.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -135,10 +137,15 @@
       </Pane>
    </bottom>
    <left>
-      <ScrollPane fx:id="hitUpdateScrollView" prefHeight="711.0" prefWidth="429.0" BorderPane.alignment="CENTER">
-         <content>
-            <VBox fx:id="vBoxHitUpdate" alignment="TOP_CENTER" prefWidth="432.0" />
-         </content>
-      </ScrollPane>
+      <Pane BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="205.0" layoutY="7.0" text="Hit log">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="hitLogListView" layoutY="40.0" prefHeight="686.0" prefWidth="463.0" />
+         </children>
+      </Pane>
    </left>
 </BorderPane>
