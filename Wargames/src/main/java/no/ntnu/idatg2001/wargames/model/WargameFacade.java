@@ -18,12 +18,14 @@ import no.ntnu.idatg2001.wargames.model.units.UnitFactory;
  * <p>Some methods in BattleMaker and this class uses isArmyOne to distinguish * between the
  * different armies. If it is true, then it will set the value to army one, * if it is false it will
  * set the value to armyTow.
+ *
+ * If Maven tests do not work, or the stage the main menu is white, delete target folder.
  */
 public class WargameFacade {
 
   private static volatile WargameFacade instance;
-  private Army armyOne;
-  private Army armyTwo;
+  private final Army armyOne;
+  private final Army armyTwo;
   private Battle battle;
   private String currentTerrain;
 
