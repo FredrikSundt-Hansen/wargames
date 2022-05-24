@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.battles.UnitObserver;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
@@ -111,15 +112,8 @@ public class SimulationController implements UnitObserver, Initializable {
   private void setCurrentTerrainImageView() {
     String terrain = WargameFacade.getInstance().getCurrentTerrain();
     currentTerrainLabel.setText(terrain);
-    try {
-      File terrainImage = new File(
-              "src/main/resources/no.ntnu.idatg2001.wargames.ui.controllers/images/"
-                  + terrain + "_Image.jpg");
+    currentTerrainImageView.setImage(new Image(Main.class.getResource(terrain + "_Image.jpg").toExternalForm()));
 
-      currentTerrainImageView.setImage(new Image(terrainImage.toURI().toString()));
-    } catch (NullPointerException ignored) {
-      //if image does not load, this is ignored.
-    }
   }
 
   /**

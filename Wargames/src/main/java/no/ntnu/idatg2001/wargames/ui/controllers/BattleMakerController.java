@@ -3,7 +3,6 @@ package no.ntnu.idatg2001.wargames.ui.controllers;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -18,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 
@@ -53,18 +53,9 @@ public class BattleMakerController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {
-      File plainImage =
-          new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
-                  + ".controllers/images/Plains_Image.jpg");
-      File hillsImage =
-          new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
-                  + ".controllers/images/Hills_Image.jpg");
-      File forestImage =
-          new File("src/main/resources/no.ntnu.idatg2001.wargames.ui"
-                  + ".controllers/images/Forest_Image.jpg");
-      plains = new Image(plainImage.toURI().toString());
-      hills = new Image(hillsImage.toURI().toString());
-      forest = new Image(forestImage.toURI().toString());
+      plains = new Image(Main.class.getResource("Plains_Image.jpg").toExternalForm());
+      hills = new Image(Main.class.getResource("Hills_Image.jpg").toExternalForm());
+      forest = new Image(Main.class.getResource("Forest_Image.jpg").toExternalForm());
     } catch (NullPointerException e) {
       showErrorMessage("Image did not load properly, because of the image location is wrong." +
           "You can ignore this message.");
@@ -129,7 +120,7 @@ public class BattleMakerController implements Initializable {
    * @return Terrain value as a string.
    */
   private String getTerrainValueFromImage(Image image) {
-    return image.getUrl().split("/")[15].split("\\.")[0].split("_")[0];
+    return image.getUrl().split("/")[14].split("\\.")[0].split("_")[0];
   }
 
   /**
