@@ -138,6 +138,7 @@ public class Battle extends BattleUpdater {
   public void setTerrain(String terrain) {
     armyOne.setTerrainToUnits(terrain);
     armyTwo.setTerrainToUnits(terrain);
+    
   }
 
   /**
