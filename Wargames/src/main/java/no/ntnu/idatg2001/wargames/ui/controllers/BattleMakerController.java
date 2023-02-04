@@ -5,20 +5,24 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
+import no.ntnu.idatg2001.wargames.ui.views.ArmyEditorDialog;
 import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 
 /**
@@ -30,6 +34,8 @@ import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
  */
 public class BattleMakerController implements Initializable {
 
+
+
   private Image plains;
   private Image hills;
   private Image forest;
@@ -37,53 +43,78 @@ public class BattleMakerController implements Initializable {
   private ArmyMakerController armyOneController;
   private ArmyMakerController armyTwoController;
 
-  @FXML private Label armyTwoFilePath;
-  @FXML private Label armyOneFilePath;
-  @FXML private Pane armyOnePane;
-  @FXML private Pane armyTwoPane;
-  @FXML private ImageView terrainImageView;
-  @FXML private ChoiceBox<String> terrainChoiceBox;
-  @FXML private Label currentTerrainLabel;
+  @FXML private Label armyOneNameLabel;
+  @FXML private Label armyTwoNameLabel;
+  @FXML private Label ArmyOneInfantryLabel;
+  @FXML private Label ArmyTwoInfantryLabel;
+  @FXML private Label ArmyOneCavalryLabel;
+  @FXML private Label ArmyTwoCavalryLabel;
+  @FXML private Label ArmyOneRangedLabel;
+  @FXML private Label ArmyTwoRangedLabel;
+  @FXML private Label ArmyOneCommanderLabel;
+  @FXML private Label ArmyTwoCommanderLabel;
+  @FXML private Label ArmyOneTotalLabel;
+  @FXML private Label ArmyTwoTotalLabel;
+  @FXML private Label ArmyOneFilePathLabel;
+  @FXML private Label ArmyTwoFilePathLabel;
+
+  @FXML
+  private Pane armyOnePane;
+  @FXML
+  private Pane armyTwoPane;
+  @FXML
+  private ImageView terrainImageView;
+  @FXML
+  private ChoiceBox<String> terrainChoiceBox;
 
   /**
    * Initiates all terrain images, sets the terrainImageView to plains. Sets the values for terrain
-   * choicebox. Iniates armyOneController and armyTwoController, loading them and adding them to
+   * choicebox. Initeates armyOneController and armyTwoController, loading them and adding them to
    * armyOne pane and armyTwo pane.
    */
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
     try {
-      plains = new Image(Main.class.getResource("Plains_Image.jpg").toExternalForm());
-      hills = new Image(Main.class.getResource("Hills_Image.jpg").toExternalForm());
-      forest = new Image(Main.class.getResource("Forest_Image.jpg").toExternalForm());
+      String plainsURL = Objects.requireNonNull(WargamesApplication.class
+              .getResource("/no/ntnu/idatg2001/wargames/ui/images/terrain/Plains_Image.jpg"))
+          .toExternalForm();
+      plains = new Image(plainsURL);
+
+      String hillsURL = Objects.requireNonNull(WargamesApplication.class
+              .getResource("/no/ntnu/idatg2001/wargames/ui/images/terrain/Hills_Image.jpg"))
+          .toExternalForm();
+      hills = new Image(hillsURL);
+
+      String forestURL = Objects.requireNonNull(WargamesApplication.class
+              .getResource("/no/ntnu/idatg2001/wargames/ui/images/terrain/Forest_Image.jpg"))
+          .toExternalForm();
+      forest = new Image(forestURL);
     } catch (NullPointerException e) {
-      showErrorMessage("Image did not load properly, because of the image location is wrong." +
+      showErrorMessage("Image did not load properly, because the image location is wrong." +
           "You can ignore this message.");
     }
 
-    terrainImageView.setImage(plains);
+    if (plains != null && hills != null && forest != null) {
+      terrainImageView.setImage(plains);
+      List<String> differentTerrains = new ArrayList<>();
+      String stringPlains = getTerrainValueFromImage(this.plains);
+      String stringHills = getTerrainValueFromImage(this.hills);
+      String stringForest = getTerrainValueFromImage(this.forest);
+      differentTerrains.add(stringPlains);
+      differentTerrains.add(stringHills);
+      differentTerrains.add(stringForest);
+      terrainChoiceBox.setItems(FXCollections.observableList(differentTerrains));
+      terrainChoiceBox.setValue(stringPlains);
 
-    List<String> differentTerrains = new ArrayList<>();
-    String stringPlains = getTerrainValueFromImage(this.plains);
-    String stringHills = getTerrainValueFromImage(this.hills);
-    String stringForest = getTerrainValueFromImage(this.forest);
-
-    differentTerrains.add(stringPlains);
-    differentTerrains.add(stringHills);
-    differentTerrains.add(stringForest);
-
-    terrainChoiceBox.setItems(FXCollections.observableList(differentTerrains));
-    terrainChoiceBox.setValue(stringPlains);
-
-    terrainChoiceBox
-        .onActionProperty()
-        .setValue(actionEvent -> setImage(terrainChoiceBox.getValue()));
+      terrainChoiceBox
+          .onActionProperty()
+          .setValue(actionEvent -> setImage(terrainChoiceBox.getValue()));
+    }
 
     FXMLLoader loaderArmyOne =
         new FXMLLoader(
-            BattleMakerController.class
-                .getClassLoader()
-                .getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyMakerView.fxml"));
+            WargamesApplication.class
+                .getResource("ArmyMakerView.fxml"));
     try {
       armyOnePane.getChildren().add(loaderArmyOne.load());
       armyOneController = loaderArmyOne.getController();
@@ -94,18 +125,14 @@ public class BattleMakerController implements Initializable {
 
     FXMLLoader loaderArmyTwo =
         new FXMLLoader(
-            BattleMakerController.class
-                .getClassLoader()
-                .getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyMakerView.fxml"));
+            WargamesApplication.class
+                .getResource("ArmyMakerView.fxml"));
     try {
       armyTwoPane.getChildren().add(loaderArmyTwo.load());
       armyTwoController = loaderArmyTwo.getController();
     } catch (IOException e) {
       e.printStackTrace();
     }
-
-    armyOneFilePath.setVisible(false);
-    armyTwoFilePath.setVisible(false);
 
     if (WargameFacade.getInstance().isSaveFileFilled()) {
       onLoadPreviousArmyOneButtonClick();
@@ -120,7 +147,9 @@ public class BattleMakerController implements Initializable {
    * @return Terrain value as a string.
    */
   private String getTerrainValueFromImage(Image image) {
-    return image.getUrl().split("/")[14].split("\\.")[0].split("_")[0];
+    return image.getUrl()
+        .split("/")[image.getUrl().split("/").length - 1]
+        .split("\\.")[0].split("_")[0];
   }
 
   /**
@@ -145,9 +174,10 @@ public class BattleMakerController implements Initializable {
    * @param terrainImage The image to load, showing the terrain.
    */
   private void setTerrainImageView(Image terrainImage) {
-    terrainImageView.setImage(terrainImage);
-    currentTerrainLabel.setVisible(true);
-    currentTerrainLabel.setText(getTerrainValueFromImage(terrainImage));
+    if (terrainImage != null) {
+      terrainImageView.setImage(terrainImage);
+    }
+
   }
 
   /**
@@ -156,13 +186,13 @@ public class BattleMakerController implements Initializable {
    */
   @FXML
   private void onSwitchTerrainMouseClick() {
-    if (terrainImageView.getImage().getUrl().equals(plains.getUrl())) {
+    if (plains != null && terrainImageView.getImage().getUrl().equals(plains.getUrl())) {
       setTerrainImageView(hills);
       terrainChoiceBox.setValue(getTerrainValueFromImage(hills));
-    } else if (terrainImageView.getImage().getUrl().equals(hills.getUrl())) {
+    } else if (hills != null && terrainImageView.getImage().getUrl().equals(hills.getUrl())) {
       setTerrainImageView(forest);
       terrainChoiceBox.setValue(getTerrainValueFromImage(forest));
-    } else if (terrainImageView.getImage().getUrl().equals(forest.getUrl())) {
+    } else if (forest != null && terrainImageView.getImage().getUrl().equals(forest.getUrl())) {
       setTerrainImageView(plains);
       terrainChoiceBox.setValue(getTerrainValueFromImage(plains));
     }
@@ -181,22 +211,9 @@ public class BattleMakerController implements Initializable {
     alert.showAndWait();
   }
 
-  private void setFilePath(boolean isArmyOne) {
-    List<String> fileInfo = WargameFacade.getInstance().getLastLoadedFileInfo();
-    if (isArmyOne) {
-      armyOneFilePath.setVisible(true);
-      armyOneFilePath.setText(
-          "Army " + "'" + fileInfo.get(0) + "'" + " loaded from :" + fileInfo.get(1)
-              + " \nFile name : " + fileInfo.get(2));
-    } else {
-      armyTwoFilePath.setVisible(true);
-      armyTwoFilePath.setText(
-          "Army " + fileInfo.get(0) + " loaded from :" + fileInfo.get(1)
-              + " \nFile name : " + fileInfo.get(2));
-    }
-  }
-
-  /** Saves army one to resources file. */
+  /**
+   * Saves army one to resources file.
+   */
   @FXML
   private void onSaveArmyOneButtonClick() {
     try {
@@ -207,7 +224,9 @@ public class BattleMakerController implements Initializable {
     }
   }
 
-  /** Saves army two to resources file. */
+  /**
+   * Saves army two to resources file.
+   */
   @FXML
   private void onSaveArmyTwoButtonClick() {
     try {
@@ -218,7 +237,9 @@ public class BattleMakerController implements Initializable {
     }
   }
 
-  /** Loads previous army one. */
+  /**
+   * Loads previous army one.
+   */
   @FXML
   private void onLoadPreviousArmyOneButtonClick() {
     try {
@@ -226,13 +247,14 @@ public class BattleMakerController implements Initializable {
           WargameFacade.getInstance().getArmyOneFromResources(),
           WargameFacade.getInstance().getArmyOneName());
       armyOneController.updateArmyUnits();
-      setFilePath(true);
-    } catch (IOException | IllegalArgumentException e) {
+    } catch (IOException | NullPointerException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
   }
 
-  /** Loads previous army two. */
+  /**
+   * Loads previous army two.
+   */
   @FXML
   private void onLoadPreviousArmyTwoButtonClick() {
     try {
@@ -240,8 +262,7 @@ public class BattleMakerController implements Initializable {
           WargameFacade.getInstance().getArmyTwoFromResources(),
           WargameFacade.getInstance().getArmyTwoName());
       armyTwoController.updateArmyUnits();
-      setFilePath(false);
-    } catch (IOException | IllegalArgumentException e) {
+    } catch (IOException | NullPointerException | IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }
   }
@@ -257,28 +278,24 @@ public class BattleMakerController implements Initializable {
           WargameFacade.getInstance().getArmyOneFromDemoFile(),
           WargameFacade.getInstance().getArmyOneName());
       armyOneController.updateArmyUnits();
-      setFilePath(true);
 
       armyTwoController.setArmyControllerValues(
           WargameFacade.getInstance().getArmyTwoFromDemoFile(),
           WargameFacade.getInstance().getArmyTwoName());
       armyTwoController.updateArmyUnits();
-      setFilePath(false);
-    } catch (IOException | IllegalArgumentException e) {
-      showErrorMessage(e.getMessage());
+    } catch (IOException | NullPointerException | IllegalArgumentException e) {
+      showErrorMessage("Cannot find file from path: \n" + e.getMessage());
     }
   }
 
   @FXML
   private void onLoadArmyOneFromFile() {
     showFileChooser(armyOneController);
-    setFilePath(true);
   }
 
   @FXML
   private void onLoadArmyTwoFromFile() {
     showFileChooser(armyTwoController);
-    setFilePath(false);
   }
 
   /**
@@ -324,4 +341,13 @@ public class BattleMakerController implements Initializable {
   private void onShowMainMenuButtonClick() {
     WargamesApplication.gotToMainMenu();
   }
+
+  @FXML
+  private void onButtonClickFileInfo(ActionEvent actionEvent) {
+
+  }
+
+
+
 }
+

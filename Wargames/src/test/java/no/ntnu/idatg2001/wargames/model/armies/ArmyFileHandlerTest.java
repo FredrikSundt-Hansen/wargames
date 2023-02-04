@@ -59,8 +59,8 @@ class ArmyFileHandlerTest {
   void readAndWriteArmyCsv() {
     String path = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyOneSaveFile.csv";
     try {
-      ArmyFileHandler.writeArmyCsv(humanArmy,path);
-      Army army = ArmyFileHandler.readCsv(path);
+      ArmyFileHandler.writeArmyCsvTestFile(humanArmy,path);
+      Army army = ArmyFileHandler.readCsvTestFiles(path);
       assertEquals(army, humanArmy);
 
     } catch (IOException e) {
@@ -75,10 +75,10 @@ class ArmyFileHandlerTest {
     String pathArmyTwo = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyTwoSaveFile.csv";
 
     try {
-      ArmyFileHandler.writeArmyCsv(humanArmy, pathArmyOne);
-      ArmyFileHandler.writeArmyCsv(orcishHorde, pathArmyTwo);
+      ArmyFileHandler.writeArmyCsvTestFile(humanArmy, pathArmyOne);
+      ArmyFileHandler.writeArmyCsvTestFile(orcishHorde, pathArmyTwo);
       Battle battle =
-          new Battle(ArmyFileHandler.readCsv(pathArmyOne), ArmyFileHandler.readCsv(pathArmyTwo));
+          new Battle(ArmyFileHandler.readCsvTestFiles(pathArmyOne), ArmyFileHandler.readCsvTestFiles(pathArmyTwo));
       assertEquals(battle.simulate("hills").getName(),humanArmy.getName());
     } catch (IOException e) {
       e.printStackTrace();
@@ -91,8 +91,8 @@ class ArmyFileHandlerTest {
     String path = "src/test/java/no/ntnu/idatg2001/wargames/model/newArmyTestFile.csv";
 
     try {
-      ArmyFileHandler.writeArmyCsv(humanArmy, path);
-      assertEquals(ArmyFileHandler.readCsv(path), humanArmy);
+      ArmyFileHandler.writeArmyCsvTestFile(humanArmy, path);
+      assertEquals(ArmyFileHandler.readCsvTestFiles(path), humanArmy);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -107,7 +107,7 @@ class ArmyFileHandlerTest {
   @Test
   void readNullArmy() {
     try {
-      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/model/wargames/armies/nullArmyFile.csv");
+      ArmyFileHandler.readCsvTestFiles("src/test/java/no/ntnu/idatg2001/model/wargames/armies/nullArmyFile.csv");
       fail();
     } catch (IOException | IllegalArgumentException e) {
       assertTrue(true);
@@ -127,7 +127,7 @@ class ArmyFileHandlerTest {
     }
 
     try {
-      ArmyFileHandler.readCsv(path);
+      ArmyFileHandler.readCsvTestFiles(path);
       fail();
     } catch (IOException | IllegalArgumentException e) {
       assertTrue(true);
@@ -137,7 +137,7 @@ class ArmyFileHandlerTest {
   @Test
   void readFromNonExcisitngFile() {
     try {
-      ArmyFileHandler.readCsv("newNonExcisitngFile.csv");
+      ArmyFileHandler.readCsvTestFiles("newNonExcisitngFile.csv");
       fail();
     } catch (IOException | IllegalArgumentException e) {
       assertTrue(true);
@@ -148,7 +148,7 @@ class ArmyFileHandlerTest {
   @DisplayName("File already contains one army, with one line not containing a the right size.")
   void readArmyWithInvalidUnit() {
     try {
-      ArmyFileHandler.readCsv("src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithInvalidUnit.csv");
+      ArmyFileHandler.readCsvTestFiles("src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithInvalidUnit.csv");
       fail();
     } catch (IOException | IllegalArgumentException e) {
       assertTrue(true);
@@ -160,14 +160,14 @@ class ArmyFileHandlerTest {
   @Test
   void writeNullArmy() {
     try {
-      ArmyFileHandler.writeArmyCsv(null, "src/main/resources/savefiles/armyOneSaveFile.csv");
+      ArmyFileHandler.writeArmyCsvTestFile(null, "src/main/resources/savefiles/armyOneSaveFile.csv");
       fail();
     } catch (IOException | NullPointerException | IllegalArgumentException exception) {
       assertTrue(true);
     }
 
     try {
-      ArmyFileHandler.writeArmyCsv(new Army(), "src/main/resources/savefiles/armyOneSaveFile.csv");
+      ArmyFileHandler.writeArmyCsvTestFile(new Army(), "src/main/resources/savefiles/armyOneSaveFile.csv");
       fail();
     } catch (IOException | IllegalArgumentException | NullPointerException exception) {
       assertTrue(true);

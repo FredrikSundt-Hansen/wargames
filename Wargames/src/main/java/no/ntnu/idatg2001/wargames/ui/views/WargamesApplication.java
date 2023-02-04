@@ -1,14 +1,14 @@
 package no.ntnu.idatg2001.wargames.ui.views;
 
-import static javafx.application.Application.launch;
-
 import java.io.IOException;
+import java.util.Objects;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class WargamesApplication extends Application {
@@ -19,21 +19,12 @@ public class WargamesApplication extends Application {
   }
 
   /**
-   * Start method from Application. Calls goToMainMenu.
-   */
-  @Override
-  public void start(Stage primaryStage) {
-    WargamesApplication.primaryStage = primaryStage;
-    gotToMainMenu();
-  }
-
-  /**
    * Displays the main menu.
    */
   @FXML
   public static void gotToMainMenu() {
     FXMLLoader loader =
-        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/MainWindowView.fxml"));
+        new FXMLLoader(WargamesApplication.class.getResource("MainWindowView.fxml"));
     try {
       Parent root = loader.load();
       Scene scene = new Scene(root);
@@ -44,6 +35,10 @@ public class WargamesApplication extends Application {
 
     primaryStage.setTitle("Main Menu");
     primaryStage.show();
+    String url = Objects.requireNonNull(WargamesApplication.class
+            .getResource("/no/ntnu/idatg2001/wargames/ui/images/icons/appIcon_255x255.png"))
+        .toExternalForm();
+    primaryStage.getIcons().add(new Image(url));
   }
 
   /**
@@ -52,7 +47,7 @@ public class WargamesApplication extends Application {
   @FXML
   public static void goToSetArmyNames() {
     FXMLLoader loader =
-        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/SetArmyNamesView.fxml"));
+        new FXMLLoader(WargamesApplication.class.getResource("SetArmyNamesView.fxml"));
     try {
       Parent root = loader.load();
       Scene scene = new Scene(root);
@@ -70,7 +65,7 @@ public class WargamesApplication extends Application {
   @FXML
   public static void goToBattleMaker() {
     FXMLLoader loader =
-        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/BattleMakerView.fxml"));
+        new FXMLLoader(WargamesApplication.class.getResource("BattleMakerView.fxml"));
     try {
       Parent root = loader.load();
       Scene scene = new Scene(root);
@@ -88,7 +83,7 @@ public class WargamesApplication extends Application {
   @FXML
   public static void getToSimulateBattle() {
     FXMLLoader loader =
-        new FXMLLoader(WargamesApplication.class.getClassLoader().getResource("no.ntnu.idatg2001.wargames.ui.views/SimulationView.fxml"));
+        new FXMLLoader(WargamesApplication.class.getResource("SimulationView.fxml"));
     try {
       Parent root = loader.load();
       Scene scene = new Scene(root);
@@ -111,6 +106,15 @@ public class WargamesApplication extends Application {
     alert.setHeaderText(e);
     alert.setContentText("Please try again");
     alert.showAndWait();
+  }
+
+  /**
+   * Start method from Application. Calls goToMainMenu.
+   */
+  @Override
+  public void start(Stage primaryStage) {
+    WargamesApplication.primaryStage = primaryStage;
+    gotToMainMenu();
   }
 
 

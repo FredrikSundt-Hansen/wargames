@@ -2,6 +2,7 @@ module no.ntnu.idatg2001 {
   requires javafx.controls;
   requires javafx.fxml;
   requires java.logging;
+
   
   opens no.ntnu.idatg2001.wargames.model.units;
   opens no.ntnu.idatg2001.wargames.model.armies;

@@ -39,8 +39,8 @@ public class ArmyEditorDialog extends Dialog<List<String>> implements Initializa
   @FXML
   public void showArmyEditor() {
     FXMLLoader loader =
-        new FXMLLoader(ArmyEditorDialog.class.getClassLoader()
-            .getResource("no.ntnu.idatg2001.wargames.ui.views/ArmyEditorDialogView.fxml"));
+        new FXMLLoader(ArmyEditorDialog.class
+            .getResource("ArmyEditorDialogView.fxml"));
     try {
       getDialogPane().setContent(loader.load());
     } catch (IOException e) {

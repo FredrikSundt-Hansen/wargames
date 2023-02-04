@@ -17,6 +17,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.WindowEvent;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.ui.views.ArmyEditorDialog;
@@ -119,6 +120,8 @@ public class ArmyMakerController implements Initializable {
   private void showDialogAddUnits() {
     ArmyEditorDialog dialog = new ArmyEditorDialog();
     Optional<List<String>> result = dialog.showAndWait();
+
+
     if (result.isPresent()) {
       try {
         unitList.addAll(WargameFacade.getInstance().makeUnits(result.get()));
@@ -194,8 +197,10 @@ public class ArmyMakerController implements Initializable {
   private void onChangeArmyNameButtonClick() {
     try {
       String name = showNameTextInputDialog();
-      WargameFacade.getInstance().setArmyName(name, isArmyOne);
-      armyNameLabel.setText(name);
+      if (name != null) {
+        WargameFacade.getInstance().setArmyName(name, isArmyOne);
+        armyNameLabel.setText(name);
+      }
     } catch (IllegalArgumentException e) {
       showErrorMessage(e.getMessage());
     }

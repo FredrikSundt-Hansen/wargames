@@ -3,10 +3,13 @@ package no.ntnu.idatg2001.wargames.ui.controllers;
 import java.io.File;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +19,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,6 +39,7 @@ import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
  * implements UnitObserver to update graph and hit log.
  */
 public class SimulationController implements UnitObserver, Initializable {
+
   private int counter;
   private int threadSpeed;
 
@@ -51,6 +56,7 @@ public class SimulationController implements UnitObserver, Initializable {
   private XYChart.Series<String, Number> armyOneChartData;
   private XYChart.Series<String, Number> armyTwoChartData;
 
+  @FXML private Slider onDragTimerSlider;
   @FXML private LineChart<String, Number> armySizeLineChart;
   @FXML private Label armyOneNameLabel;
   @FXML private Label armyTwoNameLabel;
@@ -83,11 +89,7 @@ public class SimulationController implements UnitObserver, Initializable {
 
     int n = setTableViewValues(instance.getArmyOneUnits(), instance.getArmyTwoUnits());
 
-    if (n > 60) { // To make the simulation not take to long.
-      threadSpeed = 10;
-    } else {
-      threadSpeed = n;
-    }
+    threadSpeed = ((int) onDragTimerSlider.getValue());
 
     setColumnPropertyFactory(armyOneTypeColumn, armyOneHealthColumn);
     setColumnPropertyFactory(armyTwoTypeColumn, armyTwoHealthColumn);
@@ -101,6 +103,12 @@ public class SimulationController implements UnitObserver, Initializable {
 
     initiateTimeline();
 
+    onDragTimerSlider.valueProperty().addListener(
+        (observableValue, oldValue, newValue) -> {
+          timeline.setRate(newValue.intValue());
+        }
+    );
+
     setCurrentTerrainImageView();
     winnerLabel.setVisible(false);
     winnerTrophyImageView.setVisible(false);
@@ -112,7 +120,10 @@ public class SimulationController implements UnitObserver, Initializable {
   private void setCurrentTerrainImageView() {
     String terrain = WargameFacade.getInstance().getCurrentTerrain();
     currentTerrainLabel.setText(terrain);
-    currentTerrainImageView.setImage(new Image(Main.class.getResource(terrain + "_Image.jpg").toExternalForm()));
+    String currentTerrainImageURL = Objects.requireNonNull(WargamesApplication.class
+            .getResource("/no/ntnu/idatg2001/wargames/ui/images/terrain/"
+                + terrain + "_Image.jpg")).toExternalForm();
+    currentTerrainImageView.setImage(new Image(currentTerrainImageURL));
 
   }
 

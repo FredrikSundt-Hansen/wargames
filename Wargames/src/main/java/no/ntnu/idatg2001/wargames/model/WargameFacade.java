@@ -1,14 +1,19 @@
 package no.ntnu.idatg2001.wargames.model;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.armies.ArmyFileHandler;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.battles.UnitObserver;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.model.units.UnitFactory;
+import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 
 /**
  * Facade for the application, as a singleton. Holds all the model classes that are being used and
@@ -235,8 +240,13 @@ public class WargameFacade {
    * @throws IllegalArgumentException - If army name is null or empty.
    */
   public void saveArmyOneToResources(String armyName, List<Unit> units) throws IOException, IllegalArgumentException {
-    ArmyFileHandler.writeArmyCsv(
-        new Army(armyName, units), "src/main/resources/savefiles/armyOneSaveFile.csv");
+    String absolutePath =
+        Objects.requireNonNull(WargameFacade.class.getResource(
+                "/no/ntnu/idatg2001/wargames/savefiles/armyOneSaveFile.csv"))
+            .toExternalForm();
+    String path = absolutePath.split(":")[absolutePath.split(":").length - 1];
+
+    ArmyFileHandler.writeArmyCsv(new Army(armyName, units), path);
   }
 
   /**
@@ -249,8 +259,13 @@ public class WargameFacade {
    * @throws IllegalArgumentException - If army name is null or empty.
    */
   public void saveArmyTwoToResources(String armyName, List<Unit> units) throws IOException, IllegalArgumentException {
-      ArmyFileHandler.writeArmyCsv(
-          new Army(armyName, units), "src/main/resources/savefiles/armyTwoSaveFile.csv");
+    String absolutePath =
+        Objects.requireNonNull(WargameFacade.class.getResource(
+                "/no/ntnu/idatg2001/wargames/savefiles/armyTwoSaveFile.csv"))
+            .toExternalForm();
+    String path = absolutePath.split(":")[absolutePath.split(":").length - 1];
+
+    ArmyFileHandler.writeArmyCsv(new Army(armyName, units), path);
   }
 
   /**
@@ -262,8 +277,10 @@ public class WargameFacade {
    * @throws IllegalArgumentException- If army name is not correct,
    * or one of the units in the file is not correct.
    */
-  public List<Unit> getArmyOneFromResources() throws IOException, IllegalArgumentException {
-    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneSaveFile.csv");
+  public List<Unit> getArmyOneFromResources() throws IOException, IllegalArgumentException, NullPointerException {
+    String path = "/no/ntnu/idatg2001/wargames/savefiles/armyOneSaveFile.csv";
+
+    Army army =  ArmyFileHandler.readCsv(path);
     armyOne.setName(army.getName());
     return army.getUnits();
   }
@@ -277,8 +294,11 @@ public class WargameFacade {
    * @throws IllegalArgumentException- If army name is not correct,
    * or one of the units in the file is not correct.
    */
-  public List<Unit> getArmyTwoFromResources() throws IOException, IllegalArgumentException {
-    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyTwoSaveFile.csv");
+  public List<Unit> getArmyTwoFromResources() throws IOException, IllegalArgumentException, NullPointerException {
+    String path = "/no/ntnu/idatg2001/wargames/savefiles/armyTwoSaveFile.csv";
+
+    Army army =  ArmyFileHandler.readCsv(path);
+
     armyTwo.setName(army.getName());
     return army.getUnits();
   }
@@ -295,7 +315,9 @@ public class WargameFacade {
    * or one of the units in the file is not correct.
    */
   public List<Unit> getArmyOneFromDemoFile() throws IOException, IllegalArgumentException {
-    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyOneDemoFile.csv");
+    String path = "/no/ntnu/idatg2001/wargames/savefiles/armyOneDemoFile.csv";
+
+    Army army =  ArmyFileHandler.readCsv(path);
     armyOne.setName(army.getName());
     return army.getUnits();
   }
@@ -311,8 +333,10 @@ public class WargameFacade {
    * @throws IllegalArgumentException- If army name is not correct,
    * or one of the units in the file is not correct.
    */
-  public List<Unit> getArmyTwoFromDemoFile() throws IOException, IllegalArgumentException {
-    Army army =  ArmyFileHandler.readCsv("src/main/resources/savefiles/armyTwoDemoFile.csv");
+  public List<Unit> getArmyTwoFromDemoFile() throws IOException, IllegalArgumentException, NullPointerException {
+    String path = "/no/ntnu/idatg2001/wargames/savefiles/armyTwoDemoFile.csv";
+
+    Army army =  ArmyFileHandler.readCsv(path);
     armyTwo.setName(army.getName());
     return army.getUnits();
   }

@@ -1,8 +1,8 @@
 .idea
 Wargames.iml
 target/
-src/main/resources/savefiles/armyOneSaveFile.csv
-src/main/resources/savefiles/armyTwoSaveFile.csv
+src/main/resources/no/ntnu/idatg2001/wargames/savefiles/armyOneSaveFile.csv
+src/main/resources/no/ntnu/idatg2001/wargames/savefiles/armyTwoSaveFile.csv
 src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithoutName.csv
 src/test/java/no/ntnu/idatg2001/wargames/model/armies/nullArmyFile.csv
 src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyWithInvalidUnit.csv

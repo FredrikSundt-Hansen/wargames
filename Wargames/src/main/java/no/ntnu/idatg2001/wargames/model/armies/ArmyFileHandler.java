@@ -2,17 +2,28 @@ package no.ntnu.idatg2001.wargames.model.armies;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
 import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 
-/** File handler for Army class. Writes and reads armies using buffered-writer and - reader. */
+/**
+ * File handler for Army class. Writes and reads armies using buffered-writer and - reader.
+ */
 public class ArmyFileHandler {
   //Represents the info about the path of the last loaded file.
   private static String lastLoadedFilePath;
@@ -22,6 +33,12 @@ public class ArmyFileHandler {
   private static String lastLoadedFileArmyName;
 
   private static boolean hasSavedFile; //True if the write method has been called.
+
+  /**
+   * Private constructor to hide the implicit public one.
+   */
+  private ArmyFileHandler() {
+  }
 
   public static boolean hasSavedFile() {
     return hasSavedFile;
@@ -39,9 +56,6 @@ public class ArmyFileHandler {
     return lastLoadedFileArmyName;
   }
 
-  /** Private constructor to hide the implicit public one. */
-  private ArmyFileHandler() {}
-
   private static void clearFile(String path) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       writer.write("");
@@ -57,6 +71,50 @@ public class ArmyFileHandler {
   public static void writeArmyCsv(Army army, String path)
       throws IOException, NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(army);
+
+    try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
+      if (army.getName() != null || !army.getName().isEmpty()) {
+        writer.write(army.getName());
+      } else {
+        throw new IllegalArgumentException("Army has no name.");
+      }
+      writer.newLine();
+      for (Unit unit : army.getUnits()) {
+        writer.write(
+            unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
+      }
+      hasSavedFile = true;
+    }
+  }
+
+  public static void writeArmyCsv2(Army army, String path)
+      throws IOException, NullPointerException, IllegalArgumentException {
+    Objects.requireNonNull(army);
+
+    //File file = new File(ArmyFileHandler.class.getResource(path).toExternalForm());
+
+    try (FileOutputStream fs = new FileOutputStream(
+        String.valueOf(ArmyFileHandler.class.getResourceAsStream(path)));
+         OutputStreamWriter ow = new OutputStreamWriter(fs);
+         BufferedWriter writer = new BufferedWriter(ow)) {
+      if (army.getName() != null || !army.getName().isEmpty()) {
+        writer.write(army.getName());
+      } else {
+        throw new IllegalArgumentException("Army has no name.");
+      }
+      writer.newLine();
+      for (Unit unit : army.getUnits()) {
+        writer.write(
+            unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
+      }
+      hasSavedFile = true;
+    }
+  }
+
+  public static void writeArmyCsvTestFile(Army army, String path)
+      throws IOException, NullPointerException, IllegalArgumentException {
+    Objects.requireNonNull(army);
+
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       if (army.getName() != null || !army.getName().isEmpty()) {
         writer.write(army.getName());
@@ -78,9 +136,52 @@ public class ArmyFileHandler {
    * @param path The path of the csv file.
    * @return The army read from the file.
    */
-  public static Army readCsv(String path) throws IOException, IllegalArgumentException {
+  public static Army readCsv(String path)
+      throws IOException, IllegalArgumentException, NullPointerException {
     Army army = new Army();
+
+    InputStream inputStream = ArmyFileHandler.class.getResourceAsStream(path);
+
+    if (inputStream != null) {
+      try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream,
+          StandardCharsets.UTF_8);
+           BufferedReader reader = new BufferedReader(inputStreamReader)) {
+        String lineOfText;
+        if ((lineOfText = reader.readLine()) != null && !lineOfText.contains(",")) {
+          army.setName(lineOfText);
+          lastLoadedFileArmyName = lineOfText;
+        } else {
+          throw new IllegalArgumentException("Error. Army name is not correct. ");
+        }
+
+        while ((lineOfText = reader.readLine()) != null) {
+          String[] words = lineOfText.split(",");
+          if (words.length == 3) {
+            assignLineToUnit(army, words);
+          } else {
+            throw new IllegalArgumentException("Invalid unit.");
+          }
+        }
+      }
+    } else {
+      throw new NullPointerException();
+    }
+    return new Army(army);
+  }
+
+  /**
+   * Reads a csv file to path, and returns the army.
+   *
+   * @param path The path of the csv file.
+   * @return The army read from the file.
+   */
+  public static Army readCsvTestFiles(String path)
+      throws IOException, IllegalArgumentException, NullPointerException {
+    Army army = new Army();
+
     Path currentPath = Path.of(path);
+
+
     try (BufferedReader reader = Files.newBufferedReader(currentPath)) {
       String lineOfText;
       if ((lineOfText = reader.readLine()) != null && !lineOfText.contains(",")) {
@@ -99,16 +200,14 @@ public class ArmyFileHandler {
         }
       }
     }
-    lastLoadedFilePath = currentPath.toAbsolutePath().toString();
-    String[] pathElements = lastLoadedFilePath.split("\\\\");
-    lastLoadedFileName = pathElements[pathElements.length - 1].split("\\.")[0];
+
     return new Army(army);
   }
 
   /**
    * Method takes one line of words and checks which unit it corresponds to.
    *
-   * @param army The army to the new unit to.
+   * @param army  The army to the new unit to.
    * @param words The line of words possible containing a unit.
    * @throws IllegalArgumentException - If it does not find a match to the known units.
    */

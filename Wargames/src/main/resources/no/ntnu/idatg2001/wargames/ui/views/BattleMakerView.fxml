@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.BattleMakerController">
+<BorderPane maxHeight="850.0" maxWidth="1720.0" minHeight="850.0" minWidth="1720.0" prefHeight="850.0" prefWidth="1720.0" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.BattleMakerController">
    <top>
       <MenuBar styleClass="whiteBackground-over" stylesheets="@../stylesheet/style.css" BorderPane.alignment="CENTER">
         <menus>
@@ -47,6 +47,7 @@
                      </items>
                   </Menu>
                   <MenuItem mnemonicParsing="false" onAction="#onLoadDemoFileButtonClick" text="Load demo " />
+                  <MenuItem mnemonicParsing="false" onAction="#onButtonClickFileInfo" text="File info" />
                </items>
             </Menu>
         </menus>
@@ -81,12 +82,7 @@
                   <String fx:value="choiceBox-label-blue" />
                </styleClass></ChoiceBox>
             <Button layoutX="2.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#onSwitchTerrainMouseClick" styleClass="button-over" stylesheets="@../stylesheet/style.css" text="&gt;" />
-            <Label fx:id="currentTerrainLabel" disable="true" layoutX="559.0" layoutY="63.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="&quot;plains&quot;" visible="false">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="462.0" layoutY="-3.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="Terrain" underline="true">
+            <Label layoutX="462.0" layoutY="-3.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="Battle Maker" underline="true">
                <font>
                   <Font size="24.0" />
                </font>
@@ -111,8 +107,6 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Label fx:id="armyTwoFilePath" disable="true" layoutX="14.0" layoutY="74.0" text="path" />
-            <Label fx:id="armyOneFilePath" disable="true" layoutX="14.0" layoutY="35.0" text="path" />
          </children>
       </Pane>
    </center>
