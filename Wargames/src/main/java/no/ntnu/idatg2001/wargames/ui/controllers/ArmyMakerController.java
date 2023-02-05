@@ -5,19 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.WindowEvent;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.ui.views.ArmyEditorDialog;
@@ -119,6 +121,7 @@ public class ArmyMakerController implements Initializable {
    */
   private void showDialogAddUnits() {
     ArmyEditorDialog dialog = new ArmyEditorDialog();
+    dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CANCEL);
     Optional<List<String>> result = dialog.showAndWait();
 
 

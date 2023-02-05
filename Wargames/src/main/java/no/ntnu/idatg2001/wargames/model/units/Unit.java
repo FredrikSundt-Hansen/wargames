@@ -65,14 +65,19 @@ public abstract class Unit {
    * @param unit The unit to copy.
    */
   protected Unit(Unit unit) {
-    this.setName(unit.name);
-    this.setHealth(unit.health);
-    this.setAttack(unit.attack);
-    this.setArmor(unit.armor);
+    this.type = unit.type;
+    this.name = unit.name;
+    this.health = unit.health;
+    this.attack = unit.attack;
+    this.armor = unit.armor;
     this.numberOfDefends = unit.numberOfDefends;
     this.numberOfAttacks = unit.numberOfAttacks;
     this.terrainDefendBonus = unit.terrainDefendBonus;
     this.terrainAttackBonus = unit.terrainAttackBonus;
+  }
+
+  public void setType(String type) {
+    this.type = type;
   }
 
   public void setHealth(int health) {
@@ -193,8 +198,7 @@ public abstract class Unit {
    *
    * @return String, consists of name, health, attack and armor.
    */
-  @Override
-  public String toString() {
+  public String getUnitInformation() {
     return "\nName: " + name + "\n" + "Health: " + health + "\n" + "Attack: " + attack + "\n"
         + "Armor: " + armor;
   }
@@ -211,21 +215,15 @@ public abstract class Unit {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Unit)) {
+    if (!(o instanceof Unit unit)) {
       return false;
     }
-    Unit unit = (Unit) o;
     return health == unit.health
         && attack == unit.attack
         && armor == unit.armor
         && Objects.equals(name, unit.name);
   }
 
-  /**
-   * Creates a hashcode of the unit, take name, health, attack and armor into consideration.
-   *
-   * @return Hashcode as an integer.
-   */
   @Override
   public int hashCode() {
     return Objects.hash(name, health, attack, armor);

@@ -3,6 +3,7 @@ package no.ntnu.idatg2001.wargames.ui.views;
 import java.io.IOException;
 import java.util.Objects;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,24 +40,6 @@ public class WargamesApplication extends Application {
             .getResource("/no/ntnu/idatg2001/wargames/ui/images/icons/appIcon_255x255.png"))
         .toExternalForm();
     primaryStage.getIcons().add(new Image(url));
-  }
-
-  /**
-   * Displays the view to set army names.
-   */
-  @FXML
-  public static void goToSetArmyNames() {
-    FXMLLoader loader =
-        new FXMLLoader(WargamesApplication.class.getResource("SetArmyNamesView.fxml"));
-    try {
-      Parent root = loader.load();
-      Scene scene = new Scene(root);
-      primaryStage.setScene(scene);
-    } catch (IOException e) {
-      showErrorMessage(e.getMessage());
-    }
-    primaryStage.setTitle("Set Army Names");
-    primaryStage.show();
   }
 
   /**
@@ -115,6 +98,11 @@ public class WargamesApplication extends Application {
   public void start(Stage primaryStage) {
     WargamesApplication.primaryStage = primaryStage;
     gotToMainMenu();
+  }
+
+  public static void exitApplication() {
+    Platform.exit();
+    System.exit(0);
   }
 
 

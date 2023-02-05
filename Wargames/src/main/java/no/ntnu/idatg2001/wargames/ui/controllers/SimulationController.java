@@ -1,15 +1,11 @@
 package no.ntnu.idatg2001.wargames.ui.controllers;
 
-import java.io.File;
 import java.net.URL;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,10 +19,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.WargameFacade;
 import no.ntnu.idatg2001.wargames.model.battles.UnitObserver;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
@@ -39,18 +33,10 @@ import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
  * implements UnitObserver to update graph and hit log.
  */
 public class SimulationController implements UnitObserver, Initializable {
-
   private int counter;
   private int threadSpeed;
-
-  private String nameAttacker;
-  private int attackValue;
-  private int attackBonus;
-  private String nameDefender;
-  private int healthDefender;
-  private int resistDefender;
-  private int armyOneSize;
-  private int armyTwoSize;
+  private int refreshUpdater;
+  private boolean simulating;
 
   private Timeline timeline;
   private XYChart.Series<String, Number> armyOneChartData;
@@ -67,7 +53,6 @@ public class SimulationController implements UnitObserver, Initializable {
   @FXML private TableColumn<Unit, String> armyOneHealthColumn;
   @FXML private TableColumn<Unit, String> armyTwoTypeColumn;
   @FXML private TableColumn<Unit, String> armyTwoHealthColumn;
-  @FXML private ImageView currentTerrainImageView;
   @FXML private Label totalUnitsArmyOneLabel;
   @FXML private Label totalUnitsArmyTwoLabel;
   @FXML private ImageView winnerTrophyImageView;
@@ -82,25 +67,10 @@ public class SimulationController implements UnitObserver, Initializable {
   public void initialize(URL url, ResourceBundle resourceBundle) {
 
     WargameFacade instance = WargameFacade.getInstance();
-
     instance.registerObserver(this);
-
-    initiateGraphValues();
-
-    int n = setTableViewValues(instance.getArmyOneUnits(), instance.getArmyTwoUnits());
-
     threadSpeed = ((int) onDragTimerSlider.getValue());
 
-    setColumnPropertyFactory(armyOneTypeColumn, armyOneHealthColumn);
-    setColumnPropertyFactory(armyTwoTypeColumn, armyTwoHealthColumn);
-
-    String armyOneName = instance.getArmyOneName();
-    String armyTwoName = instance.getArmyTwoName();
-    armyOneChartData.setName(armyOneName);
-    armyTwoChartData.setName(armyTwoName);
-    armyOneNameLabel.setText(armyOneName);
-    armyTwoNameLabel.setText(armyTwoName);
-
+    initiateGraphValues();
     initiateTimeline();
 
     onDragTimerSlider.valueProperty().addListener(
@@ -109,22 +79,13 @@ public class SimulationController implements UnitObserver, Initializable {
         }
     );
 
-    setCurrentTerrainImageView();
+    setTableViewValues(WargameFacade.getInstance().getArmyOneUnits(),
+        WargameFacade.getInstance().getArmyTwoUnits());
+
+    currentTerrainLabel.setText(WargameFacade.getInstance().getCurrentTerrain());
+
     winnerLabel.setVisible(false);
     winnerTrophyImageView.setVisible(false);
-  }
-
-  /**
-   * Sets TerrainImageView to match the current terrain of the battle.
-   */
-  private void setCurrentTerrainImageView() {
-    String terrain = WargameFacade.getInstance().getCurrentTerrain();
-    currentTerrainLabel.setText(terrain);
-    String currentTerrainImageURL = Objects.requireNonNull(WargamesApplication.class
-            .getResource("/no/ntnu/idatg2001/wargames/ui/images/terrain/"
-                + terrain + "_Image.jpg")).toExternalForm();
-    currentTerrainImageView.setImage(new Image(currentTerrainImageURL));
-
   }
 
   /**
@@ -132,9 +93,8 @@ public class SimulationController implements UnitObserver, Initializable {
    *
    * @param armyOneUnits List of units for armyOneTableView.
    * @param armyTwoUnits List of units for armyTwoTableView.
-   * @returns The average size of armyOneUnits and armyTwoUnits,
    */
-  private int setTableViewValues(List<Unit> armyOneUnits, List<Unit> armyTwoUnits) {
+  private void setTableViewValues(List<Unit> armyOneUnits, List<Unit> armyTwoUnits) {
     ObservableList<Unit> unitObservableListArmyTwo =
         FXCollections.observableList(armyOneUnits);
     armyOneTableView.setItems(unitObservableListArmyTwo);
@@ -143,17 +103,15 @@ public class SimulationController implements UnitObserver, Initializable {
         FXCollections.observableList(armyTwoUnits);
     armyTwoTableView.setItems(unitObservableListArmyOne);
 
-    updateAllTotalLabels();
-
-    return (armyOneUnits.size() + armyTwoUnits.size()) / 2;
+    updateAllTotalLabels(armyOneTableView.getItems().size(), armyTwoTableView.getItems().size());
   }
 
   /**
    * Updates armyOne and armyTwo size label.
    */
-  private void updateAllTotalLabels() {
-    totalUnitsArmyOneLabel.setText(String.valueOf(armyOneTableView.getItems().size()));
-    totalUnitsArmyTwoLabel.setText(String.valueOf(armyTwoTableView.getItems().size()));
+  private void updateAllTotalLabels(int armyOneSize, int armyTwoSize) {
+    totalUnitsArmyOneLabel.setText(String.valueOf(armyOneSize));
+    totalUnitsArmyTwoLabel.setText(String.valueOf(armyTwoSize));
   }
 
   /**
@@ -190,6 +148,16 @@ public class SimulationController implements UnitObserver, Initializable {
     armySizeLineChart.setCreateSymbols(false);
     armySizeLineChart.setHorizontalGridLinesVisible(false);
     armySizeLineChart.setVerticalGridLinesVisible(false);
+
+    setColumnPropertyFactory(armyOneTypeColumn, armyOneHealthColumn);
+    setColumnPropertyFactory(armyTwoTypeColumn, armyTwoHealthColumn);
+
+    String armyOneName = WargameFacade.getInstance().getArmyOneName();
+    String armyTwoName = WargameFacade.getInstance().getArmyTwoName();
+    armyOneChartData.setName(armyOneName);
+    armyTwoChartData.setName(armyTwoName);
+    armyOneNameLabel.setText(armyOneName);
+    armyTwoNameLabel.setText(armyTwoName);
   }
 
   /**
@@ -197,16 +165,28 @@ public class SimulationController implements UnitObserver, Initializable {
    */
   @FXML
   private void onStartSimulationButtonClick() {
-    timeline.play();
+    if (!simulating) {
+      timeline.play();
+      simulating = true;
+    } else {
+      timeline.stop();
+      simulating = false;
+    }
   }
 
-  /**
-   * Method to reset the simulation when this button is clicked.
-   * Goes to BattleMaker, and laos the same units there.
-   */
   @FXML
   private void onResetSimulationButtonClick() {
-    WargamesApplication.goToBattleMaker();
+    winnerLabel.setVisible(false);
+    winnerTrophyImageView.setVisible(false);
+
+    WargameFacade.getInstance().resetArmies();
+    setTableViewValues(WargameFacade.getInstance().getArmyOneUnits(),
+        WargameFacade.getInstance().getArmyTwoUnits());
+    initiateTimeline();
+    simulating = false;
+    onStartSimulationButtonClick();
+    WargameFacade.getInstance().registerObserver(this);
+
   }
 
   /**
@@ -216,6 +196,8 @@ public class SimulationController implements UnitObserver, Initializable {
   private void step(ActionEvent actionEvent) {
     if (WargameFacade.getInstance().simulateStep()) {
       timeline.stop();
+      armyOneTableView.refresh();
+      armyTwoTableView.refresh();
       winnerTrophyImageView.setVisible(true);
       winnerLabel.setVisible(true);
       if (Integer.parseInt(totalUnitsArmyOneLabel.getText())
@@ -226,43 +208,37 @@ public class SimulationController implements UnitObserver, Initializable {
       }
     }
 
-    updateGraphValues();
-    hitLogListView.getItems()
-        .add(nameAttacker + " attacked  " + nameDefender + " with resist "
-            + " -(" + resistDefender + ") " + "Dealing " + attackValue
-            + " +(" + attackBonus + ")" + " damage "
-            + " Health : " + healthDefender);
-    hitLogListView.scrollTo(hitLogListView.getItems().size());
-    updateAllTotalLabels();
-    armyTwoTableView.refresh();
-    armyOneTableView.refresh();
+    if (refreshUpdater >= 250) {
+      refreshUpdater = 0;
+      armyOneTableView.refresh();
+      armyTwoTableView.refresh();
+    }
+    refreshUpdater++;
   }
 
   /**
    * Updates the graph to the current known values of armyOneSize and armyTwoSize.
    */
-  private void updateGraphValues() {
-    armyOneChartData.getData().add(new XYChart.Data<>(String.valueOf(counter), armyOneSize));
-    armyTwoChartData.getData().add(new XYChart.Data<>(String.valueOf(counter), armyTwoSize));
+  private void updateGraphValues(int sizeOne, int sizeTwo) {
+    armyOneChartData.getData().add(new XYChart.Data<>(String.valueOf(counter), sizeOne));
+    armyTwoChartData.getData().add(new XYChart.Data<>(String.valueOf(counter), sizeTwo));
     counter++;
   }
 
   @Override
   public void hitUpdate(String nameAttacker, int attackValue, int attackBonus, String nameDefender,
       int healthDefender, int resistDefender) {
-    this.nameAttacker = nameAttacker;
-    this.attackValue = attackValue;
-    this.attackBonus = attackBonus;
-    this.nameDefender = nameDefender;
-    this.healthDefender = healthDefender;
-    this.resistDefender = resistDefender;
+    hitLogListView.getItems()
+        .add(nameAttacker + attackValue + "+(" + attackBonus + ")"
+            + "  ->  " + nameDefender + " -(" + resistDefender + ")"
+            + " = " + healthDefender);
+    hitLogListView.scrollTo(hitLogListView.getItems().size());
   }
-
 
   @Override
   public void sizeUpdate(int sizeOne, int sizeTwo) {
-    this.armyOneSize = sizeOne;
-    this.armyTwoSize = sizeTwo;
+    updateAllTotalLabels(sizeOne, sizeTwo);
+    updateGraphValues(sizeOne, sizeTwo);
   }
 
   @FXML

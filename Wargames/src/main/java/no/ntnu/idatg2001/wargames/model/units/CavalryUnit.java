@@ -6,7 +6,6 @@ package no.ntnu.idatg2001.wargames.model.units;
  * @version 1.0.0
  */
 public class CavalryUnit extends Unit {
-
   /**
    * Constructs new cavalry unit, with all parameters.
    *
@@ -17,6 +16,7 @@ public class CavalryUnit extends Unit {
    */
   public CavalryUnit(String name, int health, int attack, int armor) {
     super(name, health, attack, armor);
+    type = "cavalryunit";
   }
 
   /**
@@ -29,6 +29,7 @@ public class CavalryUnit extends Unit {
     super(name, health);
     attack = 20;
     armor = 12;
+    type = "cavalryunit";
   }
 
   /**
@@ -38,6 +39,7 @@ public class CavalryUnit extends Unit {
    */
   public CavalryUnit(Unit unit) {
     super(unit);
+    type = "cavalryunit";
   }
 
   @Override

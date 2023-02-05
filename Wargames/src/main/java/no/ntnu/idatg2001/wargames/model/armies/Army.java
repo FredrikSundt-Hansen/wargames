@@ -17,14 +17,14 @@ import no.ntnu.idatg2001.wargames.model.units.Unit;
  * @version 1.0.1
  */
 public class Army {
-  private List<Unit> units;
   private final Random rand;
+  private List<Unit> units;
   private String name;
 
   /**
    * Constructs a new Army object containing units.
    *
-   * @param name The name of the army.
+   * @param name  The name of the army.
    * @param units A list containing units.
    */
   public Army(String name, List<Unit> units) {
@@ -32,7 +32,6 @@ public class Army {
     this.units = units;
     rand = new Random();
   }
-
 
   /**
    * Constructs an empty army with name.
@@ -52,24 +51,34 @@ public class Army {
    * @throws NullPointerException - If army is null.
    */
   public Army(Army army) throws NullPointerException {
+    this.units = new ArrayList<>();
+    rand = new Random();
     if (army != null) {
       this.name = army.name;
-      this.units = army.units;
-      rand = new Random();
+
+      for (Unit unit : army.units) {
+        if (unit.getType().equalsIgnoreCase("infantryunit")) {
+          this.units.add(new InfantryUnit(unit));
+        } else if (unit.getType().equalsIgnoreCase("cavalryunit")) {
+          this.units.add(new CavalryUnit(unit));
+        } else if (unit.getType().equalsIgnoreCase("rangedunit")) {
+          this.units.add(new RangedUnit(unit));
+        } else if (unit.getType().equalsIgnoreCase("commanderunit")) {
+          this.units.add(new CommanderUnit(unit));
+        }
+      }
     } else {
       throw new NullPointerException("Null army");
     }
   }
 
-  /** Constructs an empty army with no name. */
+  /**
+   * Constructs an empty army with no name.
+   */
   public Army() {
-    this.name = null;
+    this.name = "";
     this.units = new ArrayList<>();
     rand = new Random();
-  }
-
-  public void setUnits(List<Unit> units) {
-    this.units = units;
   }
 
   public String getName() {
@@ -80,7 +89,7 @@ public class Army {
    * Mutator method to change the name of the unit.
    *
    * @param name The name of the unit.
-   * @exception IllegalArgumentException - If name is empty (null).
+   * @throws IllegalArgumentException - If name is empty (null).
    */
   public void setName(String name) throws IllegalArgumentException {
     if (!name.isEmpty()) {
@@ -92,6 +101,10 @@ public class Army {
 
   public List<Unit> getUnits() {
     return units;
+  }
+
+  public void setUnits(List<Unit> units) {
+    this.units = units;
   }
 
   /**
@@ -212,8 +225,7 @@ public class Army {
    *
    * @return A string containing the name and how many units.
    */
-  @Override
-  public String toString() {
+  public String getArmyInformation() {
     return " '"
         + name
         + "' "

@@ -1,19 +1,15 @@
 package no.ntnu.idatg2001.wargames.model;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.armies.ArmyFileHandler;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.battles.UnitObserver;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
 import no.ntnu.idatg2001.wargames.model.units.UnitFactory;
-import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 
 /**
  * Facade for the application, as a singleton. Holds all the model classes that are being used and
@@ -29,10 +25,16 @@ import no.ntnu.idatg2001.wargames.ui.views.WargamesApplication;
 public class WargameFacade {
 
   private static volatile WargameFacade instance;
-  private final Army armyOne;
-  private final Army armyTwo;
+  private Army armyOneBackup;
+  private Army armyTwoBackup;
+  private Army armyOne;
+  private Army armyTwo;
   private Battle battle;
   private String currentTerrain;
+  private String armyOneFileName;
+  private String armyOneFilePath;
+  private String armyTwoFileName;
+  private String armyTwoFilePath;
 
   /**
    * Constructor creates an instance.
@@ -41,6 +43,8 @@ public class WargameFacade {
   private WargameFacade() {
     armyOne = new Army();
     armyTwo = new Army();
+    armyOneBackup = new Army();
+    armyTwoBackup = new Army();
   }
 
   /**
@@ -72,6 +76,42 @@ public class WargameFacade {
     return armyTwo.getName();
   }
 
+  public String getArmyOneFileName() {
+    return armyOneFileName;
+  }
+
+  public String getArmyOneFilePath() {
+    return armyOneFilePath;
+  }
+
+  public String getArmyTwoFileName() {
+    return armyTwoFileName;
+  }
+
+  public String getArmyTwoFilePath() {
+    return armyTwoFilePath;
+  }
+
+  public void resetBattle() {
+    armyOne = new Army();
+    armyTwo = new Army();
+    battle.setArmyOne(armyOne);
+    battle.setArmyTwo(armyTwo);
+  }
+
+  public void updateBackupArmies() {
+    armyOneBackup = new Army(armyOne);
+    armyTwoBackup = new Army(armyTwo);
+  }
+
+  public void resetArmies() {
+    armyOne = new Army(armyOneBackup);
+    armyTwo = new Army(armyTwoBackup);
+    battle = new Battle(armyOne, armyTwo);
+    battle.setFirstStepFalse();
+  }
+
+
   /**
    * Seth the name of one of the army. If isArmy is true, the name will be set to army one,
    * if it is false it will be set to army two. This type of implementation, isArmyOne is used in
@@ -86,29 +126,15 @@ public class WargameFacade {
     if (name != null && !name.isEmpty()) {
       if (isArmyOne && !name.equals(armyTwo.getName())) {
         this.armyOne.setName(name);
+        this.armyOneBackup.setName(name);
       } else if (!name.equals(armyOne.getName())) {
         this.armyTwo.setName(name);
+        this.armyTwoBackup.setName(name);
       } else {
         throw new IllegalArgumentException("That name is already chosen. Pick a new one.");
       }
     } else {
       throw new IllegalArgumentException("Invalid name.");
-    }
-  }
-
-  /**
-   * Checks if the current army is of valid input, that is the armies has units and the names
-   * are not the same.
-   *
-   * @throws IllegalArgumentException - If units of one of the armies are empty,
-   * or the names of the armies are null og empty.
-   */
-  public void checkValidArmies() throws NullPointerException, IllegalArgumentException {
-    if (armyOne.getName() == null || armyTwo.getName() == null
-        || armyOne.getName().isEmpty() || armyTwo.getName().isEmpty()) {
-       throw new IllegalArgumentException("Both armies need to have a name.");
-    } else if (!armyOne.hasUnits() || !armyTwo.hasUnits()) {
-      throw new IllegalArgumentException("Both armies need to have units in them.");
     }
   }
 
@@ -134,10 +160,27 @@ public class WargameFacade {
    */
   public void setUnitsNameArmyOneAndTwo(List<Unit> unitsOne, List<Unit> unitsTwo )
       throws NullPointerException, IllegalArgumentException {
-    checkValidArmies();
     setUnits(unitsOne, true);
     setUnits(unitsTwo, false);
   }
+
+  /**
+   * Checks if the current army is of valid input, that is the armies has units and the names
+   * are not the same.
+   *
+   * @throws IllegalArgumentException - If units of one of the armies are empty,
+   * or the names of the armies are null og empty.
+   * @return
+   */
+  public void checkValidArmies() throws NullPointerException, IllegalArgumentException {
+    if (armyOne.getName() == null || armyTwo.getName() == null
+        || armyOne.getName().isEmpty() || armyTwo.getName().isEmpty()) {
+      throw new IllegalArgumentException("Both armies need to have a name.");
+    } else if (!armyOne.hasUnits() || !armyTwo.hasUnits()) {
+      throw new IllegalArgumentException("Both armies need to have units in them.");
+    }
+  }
+
 
   /**
    * Method to get a list of integer containing all information about the
@@ -282,6 +325,8 @@ public class WargameFacade {
 
     Army army =  ArmyFileHandler.readCsv(path);
     armyOne.setName(army.getName());
+    armyOneFileName = ArmyFileHandler.getLastLoadedFileName();
+    armyOneFilePath = ArmyFileHandler.getLastLoadedFilePath();
     return army.getUnits();
   }
 
@@ -298,8 +343,9 @@ public class WargameFacade {
     String path = "/no/ntnu/idatg2001/wargames/savefiles/armyTwoSaveFile.csv";
 
     Army army =  ArmyFileHandler.readCsv(path);
-
     armyTwo.setName(army.getName());
+    armyTwoFileName = ArmyFileHandler.getLastLoadedFileName();
+    armyTwoFilePath = ArmyFileHandler.getLastLoadedFilePath();
     return army.getUnits();
   }
 
@@ -319,6 +365,8 @@ public class WargameFacade {
 
     Army army =  ArmyFileHandler.readCsv(path);
     armyOne.setName(army.getName());
+    armyOneFileName = ArmyFileHandler.getLastLoadedFileName();
+    armyOneFilePath = ArmyFileHandler.getLastLoadedFilePath();
     return army.getUnits();
   }
 
@@ -336,8 +384,10 @@ public class WargameFacade {
   public List<Unit> getArmyTwoFromDemoFile() throws IOException, IllegalArgumentException, NullPointerException {
     String path = "/no/ntnu/idatg2001/wargames/savefiles/armyTwoDemoFile.csv";
 
-    Army army =  ArmyFileHandler.readCsv(path);
+    Army army = ArmyFileHandler.readCsv(path);
     armyTwo.setName(army.getName());
+    armyTwoFileName = ArmyFileHandler.getLastLoadedFileName();
+    armyTwoFilePath = ArmyFileHandler.getLastLoadedFilePath();
     return army.getUnits();
   }
 
@@ -353,24 +403,14 @@ public class WargameFacade {
    * @throws IllegalArgumentException -If the army in this file did not have a valid name,
    * or any of the units were wrong.
    */
-  public List<Unit> getArmyFromFile(String path) throws IOException, IllegalArgumentException {
+  public List<Unit> getArmyFromFile(String path, boolean armyOne) throws IOException, IllegalArgumentException {
     Army army = ArmyFileHandler.readCsv(path);
-    this.armyOne.setName(army.getName());
+    if (armyOne) {
+      this.armyOne.setName(army.getName());
+    } else {
+      this.armyTwo.setName(army.getName());
+    }
     return army.getUnits();
-  }
-
-  /**
-   * Returns a list of String containing the info from the last loaded file from FileHandler.
-   * List consists of army name, file path and file name of the army that was loaded.
-   *
-   * @return List of string with the last loaded file info.
-   */
-  public List<String> getLastLoadedFileInfo() {
-    List<String> fileInfo = new ArrayList<>();
-    fileInfo.add(ArmyFileHandler.getLastLoadedFileArmyName());
-    fileInfo.add(ArmyFileHandler.getLastLoadedFilePath());
-    fileInfo.add(ArmyFileHandler.getLastLoadedFileName());
-    return fileInfo;
   }
 
 }

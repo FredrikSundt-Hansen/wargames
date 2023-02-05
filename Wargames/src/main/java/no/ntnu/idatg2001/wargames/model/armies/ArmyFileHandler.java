@@ -3,18 +3,13 @@ package no.ntnu.idatg2001.wargames.model.armies;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
-import no.ntnu.idatg2001.wargames.Main;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
 import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
@@ -29,8 +24,6 @@ public class ArmyFileHandler {
   private static String lastLoadedFilePath;
   //Represents the file name of the last loaded file.
   private static String lastLoadedFileName;
-  //Represents the Army name of the last loaded file.
-  private static String lastLoadedFileArmyName;
 
   private static boolean hasSavedFile; //True if the write method has been called.
 
@@ -52,10 +45,6 @@ public class ArmyFileHandler {
     return lastLoadedFileName;
   }
 
-  public static String getLastLoadedFileArmyName() {
-    return lastLoadedFileArmyName;
-  }
-
   private static void clearFile(String path) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       writer.write("");
@@ -69,49 +58,6 @@ public class ArmyFileHandler {
    * @param path The path of the file to write to.
    */
   public static void writeArmyCsv(Army army, String path)
-      throws IOException, NullPointerException, IllegalArgumentException {
-    Objects.requireNonNull(army);
-
-    try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
-      if (army.getName() != null || !army.getName().isEmpty()) {
-        writer.write(army.getName());
-      } else {
-        throw new IllegalArgumentException("Army has no name.");
-      }
-      writer.newLine();
-      for (Unit unit : army.getUnits()) {
-        writer.write(
-            unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
-      }
-      hasSavedFile = true;
-    }
-  }
-
-  public static void writeArmyCsv2(Army army, String path)
-      throws IOException, NullPointerException, IllegalArgumentException {
-    Objects.requireNonNull(army);
-
-    //File file = new File(ArmyFileHandler.class.getResource(path).toExternalForm());
-
-    try (FileOutputStream fs = new FileOutputStream(
-        String.valueOf(ArmyFileHandler.class.getResourceAsStream(path)));
-         OutputStreamWriter ow = new OutputStreamWriter(fs);
-         BufferedWriter writer = new BufferedWriter(ow)) {
-      if (army.getName() != null || !army.getName().isEmpty()) {
-        writer.write(army.getName());
-      } else {
-        throw new IllegalArgumentException("Army has no name.");
-      }
-      writer.newLine();
-      for (Unit unit : army.getUnits()) {
-        writer.write(
-            unit.getClass().getSimpleName() + "," + unit.getName() + "," + unit.getHealth() + "\n");
-      }
-      hasSavedFile = true;
-    }
-  }
-
-  public static void writeArmyCsvTestFile(Army army, String path)
       throws IOException, NullPointerException, IllegalArgumentException {
     Objects.requireNonNull(army);
 
@@ -149,7 +95,6 @@ public class ArmyFileHandler {
         String lineOfText;
         if ((lineOfText = reader.readLine()) != null && !lineOfText.contains(",")) {
           army.setName(lineOfText);
-          lastLoadedFileArmyName = lineOfText;
         } else {
           throw new IllegalArgumentException("Error. Army name is not correct. ");
         }
@@ -166,7 +111,14 @@ public class ArmyFileHandler {
     } else {
       throw new NullPointerException();
     }
-    return new Army(army);
+
+    File file = new File(Objects.requireNonNull(ArmyFileHandler.class.getResource(path)).getFile());
+    lastLoadedFileName = file.getName();
+
+    lastLoadedFilePath = Objects.requireNonNull(ArmyFileHandler.class.getResource(path))
+        .toExternalForm();
+
+    return new Army(army.getName(), army.getUnits());
   }
 
   /**
@@ -181,12 +133,10 @@ public class ArmyFileHandler {
 
     Path currentPath = Path.of(path);
 
-
     try (BufferedReader reader = Files.newBufferedReader(currentPath)) {
       String lineOfText;
       if ((lineOfText = reader.readLine()) != null && !lineOfText.contains(",")) {
         army.setName(lineOfText);
-        lastLoadedFileArmyName = lineOfText;
       } else {
         throw new IllegalArgumentException("Error. Army name is not correct. ");
       }
@@ -200,7 +150,6 @@ public class ArmyFileHandler {
         }
       }
     }
-
     return new Army(army);
   }
 

@@ -17,6 +17,7 @@ public class InfantryUnit extends Unit {
    */
   public InfantryUnit(String name, int health, int attack, int armor) {
     super(name, health, attack, armor);
+    type = "infantryunit";
   }
 
   /**
@@ -29,6 +30,7 @@ public class InfantryUnit extends Unit {
     super(name, health);
     attack = 15;
     armor = 10;
+    type = "infantryunit";
   }
 
   /**
@@ -38,6 +40,7 @@ public class InfantryUnit extends Unit {
    */
   public InfantryUnit(Unit unit) {
     super(unit);
+    type = "infantryunit";
   }
 
   @Override

@@ -28,9 +28,6 @@ public class Battle extends BattleUpdater {
     rand = new Random();
   }
 
-
-
-
   public Army getArmyOne() {
     return armyOne;
   }
@@ -73,11 +70,7 @@ public class Battle extends BattleUpdater {
         armyOne.removeUnit(u1);
         sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
       }
-
     }
-
-
-
   }
 
   private void hitUpdate(Unit attacker, Unit defender) {
@@ -122,7 +115,6 @@ public class Battle extends BattleUpdater {
   }
 
   public boolean simulateStep() {
-    boolean finished = false;
     try {
       if (!firstStep) {
         sizeUpdate(armyOne.getUnits().size(), armyTwo.getUnits().size());
@@ -130,9 +122,13 @@ public class Battle extends BattleUpdater {
       }
       randomAttack(armyOne, armyTwo);
     } catch (IllegalArgumentException e) {
-      finished = true;
+      return true;
     }
-    return finished;
+    return false;
+  }
+
+  public void setFirstStepFalse() {
+    firstStep = false;
   }
 
   public void setTerrain(String terrain) {
@@ -147,8 +143,7 @@ public class Battle extends BattleUpdater {
    *
    * @return A string containing the information abut the battle.
    */
-  @Override
-  public String toString() {
+  public String getBattleInformation() {
     return "Battle between the armies '"
         + armyOne.getName()
         + "' and '"

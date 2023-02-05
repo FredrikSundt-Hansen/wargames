@@ -8,14 +8,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import no.ntnu.idatg2001.wargames.model.armies.Army;
 import no.ntnu.idatg2001.wargames.model.battles.Battle;
 import no.ntnu.idatg2001.wargames.model.units.CavalryUnit;
 import no.ntnu.idatg2001.wargames.model.units.CommanderUnit;
 import no.ntnu.idatg2001.wargames.model.units.InfantryUnit;
 import no.ntnu.idatg2001.wargames.model.units.RangedUnit;
 import no.ntnu.idatg2001.wargames.model.units.Unit;
-import no.ntnu.idatg2001.wargames.model.armies.ArmyFileHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -59,7 +57,7 @@ class ArmyFileHandlerTest {
   void readAndWriteArmyCsv() {
     String path = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyOneSaveFile.csv";
     try {
-      ArmyFileHandler.writeArmyCsvTestFile(humanArmy,path);
+      ArmyFileHandler.writeArmyCsv(humanArmy,path);
       Army army = ArmyFileHandler.readCsvTestFiles(path);
       assertEquals(army, humanArmy);
 
@@ -75,8 +73,8 @@ class ArmyFileHandlerTest {
     String pathArmyTwo = "src/test/java/no/ntnu/idatg2001/wargames/model/armies/armyTwoSaveFile.csv";
 
     try {
-      ArmyFileHandler.writeArmyCsvTestFile(humanArmy, pathArmyOne);
-      ArmyFileHandler.writeArmyCsvTestFile(orcishHorde, pathArmyTwo);
+      ArmyFileHandler.writeArmyCsv(humanArmy, pathArmyOne);
+      ArmyFileHandler.writeArmyCsv(orcishHorde, pathArmyTwo);
       Battle battle =
           new Battle(ArmyFileHandler.readCsvTestFiles(pathArmyOne), ArmyFileHandler.readCsvTestFiles(pathArmyTwo));
       assertEquals(battle.simulate("hills").getName(),humanArmy.getName());
@@ -91,7 +89,7 @@ class ArmyFileHandlerTest {
     String path = "src/test/java/no/ntnu/idatg2001/wargames/model/newArmyTestFile.csv";
 
     try {
-      ArmyFileHandler.writeArmyCsvTestFile(humanArmy, path);
+      ArmyFileHandler.writeArmyCsv(humanArmy, path);
       assertEquals(ArmyFileHandler.readCsvTestFiles(path), humanArmy);
     } catch (IOException e) {
       e.printStackTrace();
@@ -160,14 +158,14 @@ class ArmyFileHandlerTest {
   @Test
   void writeNullArmy() {
     try {
-      ArmyFileHandler.writeArmyCsvTestFile(null, "src/main/resources/savefiles/armyOneSaveFile.csv");
+      ArmyFileHandler.writeArmyCsv(null, "src/main/resources/savefiles/armyOneSaveFile.csv");
       fail();
     } catch (IOException | NullPointerException | IllegalArgumentException exception) {
       assertTrue(true);
     }
 
     try {
-      ArmyFileHandler.writeArmyCsvTestFile(new Army(), "src/main/resources/savefiles/armyOneSaveFile.csv");
+      ArmyFileHandler.writeArmyCsv(new Army(), "src/main/resources/savefiles/armyOneSaveFile.csv");
       fail();
     } catch (IOException | IllegalArgumentException | NullPointerException exception) {
       assertTrue(true);
