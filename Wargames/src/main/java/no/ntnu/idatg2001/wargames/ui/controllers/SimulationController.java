@@ -228,7 +228,7 @@ public class SimulationController implements UnitObserver, Initializable {
   public void hitUpdate(String nameAttacker, int attackValue, int attackBonus, String nameDefender,
       int healthDefender, int resistDefender) {
     hitLogListView.getItems()
-        .add(nameAttacker + attackValue + "+(" + attackBonus + ")"
+        .add(nameAttacker + " " +attackValue + "+(" + attackBonus + ")"
             + "  ->  " + nameDefender + " -(" + resistDefender + ")"
             + " = " + healthDefender);
     hitLogListView.scrollTo(hitLogListView.getItems().size());
