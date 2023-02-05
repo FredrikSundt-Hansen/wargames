@@ -79,6 +79,11 @@ public class SimulationController implements UnitObserver, Initializable {
         }
     );
 
+    setColumnPropertyFactory(armyOneTypeColumn, armyOneHealthColumn);
+    setColumnPropertyFactory(armyTwoTypeColumn, armyTwoHealthColumn);
+
+
+
     setTableViewValues(WargameFacade.getInstance().getArmyOneUnits(),
         WargameFacade.getInstance().getArmyTwoUnits());
 
@@ -141,23 +146,13 @@ public class SimulationController implements UnitObserver, Initializable {
   private void initiateGraphValues() {
     armyOneChartData = new XYChart.Series<>();
     armyTwoChartData = new XYChart.Series<>();
-    armySizeLineChart.getData().addAll(armyOneChartData, armyTwoChartData);
-
-    armySizeLineChart.getXAxis().setTickLabelsVisible(false);
-    armySizeLineChart.getYAxis().setAutoRanging(true);
-    armySizeLineChart.setCreateSymbols(false);
-    armySizeLineChart.setHorizontalGridLinesVisible(false);
-    armySizeLineChart.setVerticalGridLinesVisible(false);
-
-    setColumnPropertyFactory(armyOneTypeColumn, armyOneHealthColumn);
-    setColumnPropertyFactory(armyTwoTypeColumn, armyTwoHealthColumn);
-
     String armyOneName = WargameFacade.getInstance().getArmyOneName();
     String armyTwoName = WargameFacade.getInstance().getArmyTwoName();
     armyOneChartData.setName(armyOneName);
     armyTwoChartData.setName(armyTwoName);
     armyOneNameLabel.setText(armyOneName);
     armyTwoNameLabel.setText(armyTwoName);
+    armySizeLineChart.getData().addAll(armyOneChartData, armyTwoChartData);
   }
 
   /**
@@ -186,6 +181,8 @@ public class SimulationController implements UnitObserver, Initializable {
     simulating = false;
     hitLogListView.getItems().clear();
     hitLogListView.refresh();
+    armySizeLineChart.getData().clear();
+    initiateGraphValues();
     onStartSimulationButtonClick();
     WargameFacade.getInstance().registerObserver(this);
 

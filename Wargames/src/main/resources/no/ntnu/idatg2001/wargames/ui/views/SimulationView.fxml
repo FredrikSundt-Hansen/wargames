@@ -35,26 +35,26 @@
    <center>
       <Pane prefHeight="731.0" prefWidth="914.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <Label contentDisplay="CENTER" layoutX="140.0" layoutY="14.0" prefHeight="49.0" prefWidth="107.0" style="-fx-text-fill: black;" stylesheets="@../stylesheet/style.css" text="Simulator">
+            <Label contentDisplay="CENTER" layoutX="151.0" layoutY="14.0" prefHeight="49.0" prefWidth="107.0" style="-fx-text-fill: black;" stylesheets="@../stylesheet/style.css" text="Simulator">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <LineChart fx:id="armySizeLineChart" alternativeColumnFillVisible="true" cache="true" cacheHint="SPEED" layoutY="51.0" prefHeight="255.0" prefWidth="386.0">
+            <LineChart fx:id="armySizeLineChart" alternativeColumnFillVisible="true" cache="true" cacheHint="SPEED" createSymbols="false" horizontalGridLinesVisible="false" layoutX="2.0" layoutY="51.0" prefHeight="255.0" prefWidth="404.0" verticalGridLinesVisible="false">
               <xAxis>
-                <CategoryAxis label="Time" prefHeight="26.0" prefWidth="869.0" side="BOTTOM" />
+                <CategoryAxis label="Time" prefHeight="26.0" prefWidth="869.0" side="BOTTOM" tickLabelsVisible="false" />
               </xAxis>
               <yAxis>
-                <NumberAxis autoRanging="false" label="Unit size" prefHeight="199.0" prefWidth="49.0" side="LEFT" upperBound="200.0" />
+                <NumberAxis label="Unit size" prefHeight="199.0" prefWidth="49.0" side="LEFT" upperBound="200.0" />
               </yAxis>
             </LineChart>
             <Group layoutX="93.0" layoutY="374.0" />
-            <ImageView fx:id="winnerTrophyImageView" fitHeight="122.0" fitWidth="103.0" layoutX="142.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="winnerTrophyImageView" fitHeight="122.0" fitWidth="103.0" layoutX="153.0" layoutY="364.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/icons/icon_trophy.png" />
                </image>
             </ImageView>
-            <Label fx:id="winnerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="329.0" prefHeight="32.0" prefWidth="287.0" text="Winner" textAlignment="CENTER" textFill="#d9fa02">
+            <Label fx:id="winnerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="61.0" layoutY="329.0" prefHeight="32.0" prefWidth="287.0" text="Winner" textAlignment="CENTER" textFill="#d9fa02">
                <font>
                   <Font size="24.0" />
                </font>
@@ -63,18 +63,18 @@
       </Pane>
    </center>
    <right>
-      <Pane prefHeight="481.0" prefWidth="289.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="481.0" prefWidth="279.0" style="-fx-background-color: lightgrey;" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="armyOneTableView" layoutX="-2.0" layoutY="67.0" prefHeight="415.0" prefWidth="155.0">
+            <TableView fx:id="armyOneTableView" layoutY="67.0" prefHeight="415.0" prefWidth="153.0">
               <columns>
-                <TableColumn fx:id="armyOneTypeColumn" prefWidth="63.0" text="Type" />
-                <TableColumn fx:id="armyOneHealthColumn" prefWidth="54.0" text="Health" />
+                <TableColumn fx:id="armyOneTypeColumn" prefWidth="101.0" text="Type" />
+                <TableColumn fx:id="armyOneHealthColumn" prefWidth="51.0" text="Health" />
               </columns>
             </TableView>
-            <TableView fx:id="armyTwoTableView" layoutX="152.0" layoutY="67.0" prefHeight="415.0" prefWidth="137.0">
+            <TableView fx:id="armyTwoTableView" layoutX="152.0" layoutY="67.0" prefHeight="415.0" prefWidth="128.0">
                <columns>
-                  <TableColumn fx:id="armyTwoTypeColumn" prefWidth="88.0" text="Type" />
-                  <TableColumn fx:id="armyTwoHealthColumn" prefWidth="49.0" text="Health" />
+                  <TableColumn fx:id="armyTwoTypeColumn" prefWidth="78.0" text="Type" />
+                  <TableColumn fx:id="armyTwoHealthColumn" prefWidth="58.0" text="Health" />
                </columns>
             </TableView>
             <Label fx:id="armyOneNameLabel" layoutX="54.0" layoutY="19.0" text="Army one" underline="true">
@@ -138,14 +138,14 @@
       </Pane>
    </bottom>
    <left>
-      <Pane BorderPane.alignment="CENTER">
+      <Pane prefHeight="481.0" prefWidth="213.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="108.0" layoutY="14.0" text="Hit log">
+            <Label layoutX="82.0" layoutY="14.0" text="Hit log">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <ListView fx:id="hitLogListView" layoutY="40.0" prefHeight="443.0" prefWidth="224.0" />
+            <ListView fx:id="hitLogListView" layoutY="40.0" prefHeight="443.0" prefWidth="216.0" />
          </children>
       </Pane>
    </left>

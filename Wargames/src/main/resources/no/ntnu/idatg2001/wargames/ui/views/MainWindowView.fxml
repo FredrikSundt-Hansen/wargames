@@ -7,27 +7,23 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.MainWindowController">
+<BorderPane focusTraversable="true" maxHeight="600.0" maxWidth="900.0" minHeight="600.0" minWidth="900.0" pickOnBounds="false" prefHeight="600.0" prefWidth="900.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.MainWindowController">
    <center>
-      <Pane prefHeight="200.0" prefWidth="200.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fx:id="imageMainWindow" fitHeight="509.0" fitWidth="501.0" layoutX="200.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/mainMenuPicture_725x724.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
+      <ImageView fx:id="imageMainWindow" fitHeight="504.0" fitWidth="529.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@../images/mainMenuPicture_725x724.png" />
+         </image>
+      </ImageView>
    </center>
    <bottom>
-      <Pane prefHeight="86.0" prefWidth="1920.0" BorderPane.alignment="CENTER">
+      <Pane prefHeight="43.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
-            <Button layoutX="509.0" layoutY="23.0" maxHeight="40.0" maxWidth="115.0" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#onNewBattleButtonClick" onMouseClicked="#onNewBattleButtonClick" prefHeight="40.0" prefWidth="115.0" styleClass="mainMenuButton-over" stylesheets="@../stylesheet/style.css" text="New Battle" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="237.0" maxHeight="40.0" maxWidth="115.0" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#onExitButtonClick" onMouseClicked="#onNewBattleButtonClick" prefHeight="40.0" prefWidth="115.0" styleClass="mainMenuButton-over" stylesheets="@../stylesheet/style.css" text="Exit" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button layoutX="277.0" layoutY="23.0" maxHeight="40.0" maxWidth="115.0" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#onExitButtonClick" onMouseClicked="#onNewBattleButtonClick" prefHeight="40.0" prefWidth="115.0" styleClass="mainMenuButton-over" stylesheets="@../stylesheet/style.css" text="Exit" textAlignment="CENTER">
+            <Button alignment="CENTER" layoutX="570.0" maxHeight="40.0" maxWidth="150.0" minHeight="40.0" minWidth="115.0" mnemonicParsing="false" onAction="#onNewBattleButtonClick" onMouseClicked="#onNewBattleButtonClick" prefHeight="40.0" prefWidth="150.0" styleClass="mainMenuButton-over" stylesheets="@../stylesheet/style.css" text="New Battle" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
