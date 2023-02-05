@@ -76,7 +76,7 @@ public class Army {
    * Constructs an empty army with no name.
    */
   public Army() {
-    this.name = "";
+    this.name = "no-name";
     this.units = new ArrayList<>();
     rand = new Random();
   }

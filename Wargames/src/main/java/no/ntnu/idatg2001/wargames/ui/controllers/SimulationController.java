@@ -179,11 +179,13 @@ public class SimulationController implements UnitObserver, Initializable {
     winnerLabel.setVisible(false);
     winnerTrophyImageView.setVisible(false);
 
-    WargameFacade.getInstance().resetArmies();
+    WargameFacade.getInstance().setArmiesToBackupArmies();
     setTableViewValues(WargameFacade.getInstance().getArmyOneUnits(),
         WargameFacade.getInstance().getArmyTwoUnits());
     initiateTimeline();
     simulating = false;
+    hitLogListView.getItems().clear();
+    hitLogListView.refresh();
     onStartSimulationButtonClick();
     WargameFacade.getInstance().registerObserver(this);
 

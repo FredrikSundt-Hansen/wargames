@@ -91,6 +91,11 @@ public class WargamesApplication extends Application {
     alert.showAndWait();
   }
 
+  public static void exitApplication() {
+    Platform.exit();
+    System.exit(0);
+  }
+
   /**
    * Start method from Application. Calls goToMainMenu.
    */
@@ -98,11 +103,6 @@ public class WargamesApplication extends Application {
   public void start(Stage primaryStage) {
     WargamesApplication.primaryStage = primaryStage;
     gotToMainMenu();
-  }
-
-  public static void exitApplication() {
-    Platform.exit();
-    System.exit(0);
   }
 
 

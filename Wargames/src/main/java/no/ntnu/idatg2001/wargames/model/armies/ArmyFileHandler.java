@@ -45,6 +45,10 @@ public class ArmyFileHandler {
     return lastLoadedFileName;
   }
 
+  public static void setHasSavedFileFalse() {
+    hasSavedFile = false;
+  }
+
   private static void clearFile(String path) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(Path.of(path))) {
       writer.write("");

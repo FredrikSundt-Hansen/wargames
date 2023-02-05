@@ -23,6 +23,7 @@ public class MainWindowController implements Initializable {
   /**Shows the window for setting army names for the new battle.*/
   @FXML
   private void onNewBattleButtonClick() {
+    WargameFacade.getInstance().reset();
     WargamesApplication.goToBattleMaker();
   }
 

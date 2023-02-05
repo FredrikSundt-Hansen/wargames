@@ -92,11 +92,12 @@ public class WargameFacade {
     return armyTwoFilePath;
   }
 
-  public void resetBattle() {
+  public void reset() {
     armyOne = new Army();
     armyTwo = new Army();
-    battle.setArmyOne(armyOne);
-    battle.setArmyTwo(armyTwo);
+    armyOneBackup = new Army();
+    armyTwoBackup = new Army();
+    ArmyFileHandler.setHasSavedFileFalse();
   }
 
   public void updateBackupArmies() {
@@ -104,7 +105,7 @@ public class WargameFacade {
     armyTwoBackup = new Army(armyTwo);
   }
 
-  public void resetArmies() {
+  public void setArmiesToBackupArmies() {
     armyOne = new Army(armyOneBackup);
     armyTwo = new Army(armyTwoBackup);
     battle = new Battle(armyOne, armyTwo);
@@ -307,6 +308,7 @@ public class WargameFacade {
                 "/no/ntnu/idatg2001/wargames/savefiles/armyTwoSaveFile.csv"))
             .toExternalForm();
     String path = absolutePath.split(":")[absolutePath.split(":").length - 1];
+
 
     ArmyFileHandler.writeArmyCsv(new Army(armyName, units), path);
   }
