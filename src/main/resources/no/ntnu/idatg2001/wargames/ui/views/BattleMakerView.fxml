@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="600.0" maxWidth="900.0" minHeight="600.0" minWidth="900.0" prefHeight="600.0" prefWidth="900.0" styleClass="whiteBackground" stylesheets="@../stylesheet/style.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.BattleMakerController">
+   <top>
+      <MenuBar styleClass="whiteBackground-over" stylesheets="@../stylesheet/style.css" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Go to">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#onSimulateButtonClick" text="Simulator" />
+                  <MenuItem mnemonicParsing="false" onAction="#onShowMainMenuButtonClick" text="Main menu" />
+               </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <Menu mnemonicParsing="false" text="Army one">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyOneButtonClick" text="Load previouse save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadArmyOneFromFile" text="Load from file" />
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuItemArmyOneFileInfoButtonClick" text="File info" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Army two">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick" text="Save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadPreviousArmyTwoButtonClick" text="Load previous save" />
+                        <MenuItem mnemonicParsing="false" onAction="#onLoadArmyTwoFromFile" text="Load from file" />
+                        <MenuItem mnemonicParsing="false" onAction="#onMenuItemArmyTwoFileInfoButtonClick" text="File info" />
+                     </items>
+                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#onLoadDemoFileButtonClick" text="Load demo " />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <left>
+      <Pane fx:id="armyOnePane" maxHeight="575.0" maxWidth="150.0" minHeight="575.0" minWidth="150.0" prefHeight="575.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <Pane fx:id="armyTwoPane" maxHeight="575.0" maxWidth="150.0" minHeight="575.0" minWidth="150.0" prefHeight="575.0" prefWidth="150.0" BorderPane.alignment="CENTER" />
+   </right>
+   <center>
+      <Pane maxHeight="933.0" maxWidth="1315.0" minHeight="390.0" minWidth="53.0" prefHeight="575.0" prefWidth="629.0" BorderPane.alignment="CENTER">
+         <children>
+            <Group layoutX="-163.0" layoutY="71.0">
+               <children>
+                  <ImageView fx:id="terrainImageView" fitHeight="333.0" fitWidth="555.0" layoutX="187.0" layoutY="2.0" onMouseClicked="#onSwitchTerrainMouseClick" pickOnBounds="true" preserveRatio="true" />
+                  <Separator layoutX="740.0" layoutY="1.0" maxHeight="600.0" maxWidth="5.0" minHeight="336.0" minWidth="0.0" orientation="VERTICAL" prefHeight="336.0" prefWidth="4.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" />
+                  <Separator layoutX="184.0" layoutY="333.0" maxHeight="4.0" maxWidth="555.0" minHeight="0.0" minWidth="555.0" prefHeight="4.0" prefWidth="555.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" />
+                  <Button layoutX="388.0" layoutY="426.0" mnemonicParsing="false" onAction="#onSimulateButtonClick" styleClass="button-over" stylesheets="@../stylesheet/style.css" text="Simulate Armies">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Separator layoutX="184.0" maxHeight="4.0" maxWidth="555.0" minHeight="4.0" minWidth="555.0" prefHeight="4.0" prefWidth="555.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" />
+                  <ChoiceBox fx:id="terrainChoiceBox" layoutX="230.0" layoutY="358.0" prefWidth="150.0" stylesheets="@../stylesheet/style.css">
+                     <styleClass>
+                        <String fx:value="choiceBox-background-blue" />
+                        <String fx:value="choiceBox-label-blue" />
+                     </styleClass>
+                  </ChoiceBox>
+                  <Button layoutX="195.0" layoutY="358.0" mnemonicParsing="false" onMouseClicked="#onSwitchTerrainMouseClick" styleClass="button-over" stylesheets="@../stylesheet/style.css" text="&gt;" />
+                  <Separator layoutX="185.0" layoutY="1.0" maxHeight="333.0" maxWidth="4.0" minHeight="333.0" minWidth="0.0" orientation="VERTICAL" prefHeight="333.0" prefWidth="4.0" styleClass="background-over" stylesheets="@../stylesheet/style.css" />
+               </children>
+            </Group>
+            <Label layoutX="233.0" layoutY="12.0" styleClass="text-fill-blue" stylesheets="@../stylesheet/style.css" text="Battle Maker" underline="true">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Button layoutX="557.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSaveArmyTwoButtonClick" stylesheets="@../stylesheet/style.css">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/icon_save_symbol.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onSaveArmyOneButtonClick" stylesheets="@../stylesheet/style.css">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/icons/icon_save_symbol.jpg" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

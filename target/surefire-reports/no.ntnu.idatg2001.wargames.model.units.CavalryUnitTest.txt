@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: no.ntnu.idatg2001.wargames.model.units.CavalryUnitTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in no.ntnu.idatg2001.wargames.model.units.CavalryUnitTest

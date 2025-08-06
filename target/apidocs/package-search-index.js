@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"no.ntnu.idatg2001","l":"no.ntnu.idatg2001.wargames.ui.controllers"},{"m":"no.ntnu.idatg2001","l":"no.ntnu.idatg2001.wargames.ui.views"}];updateSearchResults();

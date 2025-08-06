@@ -1,0 +1,4 @@
+--patch-module
+no.ntnu.idatg2001=_
+--add-reads
+no.ntnu.idatg2001=ALL-UNNAMED

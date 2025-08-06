@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="575.0" maxWidth="150.0" minHeight="575.0" minWidth="150.0" prefHeight="575.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="no.ntnu.idatg2001.wargames.ui.controllers.ArmyMakerController">
+   <children>
+      <TableView fx:id="armyTableView" layoutY="159.0" maxHeight="575.0" maxWidth="150.0" minHeight="402.0" minWidth="150.0" prefHeight="416.0" prefWidth="150.0">
+         <columns>
+            <TableColumn fx:id="typeColumn" prefWidth="76.0" text="Type" />
+            <TableColumn fx:id="nameColumn" prefWidth="72.0" text="Name" />
+            <TableColumn fx:id="healthColumn" minWidth="5.0" prefWidth="92.0" text="Health" />
+            <TableColumn fx:id="armorColumn" minWidth="5.0" prefWidth="50.0" text="Armor" />
+            <TableColumn fx:id="attackColumn" minWidth="5.0" prefWidth="50.0" text="Attack" />
+         </columns>
+      </TableView>
+      <Group layoutX="9.0" layoutY="47.0">
+         <children>
+            <Label layoutY="28.0" text="Infantry : " />
+            <Label layoutX="62.0" layoutY="28.0" text="Ranged : " />
+            <Label layoutY="51.0" text="Cavalry : " />
+            <Label layoutX="62.0" layoutY="51.0" text="Command.:" />
+            <Label fx:id="totalInfantryUnitsUnitsLabel" layoutX="50.0" layoutY="28.0" text="X" />
+            <Label fx:id="totalRangedUnitsLabel" layoutX="125.0" layoutY="28.0" text="X" />
+            <Label fx:id="totalCavalryUnitsLabel" layoutX="50.0" layoutY="51.0" text="X" />
+            <Label fx:id="totalCommanderUnitsUnitsLabel" layoutX="125.0" layoutY="51.0" text="X" />
+            <Label layoutX="37.0" layoutY="6.0" text="Total : " />
+            <Label fx:id="totalUnitsLabel" layoutX="84.0" layoutY="6.0" text="X" />
+         </children>
+      </Group>
+      <Button layoutX="102.0" layoutY="14.0" mnemonicParsing="false" onAction="#onChangeArmyNameButtonClick">
+         <graphic>
+            <ImageView fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_edit_symbol.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label fx:id="armyNameLabel" layoutX="25.0" layoutY="20.0" text="Army name">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button layoutX="19.0" layoutY="124.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#onAddUnitsButtonClick" prefHeight="30.0" prefWidth="30.0" styleClass="button-over" stylesheets="@../stylesheet/style.css">
+         <graphic>
+            <ImageView fitHeight="27.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_plus_symobl_160x160.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="60.0" layoutY="124.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#onRemoveUnitsButtonClick" prefHeight="30.0" prefWidth="30.0" styleClass="button-over" stylesheets="@../stylesheet/style.css">
+         <graphic>
+            <ImageView fitHeight="22.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/icon_minus_symbol_160x160.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button layoutX="101.0" layoutY="124.0" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onAction="#onResetUnitsButtonClick" prefHeight="30.0" prefWidth="30.0" styleClass="button-over" stylesheets="@../stylesheet/style.css">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/icons/refresh-2-512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

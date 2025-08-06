@@ -1,0 +1,50 @@
+@options
+@packages
+@argfile
+--class-path
+'C:/Users/fredr/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2.jar;C:/Users/fredr/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2.jar;C:/Users/fredr/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2.jar;C:/Users/fredr/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2.jar'
+--module-path
+'C:/Users/fredr/.m2/repository/org/openjfx/javafx-base/17.0.2/javafx-base-17.0.2-win.jar;C:/Users/fredr/.m2/repository/org/openjfx/javafx-graphics/17.0.2/javafx-graphics-17.0.2-win.jar;C:/Users/fredr/OneDrive/NTNU/programmering_2/wargamesproject/Wargames/target/Wargames-1.0-SNAPSHOT.jar;C:/Users/fredr/.m2/repository/org/openjfx/javafx-fxml/17.0.2/javafx-fxml-17.0.2-win.jar;C:/Users/fredr/.m2/repository/org/openjfx/javafx-controls/17.0.2/javafx-controls-17.0.2-win.jar'
+--patch-module
+no.ntnu.idatg2001='C:/Users/fredr/OneDrive/NTNU/programmering_2/wargamesproject/Wargames/src/main/java;C:/Users/fredr/OneDrive/NTNU/programmering_2/wargamesproject/Wargames/target/generated-sources/annotations'
+-encoding
+'UTF-8'
+-public
+-source
+'17'
+--module-source-path
+'C:/Users/fredr/OneDrive/NTNU/programmering_2/wargamesproject/Wargames/target/apidocs/src'
+-author
+-bottom
+'Copyright &#169; 2023. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/fredr/OneDrive/NTNU/programmering_2/wargamesproject/Wargames/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Wargames 1.0-SNAPSHOT API'
+-nohelp
+-use
+-version
+-windowtitle
+'Wargames 1.0-SNAPSHOT API'
+no.ntnu.idatg2001.wargames.ui.controllers
+no.ntnu.idatg2001.wargames.ui.views
+'C:/Users/fredr/OneDrive/NTNU/programmering_2/wargamesproject/Wargames/src/main/java/module-info.java'
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\allclasses-index.html = 1677662740389
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\allpackages-index.html = 1677662740393
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\element-list = 1677662740266
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\index-all.html = 1677662740415
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\index.html = 1677662740419
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\jquery-ui.overrides.css = 1677662740445
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\member-search-index.js = 1677662740399
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\module-search-index.js = 1677662740395
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\overview-tree.html = 1677662740369
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\package-search-index.js = 1677662740396
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\script.js = 1677662740422
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\search.js = 1677662740423
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\stylesheet.css = 1677662740421
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\tag-search-index.js = 1677662740400
+C:\Users\fredr\OneDrive\NTNU\programmering_2\wargamesproject\Wargames\target\apidocs\type-search-index.js = 1677662740397
