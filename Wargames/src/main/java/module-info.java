@@ -1,4 +1,4 @@
-module no.ntnu.idatg2001 {
+   module no.ntnu.idatg2001 {
   requires javafx.controls;
   requires javafx.fxml;
   requires java.logging;
